@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { DivideIcon as LucideIcon } from 'lucide-react';
 
 interface NavItem {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   label: string;
   path: string;
 }
@@ -17,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ items }) => {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+    <nav className="fixed bottom-0 left-0 right-0 bg-background">
       <div className="max-w-md mx-auto px-4">
         <div className="flex justify-between py-2">
           {items.map((item) => {
@@ -27,8 +27,8 @@ const Navbar: React.FC<NavbarProps> = ({ items }) => {
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
-                  isActive ? 'text-blue-600' : 'text-gray-600 hover:text-blue-500'
+                className={`flex flex-col items-center p-2 rounded-lg transition-colors font-semibold text-xs tracking-wide ${
+                  isActive ? 'text-primary' : 'text-text/80 hover:text-primary'
                 }`}
               >
                 <Icon className="w-6 h-6" />

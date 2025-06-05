@@ -49,21 +49,21 @@ const Profile = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-6 pb-24">
+    <div className="max-w-md mx-auto px-4 pt-6 pb-24 bg-background min-h-screen">
       <div className="flex items-center gap-4 mb-8">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 hover:bg-gray-100 rounded-full"
+          className="p-2 hover:bg-accent rounded-full"
         >
-          <ChevronLeft className="w-6 h-6 text-gray-600" />
+          <ChevronLeft className="w-6 h-6 text-text" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Profil</h1>
-          <p className="text-gray-600">Verwalten Sie Ihr Konto</p>
+          <h1 className="text-2xl font-bold text-text">Profil</h1>
+          <p className="text-text/80">Verwalten Sie Ihr Konto</p>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+      <div className="bg-card rounded-xl shadow-sm p-6 mb-8">
         <div className="flex items-center gap-4">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150"
@@ -71,22 +71,22 @@ const Profile = () => {
             className="w-20 h-20 rounded-full object-cover"
           />
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Junis Ba</h2>
-            <p className="text-gray-600">Junis.ba@example.com</p>
-            <p className="text-sm text-gray-500">Mitglied seit März 2024</p>
+            <h2 className="text-xl font-bold text-text">Junis Ba</h2>
+            <p className="text-text/80">Junis.ba@example.com</p>
+            <p className="text-sm text-muted">Mitglied seit März 2024</p>
           </div>
         </div>
       </div>
 
       {/* Progress Section */}
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+      <div className="bg-primary/30 rounded-xl shadow-sm p-6 mb-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-900">🎖️ Dein Fortschritt</h2>
+          <h2 className="text-xl font-bold text-text">🎖️ Dein Fortschritt</h2>
           <button
             onClick={() => setShowXPInfo(true)}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-accent rounded-full"
           >
-            <Info className="w-5 h-5 text-gray-600" />
+            <Info className="w-5 h-5 text-primary" />
           </button>
         </div>
 
@@ -94,17 +94,17 @@ const Profile = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h3 className="font-medium text-gray-900">Level 2</h3>
-              <p className="text-sm text-gray-600">Du entwickelst mentale Stärke</p>
+              <h3 className="font-medium text-text">Level 2</h3>
+              <p className="text-sm text-text/80">Du entwickelst mentale Stärke</p>
             </div>
             <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">120 / 200 XP</p>
-              <p className="text-xs text-gray-500">bis zum nächsten Level</p>
+              <p className="text-sm font-medium text-text">120 / 200 XP</p>
+              <p className="text-xs text-muted">bis zum nächsten Level</p>
             </div>
           </div>
-          <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+          <div className="w-full h-3 bg-accent rounded-full overflow-hidden">
             <div 
-              className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+              className="h-full bg-primary rounded-full"
               style={{ width: '60%' }}
             />
           </div>
@@ -116,7 +116,7 @@ const Profile = () => {
             <div className="text-6xl animate-bounce">🌱</div>
           </div>
           <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-            <p className="text-sm text-center text-gray-600">
+            <p className="text-sm text-center text-text/80">
               Dein Baum wächst weiter – stark! 🌱
             </p>
           </div>
@@ -124,15 +124,15 @@ const Profile = () => {
 
         {/* Badges Grid */}
         <div className="mb-8">
-          <h3 className="font-medium text-gray-900 mb-4">Freigeschaltete Erfolge</h3>
+          <h3 className="font-medium text-text mb-4">Freigeschaltete Erfolge</h3>
           <div className="grid grid-cols-3 gap-4">
             {badges.map(badge => (
               <div
                 key={badge.id}
                 className={`aspect-square rounded-xl flex flex-col items-center justify-center p-2 ${
                   badge.unlocked
-                    ? 'bg-blue-50 text-blue-900'
-                    : 'bg-gray-50 text-gray-400'
+                    ? 'bg-accent text-text'
+                    : 'bg-muted text-muted'
                 }`}
               >
                 <span className="text-2xl mb-1">{badge.emoji}</span>
@@ -148,7 +148,7 @@ const Profile = () => {
         </div>
 
         {/* Daily Challenge */}
-        <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl p-6 text-white">
+        <div className="bg-primary rounded-xl p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-medium">Meine tägliche Challenge</h3>
             <span className="text-2xl">{dailyChallenge.emoji}</span>
@@ -169,23 +169,23 @@ const Profile = () => {
             <button
               key={item.label}
               onClick={() => navigate(item.path)}
-              className="w-full bg-white rounded-xl shadow-sm p-4 flex items-center gap-4 hover:bg-gray-50 transition-colors"
+              className="w-full bg-card rounded-xl shadow-sm p-4 flex items-center gap-4 hover:bg-accent transition-colors"
             >
-              <div className="bg-blue-100 p-2 rounded-lg">
-                <Icon className="w-6 h-6 text-blue-600" />
+              <div className="bg-accent p-2 rounded-lg">
+                <Icon className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-1 text-left">
-                <h3 className="font-semibold text-gray-900">{item.label}</h3>
-                <p className="text-sm text-gray-600">{item.description}</p>
+                <h3 className="font-semibold text-text">{item.label}</h3>
+                <p className="text-sm text-text/80">{item.description}</p>
               </div>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
+              <ChevronRight className="w-5 h-5 text-muted" />
             </button>
           );
         })}
       </div>
 
       <div className="mt-8">
-        <button className="w-full bg-red-50 text-red-600 py-3 rounded-lg font-medium hover:bg-red-100 transition-colors flex items-center justify-center gap-2">
+        <button className="w-full bg-primary/20 text-primary py-3 rounded-lg font-medium hover:bg-primary/30 transition-colors flex items-center justify-center gap-2">
           <LogOut className="w-5 h-5" />
           Abmelden
         </button>

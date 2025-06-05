@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Menu from '../components/Menu';
 import Diary from '../components/Diary';
 import KeyFacts from '../components/KeyFacts';
-import Registration from '../components/Registration';
+import ZPPRegistration from '../components/ZPPRegistration';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDiaryOpen, setIsDiaryOpen] = useState(false);
   const [isKeyFactsOpen, setIsKeyFactsOpen] = useState(false);
-  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isZPPRegistrationOpen, setIsZPPRegistrationOpen] = useState(false);
   const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
   const [isStressLevelConfirmed, setIsStressLevelConfirmed] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
@@ -87,10 +87,10 @@ const Home = () => {
   }, []);
 
   const moods = [
-    { id: 'great', label: 'Großartig', icon: Sun, color: 'bg-yellow-100 text-yellow-700' },
-    { id: 'okay', label: 'In Ordnung', icon: Moon, color: 'bg-blue-100 text-blue-700' },
-    { id: 'down', label: 'Niedergeschlagen', icon: CloudRain, color: 'bg-gray-100 text-gray-700' },
-    { id: 'stressed', label: 'Gestresst', icon: CloudLightning, color: 'bg-purple-100 text-purple-700' },
+    { id: 'great', label: 'Großartig', icon: Sun, color: 'bg-card text-text' },
+    { id: 'okay', label: 'In Ordnung', icon: Moon, color: 'bg-secondary text-text' },
+    { id: 'down', label: 'Niedergeschlagen', icon: CloudRain, color: 'bg-depressed text-text' },
+    { id: 'stressed', label: 'Gestresst', icon: CloudLightning, color: 'bg-stressed text-text' },
   ];
 
   const currentModule = {
@@ -98,8 +98,8 @@ const Home = () => {
     description: 'Einführung in Stress und Stressbewältigung',
     progress: 25,
     duration: '45 min',
-    color: 'bg-blue-100',
-    textColor: 'text-blue-900'
+    color: 'bg-card',
+    textColor: 'text-text'
   };
 
   const handleModuleClick = () => {
@@ -345,8 +345,12 @@ const Home = () => {
     </div>
   );
 
+  const handleOpenLogin = () => {
+    console.log("Opening login modal...");
+  };
+
   return (
-    <div className="max-w-md mx-auto px-4 pt-6 pb-24">
+    <div className="max-w-md mx-auto px-4 pt-6 pb-24 bg-background min-h-screen">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <img
@@ -355,47 +359,47 @@ const Home = () => {
             className="w-12 h-12 rounded-full object-cover"
           />
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Guten Morgen, Junis</h1>
+            <h1 className="text-2xl font-bold text-text">Guten Morgen, Junis</h1>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <button 
-            onClick={() => setIsRegistrationOpen(true)}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            onClick={() => setIsZPPRegistrationOpen(true)}
+            className="p-2 hover:bg-accent rounded-full"
           >
-            <UserPlus className="w-6 h-6 text-gray-600" />
+            <UserPlus className="w-6 h-6 text-text" />
           </button>
           <button 
             onClick={() => setIsKeyFactsOpen(true)}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-accent rounded-full"
           >
-            <Lightbulb className="w-6 h-6 text-yellow-500" />
+            <Lightbulb className="w-6 h-6 text-primary" />
           </button>
           <button 
-            onClick={() => setIsDiaryOpen(true)}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            onClick={() => navigate('/diary-overview')}
+            className="bg-journalgreen text-white rounded-3xl p-6 flex items-center justify-between shadow-lg hover:shadow-xl transition-all"
           >
-            <BookOpen className="w-6 h-6 text-gray-600" />
+            <BookOpen className="w-6 h-6" />
           </button>
           <button 
             onClick={() => setIsMenuOpen(true)}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-accent rounded-full"
           >
-            <MenuIcon className="w-6 h-6 text-gray-600" />
+            <MenuIcon className="w-6 h-6 text-text" />
           </button>
         </div>
       </div>
 
       <p 
         key={currentSloganIndex}
-        className="text-gray-600 text-center text-lg mb-4 animate-fade-in"
+        className="text-text/80 text-center text-lg mb-4 animate-fade-in"
       >
         {slogans[currentSloganIndex]}
       </p>
 
       <button
         onClick={() => navigate('/exercises')}
-        className="w-full bg-blue-600 text-white py-4 px-6 rounded-xl font-medium mb-8 flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors"
+        className="w-full bg-primary text-white py-4 px-6 rounded-xl font-medium mb-8 flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
       >
         <Brain className="w-5 h-5" />
         Zu den Übungen
@@ -407,9 +411,9 @@ const Home = () => {
       >
         <h2 className={`text-3xl font-bold ${currentModule.textColor} mb-2`}>{currentModule.title}</h2>
         <p className={`${currentModule.textColor} opacity-75 mb-4`}>{currentModule.description}</p>
-        <div className="w-full bg-blue-200 rounded-full h-2 mb-4">
+        <div className="w-full bg-accent rounded-full h-2 mb-4">
           <div 
-            className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+            className="bg-primary h-2 rounded-full transition-all duration-500"
             style={{ width: `${currentModule.progress}%` }}
           />
         </div>
@@ -418,20 +422,22 @@ const Home = () => {
             <Clock className={`w-5 h-5 ${currentModule.textColor} opacity-75`} />
             <span className={`${currentModule.textColor} opacity-75`}>{currentModule.duration}</span>
           </div>
-          <button className={`bg-white rounded-full p-3 ${currentModule.textColor}`}>
+          <button className={`bg-background rounded-full p-3 ${currentModule.textColor}`}>
             <Play className="w-6 h-6" />
           </button>
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Wie fühlst du dich heute?</h2>
+      <h2 className="text-2xl font-bold text-text mb-4">Wie fühlst du dich heute?</h2>
       <div className="grid grid-cols-2 gap-4 mb-6">
         {moods.map(({ id, label, icon: Icon, color }) => (
           <button
             key={id}
             onClick={() => setSelectedMood(id)}
-            className={`${color} p-6 rounded-3xl flex flex-col items-center justify-center gap-3 transition-all ${
-              selectedMood === id ? 'scale-105 ring-2 ring-offset-2 ring-green-600' : 'hover:scale-102'
+            className={`${color} p-6 rounded-3xl flex flex-col items-center justify-center gap-3 transition-all border-2 ${
+              selectedMood === id
+                ? 'scale-105 border-primary ring-2 ring-offset-2 ring-primary'
+                : 'border-transparent hover:scale-102'
             }`}
           >
             <Icon className="w-8 h-8" />
@@ -440,9 +446,9 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="bg-white rounded-xl border p-6 mb-8">
+      <div className="bg-card rounded-xl border-none p-6 mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-gray-900">Stressbarometer</h3>
+          <h3 className="font-semibold text-text">Stressbarometer</h3>
           <span className={`font-medium ${getStressLevelColor(stressLevel)}`}>
             {getStressLevelText(stressLevel)}
           </span>
@@ -453,9 +459,9 @@ const Home = () => {
           max="100"
           value={stressLevel}
           onChange={(e) => setStressLevel(parseInt(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mb-4"
+          className="w-full h-2 bg-accent rounded-lg appearance-none cursor-pointer mb-4"
         />
-        <div className="flex justify-between mb-4 text-sm text-gray-500">
+        <div className="flex justify-between mb-4 text-sm text-text/70">
           <span>Entspannt</span>
           <span>Gestresst</span>
         </div>
@@ -464,8 +470,8 @@ const Home = () => {
           disabled={isStressLevelConfirmed}
           className={`w-full py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-all ${
             isStressLevelConfirmed
-              ? 'bg-green-600 text-white'
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+              ? 'bg-primary/80 text-white'
+              : 'bg-primary text-white hover:bg-primary/90'
           }`}
         >
           {isStressLevelConfirmed ? (
@@ -555,7 +561,14 @@ const Home = () => {
       <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       <Diary isOpen={isDiaryOpen} onClose={() => setIsDiaryOpen(false)} />
       <KeyFacts isOpen={isKeyFactsOpen} onClose={() => setIsKeyFactsOpen(false)} />
-      <Registration isOpen={isRegistrationOpen} onClose={() => setIsRegistrationOpen(false)} />
+      <ZPPRegistration 
+        isOpen={isZPPRegistrationOpen} 
+        onClose={() => setIsZPPRegistrationOpen(false)}
+        onLoginClick={() => {
+          setIsZPPRegistrationOpen(false);
+          handleOpenLogin();
+        }}
+      />
     </div>
   );
 };

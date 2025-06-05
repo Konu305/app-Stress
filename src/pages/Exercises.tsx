@@ -26,8 +26,8 @@ const Exercises = () => {
       subtitle: 'Woche 1',
       description: 'Grundlagen & persönliche Analyse',
       duration: '45 min',
-      color: 'bg-blue-100',
-      textColor: 'text-blue-900',
+      color: 'bg-card',
+      textColor: 'text-text',
       progress: 0
     },
     {
@@ -35,8 +35,8 @@ const Exercises = () => {
       subtitle: 'Woche 2',
       description: 'Gedanken und Stressreaktionen erkennen',
       duration: '50 min',
-      color: 'bg-purple-100',
-      textColor: 'text-purple-900',
+      color: 'bg-primary/30',
+      textColor: 'text-text',
       progress: 0
     },
     {
@@ -44,8 +44,8 @@ const Exercises = () => {
       subtitle: 'Woche 3',
       description: 'Kognitive Verzerrungen bei Stress',
       duration: '40 min',
-      color: 'bg-green-100',
-      textColor: 'text-green-900',
+      color: 'bg-primary/40',
+      textColor: 'text-text',
       progress: 0
     },
     {
@@ -478,15 +478,15 @@ const Exercises = () => {
   };
 
   const renderStressFactors = () => (
-    <div className="fixed inset-0 bg-white z-50">
+    <div className="fixed inset-0 bg-background z-50">
       <div className="relative h-screen flex flex-col">
         <div className="p-6 flex justify-between items-start border-b">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setShowStressFactors(false)}
-              className="p-2 hover:bg-gray-100 rounded-full"
+              className="p-2 hover:bg-accent rounded-full"
             >
-              <ChevronLeft className="w-6 h-6 text-gray-600" />
+              <ChevronLeft className="w-6 h-6 text-text" />
             </button>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Stressoren im Alltag</h1>
@@ -496,12 +496,12 @@ const Exercises = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto p-6">
-          <div className="bg-yellow-50 rounded-xl p-4 mb-6">
+          <div className="bg-card rounded-xl p-4 mb-6">
             <div className="flex items-start gap-3">
-              <div className="p-2 bg-yellow-100 rounded-lg">
-                <Lightbulb className="w-5 h-5 text-yellow-600" />
+              <div className="p-2 bg-accent rounded-lg">
+                <Lightbulb className="w-5 h-5 text-primary" />
               </div>
-              <p className="text-sm text-yellow-800">
+              <p className="text-sm text-text">
                 Nehmen Sie sich einen Moment Zeit, um über Ihre persönlichen Stressauslöser nachzudenken. 
                 Das Erkennen dieser Faktoren ist der erste Schritt zu einem besseren Stressmanagement.
               </p>
@@ -510,16 +510,16 @@ const Exercises = () => {
 
           <div className="space-y-6">
             {stressFactors.map((category, index) => (
-              <div key={index} className="bg-white rounded-xl border p-6">
+              <div key={index} className="bg-card rounded-xl border-none p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">{category.category}</h2>
                 <div className="space-y-4">
                   {category.factors.map((factor, factorIndex) => (
                     <div 
                       key={factorIndex}
-                      className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer"
+                      className="flex items-start gap-3 p-4 bg-accent rounded-xl hover:bg-card transition-colors cursor-pointer"
                     >
-                      <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-sm text-blue-600 font-medium">{factorIndex + 1}</span>
+                      <div className="w-6 h-6 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-sm text-primary font-medium">{factorIndex + 1}</span>
                       </div>
                       <div>
                         <p className="text-gray-900">{factor}</p>
@@ -537,7 +537,7 @@ const Exercises = () => {
           </div>
 
           <div className="mt-8">
-            <button className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
+            <button className="w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors">
               Speichern
             </button>
           </div>
@@ -547,7 +547,7 @@ const Exercises = () => {
   );
 
   const renderBreathingExercise = () => (
-    <div className="fixed inset-0 bg-white z-50">
+    <div className="fixed inset-0 bg-background z-50">
       {currentSlide < introSlides.length ? (
         <div className="relative h-screen">
           <div 
@@ -556,7 +556,7 @@ const Exercises = () => {
               backgroundImage: `url(${introSlides[currentSlide].image})`
             }}
           >
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-black/30" />
           </div>
 
           <div className="relative h-full flex flex-col">
@@ -566,9 +566,9 @@ const Exercises = () => {
                   setCurrentSlide(0);
                   setShowBreathingExercise(false);
                 }}
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md"
+                className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-md"
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="w-6 h-6 text-primary" />
               </button>
             </div>
 
@@ -581,7 +581,7 @@ const Exercises = () => {
               </p>
               <button
                 onClick={() => setCurrentSlide(prev => prev + 1)}
-                className="w-full bg-white text-gray-900 py-4 rounded-xl font-semibold hover:bg-white/90 transition-colors animate-fade-in"
+                className="w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors animate-fade-in"
               >
                 Weiter
               </button>
@@ -592,7 +592,7 @@ const Exercises = () => {
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentSlide ? 'bg-white' : 'bg-white/40'
+                    index === currentSlide ? 'bg-primary' : 'bg-primary/30'
                   }`}
                 />
               ))}
@@ -617,12 +617,12 @@ const Exercises = () => {
                   setCurrentSlide(0);
                   setShowBreathingExercise(false);
                 }}
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md"
+                className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-md"
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="w-6 h-6 text-primary" />
               </button>
-              <button className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md">
-                <MoreVertical className="w-6 h-6 text-white" />
+              <button className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-md">
+                <MoreVertical className="w-6 h-6 text-primary" />
               </button>
             </div>
 
@@ -631,18 +631,18 @@ const Exercises = () => {
               <p className="text-white/90 text-lg mb-8">
                 Finden Sie innere Ruhe durch bewusstes Atmen
               </p>
-              <div className="w-32 h-32 rounded-full border-4 border-white/30 flex items-center justify-center mb-8">
-                <Play className="w-12 h-12 text-white" />
+              <div className="w-32 h-32 rounded-full border-4 border-primary/30 flex items-center justify-center mb-8">
+                <Play className="w-12 h-12 text-primary" />
               </div>
-              <p className="text-white/80">10 Minuten • Anfänger</p>
+              <p className="text-text/80">10 Minuten • Anfänger</p>
             </div>
 
-            <div className="bg-white rounded-t-3xl p-6">
+            <div className="bg-card rounded-t-3xl p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Übungsablauf</h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <span className="text-blue-600 font-medium">1</span>
+                  <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0">
+                    <span className="text-primary font-medium">1</span>
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">Einatmen</h3>
@@ -650,8 +650,8 @@ const Exercises = () => {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <span className="text-blue-600 font-medium">2</span>
+                  <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0">
+                    <span className="text-primary font-medium">2</span>
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">Halten</h3>
@@ -659,8 +659,8 @@ const Exercises = () => {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <span className="text-blue-600 font-medium">3</span>
+                  <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0">
+                    <span className="text-primary font-medium">3</span>
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">Ausatmen</h3>
@@ -680,9 +680,9 @@ const Exercises = () => {
       <div className="flex-1 relative flex items-center justify-center">
         <button 
           onClick={handleVideoClose}
-          className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors"
+          className="absolute top-4 right-4 z-10 bg-primary/20 hover:bg-primary/30 rounded-full p-2 transition-colors"
         >
-          <X className="w-6 h-6 text-white" />
+          <X className="w-6 h-6 text-primary" />
         </button>
 
         <div className="absolute inset-0">
@@ -694,15 +694,15 @@ const Exercises = () => {
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
             <button 
               onClick={handleVideoStart}
-              className="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center transform hover:scale-105 transition-all duration-300"
+              className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center transform hover:scale-105 transition-all duration-300"
             >
-              <Play className="w-8 h-8 text-gray-900" />
+              <Play className="w-8 h-8 text-primary" />
             </button>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-t-3xl p-6 max-h-[40vh] overflow-y-auto z-10">
+      <div className="bg-card rounded-t-3xl p-6 max-h-[40vh] overflow-y-auto z-10">
         <h3 className="text-xl font-bold text-gray-900 mb-4">Wichtige Erkenntnisse</h3>
         <div className="space-y-3">
           {visibleKeyFacts.map((fact, index) => (
@@ -710,10 +710,10 @@ const Exercises = () => {
               key={index}
               className="flex items-start gap-3 animate-fade-in"
             >
-              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-sm text-blue-600 font-medium">{index + 1}</span>
+              <div className="w-6 h-6 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-sm text-primary font-medium">{index + 1}</span>
               </div>
-              <p className="text-gray-700">{fact}</p>
+              <p className="text-text">{fact}</p>
             </div>
           ))}
         </div>
@@ -722,7 +722,7 @@ const Exercises = () => {
   );
 
   const renderModuleContent = () => (
-    <div className="fixed inset-0 bg-white z-40 overflow-y-auto">
+    <div className="fixed inset-0 bg-background z-40 overflow-y-auto">
       <div className="min-h-screen">
         <div 
           className="relative h-96 bg-cover bg-center cursor-pointer"
@@ -734,9 +734,9 @@ const Exercises = () => {
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
             <button 
               onClick={handleVideoStart}
-              className="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center transform hover:scale-105 transition-all duration-300"
+              className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center transform hover:scale-105 transition-all duration-300"
             >
-              <Play className="w-8 h-8 text-gray-900" />
+              <Play className="w-8 h-8 text-primary" />
             </button>
           </div>
           
@@ -745,55 +745,55 @@ const Exercises = () => {
               e.stopPropagation();
               handleBackClick();
             }}
-            className="absolute top-4 left-4 w-12 h-12 bg-white rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-200 transition-colors shadow-lg z-50"
+            className="absolute top-4 left-4 w-12 h-12 bg-accent rounded-full flex items-center justify-center cursor-pointer hover:bg-card active:bg-muted transition-colors shadow-lg z-50"
           >
-            <ChevronLeft className="w-8 h-8 text-gray-900" />
+            <ChevronLeft className="w-8 h-8 text-primary" />
           </div>
           
           <button 
             onClick={(e)=> e.stopPropagation()}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center"
+            className="absolute top-4 right-4 w-10 h-10 bg-accent rounded-full flex items-center justify-center"
           >
-            <Menu className="w-6 h-6 text-gray-900" />
+            <Menu className="w-6 h-6 text-primary" />
           </button>
           
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-6 z-10">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <div className="absolute bottom-0 left-0 right-0 bg-card rounded-t-3xl p-6 z-10">
+            <h1 className="text-3xl font-bold text-text mb-2">
               {currentExercise?.title}
             </h1>
-            <p className="text-gray-600 mb-2">{currentExercise?.description}</p>
+            <p className="text-text/80 mb-2">{currentExercise?.description}</p>
             <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-gray-600" />
-              <span className="text-gray-600">{currentExercise?.duration}</span>
+              <Clock className="w-5 h-5 text-primary" />
+              <span className="text-text/80">{currentExercise?.duration}</span>
             </div>
           </div>
         </div>
 
         <div className="px-4 py-8">
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Theorie</h2>
+            <h2 className="text-2xl font-bold text-text mb-4">Theorie</h2>
             <div className="space-y-4">
               {moduleContent.theorie.map((item, index) => {
                 const Icon = getIcon(item.type);
                 return (
-                  <div key={index} className="bg-gray-100 rounded-2xl p-4">
+                  <div key={index} className="bg-accent rounded-2xl p-4">
                     <div className="flex items-start gap-4">
-                      <div className="bg-white p-3 rounded-xl">
-                        <Icon className="w-6 h-6 text-gray-900" />
+                      <div className="bg-card p-3 rounded-xl">
+                        <Icon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900">{item.title}</h3>
-                        <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                        <h3 className="font-semibold text-text">{item.title}</h3>
+                        <p className="text-sm text-text/80 mb-2">{item.description}</p>
                         <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-600" />
-                          <span className="text-sm text-gray-600">{item.duration}</span>
+                          <Clock className="w-4 h-4 text-primary" />
+                          <span className="text-sm text-text/80">{item.duration}</span>
                         </div>
                       </div>
                       <button 
-                        className="bg-white p-2 rounded-full"
+                        className="bg-background p-2 rounded-full"
                         onClick={item.onClick}
                       >
-                        <Play className="w-5 h-5 text-gray-900" />
+                        <Play className="w-5 h-5 text-primary" />
                       </button>
                     </div>
                   </div>
@@ -803,29 +803,29 @@ const Exercises = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Praxis</h2>
+            <h2 className="text-2xl font-bold text-text mb-4">Praxis</h2>
             <div className="space-y-4">
               {moduleContent.praxis.map((item, index) => {
                 const Icon = getIcon(item.type);
                 return (
-                  <div key={index} className="bg-blue-50 rounded-2xl p-4">
+                  <div key={index} className="bg-accent rounded-2xl p-4">
                     <div className="flex items-start gap-4">
-                      <div className="bg-white p-3 rounded-xl">
-                        <Icon className="w-6 h-6 text-blue-600" />
+                      <div className="bg-card p-3 rounded-xl">
+                        <Icon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900">{item.title}</h3>
-                        <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                        <h3 className="font-semibold text-text">{item.title}</h3>
+                        <p className="text-sm text-text/80 mb-2">{item.description}</p>
                         <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-600" />
-                          <span className="text-sm text-gray-600">{item.duration}</span>
+                          <Clock className="w-4 h-4 text-primary" />
+                          <span className="text-sm text-text/80">{item.duration}</span>
                         </div>
                       </div>
                       <button 
-                        className="bg-white p-2 rounded-full"
+                        className="bg-background p-2 rounded-full"
                         onClick={item.onClick}
                       >
-                        <Play className="w-5 h-5 text-blue-600" />
+                        <Play className="w-5 h-5 text-primary" />
                       </button>
                     </div>
                   </div>
@@ -835,26 +835,26 @@ const Exercises = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Reflexion</h2>
+            <h2 className="text-2xl font-bold text-text mb-4">Reflexion</h2>
             <div className="space-y-4">
               {moduleContent.reflexion.map((item, index) => {
                 const Icon = getIcon(item.type);
                 return (
-                  <div key={index} className="bg-green-50 rounded-2xl p-4">
+                  <div key={index} className="bg-accent rounded-2xl p-4">
                     <div className="flex items-start gap-4">
-                      <div className="bg-white p-3 rounded-xl">
-                        <Icon className="w-6 h-6 text-green-600" />
+                      <div className="bg-card p-3 rounded-xl">
+                        <Icon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900">{item.title}</h3>
-                        <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                        <h3 className="font-semibold text-text">{item.title}</h3>
+                        <p className="text-sm text-text/80 mb-2">{item.description}</p>
                         <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-600" />
-                          <span className="text-sm text-gray-600">{item.duration}</span>
+                          <Clock className="w-4 h-4 text-primary" />
+                          <span className="text-sm text-text/80">{item.duration}</span>
                         </div>
                       </div>
-                      <button className="bg-white p-2 rounded-full">
-                        <Play className="w-5 h-5 text-green-600" />
+                      <button className="bg-background p-2 rounded-full">
+                        <Play className="w-5 h-5 text-primary" />
                       </button>
                     </div>
                   </div>
@@ -868,7 +868,7 @@ const Exercises = () => {
   );
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-6 pb-24">
+    <div className="max-w-md mx-auto px-4 pt-6 pb-24 bg-background min-h-screen">
       {!showModuleContent && (
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-gray-900">Übungen</h1>

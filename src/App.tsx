@@ -10,6 +10,8 @@ import Privacy from './pages/Privacy';
 import Notifications from './pages/Notifications';
 import Help from './pages/Help';
 import Settings from './pages/Settings';
+import DiaryPage from './pages/DiaryPage';
+import DiaryOverview from './pages/DiaryOverview';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/help" element={<Help />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/diary" element={<DiaryPage />} />
+            <Route path="/diary-overview" element={<DiaryOverview />} />
           </Routes>
         </main>
         <Navbar 
