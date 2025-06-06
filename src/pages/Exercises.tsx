@@ -957,8 +957,8 @@ const Exercises = () => {
         <div className="px-4 py-8">
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-[#23412C] mb-6 flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#E86F3A] rounded-full flex items-center justify-center">
-                <Book className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 bg-[#F2C75B] rounded-full flex items-center justify-center">
+                <Book className="w-4 h-4 text-[#23412C]" />
               </div>
               Theorie
             </h2>
@@ -1005,8 +1005,8 @@ const Exercises = () => {
                 return (
                   <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-md border border-[#F6D98A] hover:shadow-lg transition-all">
                     <div className="flex items-start gap-4">
-                      <div className="bg-[#F6D98A] p-3 rounded-xl shadow-sm">
-                        <Icon className="w-6 h-6 text-[#23412C]" />
+                      <div className="bg-[#4D5922] p-3 rounded-xl shadow-sm">
+                        <Icon className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex-1">
                         <h3 className="font-semibold text-[#23412C] text-lg mb-1">{item.title}</h3>
@@ -1017,7 +1017,7 @@ const Exercises = () => {
                         </div>
                       </div>
                       <button 
-                        className="bg-[#4D5922] hover:bg-[#3A4219] p-3 rounded-full transition-colors shadow-md"
+                        className="bg-[#E86F3A] hover:bg-[#D85A2A] p-3 rounded-full transition-colors shadow-md"
                         onClick={item.onClick}
                       >
                         <Play className="w-5 h-5 text-white" />
@@ -1031,8 +1031,8 @@ const Exercises = () => {
 
           <section>
             <h2 className="text-2xl font-bold text-[#23412C] mb-6 flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#F2C75B] rounded-full flex items-center justify-center">
-                <Lightbulb className="w-4 h-4 text-[#23412C]" />
+              <div className="w-8 h-8 bg-[#E86F3A] rounded-full flex items-center justify-center">
+                <Lightbulb className="w-4 h-4 text-white" />
               </div>
               Reflexion
             </h2>
@@ -1053,8 +1053,8 @@ const Exercises = () => {
                           <span className="text-sm text-[#23412C]/70 font-medium">{item.duration}</span>
                         </div>
                       </div>
-                      <button className="bg-[#F2C75B] hover:bg-[#E6B84F] p-3 rounded-full transition-colors shadow-md">
-                        <Play className="w-5 h-5 text-[#23412C]" />
+                      <button className="bg-[#E86F3A] hover:bg-[#D85A2A] p-3 rounded-full transition-colors shadow-md">
+                        <Play className="w-5 h-5 text-white" />
                       </button>
                     </div>
                   </div>
