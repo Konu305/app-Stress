@@ -75,8 +75,8 @@ const stressLevels: StressAssessment[] = [
     level: 6,
     category: 'Erhöhter Stress',
     symptoms: ['Nervosität', 'Gedankenkreisen', 'Körperliche Anspannung', 'Unruhiger Schlaf'],
-    recommendations: ['Bewusste Entspannungspausen', 'Atemtechniken anwenden', 'Tagesstruktur überprüfen', 'Ausgleichsaktivitäten'],
-    explanation: 'Ein anspruchsvoller Tag mit erhöhtem Stresslevel. Das ist völlig normal bei besonderen Herausforderungen. Achten Sie darauf, dass sich dieser Zustand nicht über mehrere Tage hinzieht.',
+    recommendations: ['Bewusste Entspannungspausen einbauen', 'Atemtechniken regelmäßig anwenden', 'Tagesstruktur überprüfen und anpassen', 'Ausgleichsaktivitäten verstärken'],
+    explanation: 'Ein anspruchsvoller Tag mit erhöhtem Stresslevel. Das ist völlig normal bei besonderen Herausforderungen oder wichtigen Terminen. Ihr Körper zeigt, dass er aktiviert ist - nutzen Sie bewusst Entspannungstechniken.',
     color: '#F97316',
     bgColor: 'bg-orange-100'
   },
@@ -84,8 +84,8 @@ const stressLevels: StressAssessment[] = [
     level: 7,
     category: 'Deutlicher Stress',
     symptoms: ['Starke Anspannung', 'Müdigkeit', 'Emotionale Schwankungen', 'Verspannungen'],
-    recommendations: ['Längere Entspannungsphasen', 'Bewegung an der frischen Luft', 'Prioritäten neu setzen', 'Mit anderen sprechen'],
-    explanation: 'Sie erleben einen deutlich stressigen Tag. Das kann bei wichtigen Terminen, Deadlines oder persönlichen Herausforderungen vorkommen. Wichtig ist, dass Sie sich heute Abend bewusst entspannen.',
+    recommendations: ['Längere Entspannungsphasen einplanen', 'Bewegung an der frischen Luft', 'Prioritäten neu bewerten', 'Mit vertrauten Personen sprechen'],
+    explanation: 'Sie erleben einen deutlich stressigen Tag. Das kommt bei wichtigen Ereignissen, Deadlines oder besonderen Herausforderungen vor. Gönnen Sie sich heute bewusst Erholung und Entspannung.',
     color: '#EF4444',
     bgColor: 'bg-red-100'
   },
@@ -93,8 +93,8 @@ const stressLevels: StressAssessment[] = [
     level: 8,
     category: 'Hoher Stress',
     symptoms: ['Starke innere Unruhe', 'Konzentrationsprobleme', 'Körperliche Verspannungen', 'Schlafprobleme'],
-    recommendations: ['Sofortige Entspannung einplanen', 'Aufgaben delegieren oder verschieben', 'Ruhige Umgebung aufsuchen', 'Atemübungen durchführen'],
-    explanation: 'Ein sehr herausfordernder Tag mit hohem Stresslevel. Bei akuten Belastungen (Prüfungen, Präsentationen, Konflikte) ist das normal. Planen Sie bewusst Erholungszeit und achten Sie darauf, dass dies nicht zum Dauerzustand wird.',
+    recommendations: ['Sofortige Entspannung priorisieren', 'Aufgaben wenn möglich delegieren', 'Ruhige Umgebung schaffen', 'Bewährte Entspannungstechniken anwenden'],
+    explanation: 'Ein sehr herausfordernder Tag mit hohem Stresslevel. Bei akuten Belastungen wie Prüfungen, wichtigen Präsentationen oder Konflikten ist das eine normale Reaktion. Planen Sie bewusst Erholungszeit für heute Abend.',
     color: '#EF4444',
     bgColor: 'bg-red-100'
   },
@@ -102,8 +102,8 @@ const stressLevels: StressAssessment[] = [
     level: 9,
     category: 'Sehr hoher Stress',
     symptoms: ['Überforderungsgefühl', 'Starke körperliche Reaktionen', 'Emotionale Belastung', 'Erschöpfung'],
-    recommendations: ['Sofortige Entlastung suchen', 'Alle nicht-essentiellen Aufgaben stoppen', 'Unterstützung aktivieren', 'Professionelle Hilfe erwägen'],
-    explanation: 'Ein extrem belastender Tag. Solche Spitzen können bei Krisen, wichtigen Ereignissen oder akuten Problemen auftreten. Wenn dieser Zustand länger als 2-3 Tage anhält, sollten Sie aktiv Hilfe suchen.',
+    recommendations: ['Sofortige Entlastung organisieren', 'Nicht-dringende Aufgaben verschieben', 'Unterstützung im persönlichen Umfeld aktivieren', 'Bewusste Auszeiten nehmen'],
+    explanation: 'Ein extrem belastender Tag oder eine sehr herausfordernde Phase. Solche Spitzen können bei Lebenskrisen, wichtigen Ereignissen oder mehreren gleichzeitigen Belastungen auftreten. Falls dieser Zustand länger als eine Woche anhält, suchen Sie aktiv Unterstützung.',
     color: '#DC2626',
     bgColor: 'bg-red-200'
   },
@@ -111,8 +111,8 @@ const stressLevels: StressAssessment[] = [
     level: 10,
     category: 'Extremer Stress',
     symptoms: ['Akute Überlastung', 'Starke körperliche Symptome', 'Gefühl der Hilflosigkeit', 'Komplette Erschöpfung'],
-    recommendations: ['Alle Aktivitäten unterbrechen', 'Notfallkontakte aktivieren', 'Professionelle Beratung suchen', 'Medizinischen Rat einholen'],
-    explanation: 'Sie durchleben gerade eine akute Stresssituation oder Krise. Das kann bei schwerwiegenden Lebensereignissen auftreten. Wichtig: Holen Sie sich Hilfe von Familie, Freunden oder Fachpersonal. Niemand muss das alleine bewältigen.',
+    recommendations: ['Alle nicht-essentiellen Aktivitäten pausieren', 'Vertraute Personen um Hilfe bitten', 'Professionelle Beratung in Anspruch nehmen', 'Bei anhaltenden Symptomen ärztlichen Rat einholen'],
+    explanation: 'Sie durchleben gerade eine akute Stresssituation oder schwere Lebenskrise. Das kann bei schwerwiegenden Ereignissen wie Trauerfällen, Jobverlust oder gesundheitlichen Problemen auftreten. Holen Sie sich Unterstützung - niemand muss solche Phasen alleine bewältigen.',
     color: '#DC2626',
     bgColor: 'bg-red-200'
   }
