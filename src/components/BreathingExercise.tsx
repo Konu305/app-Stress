@@ -595,8 +595,8 @@ const BreathingExercise: React.FC<BreathingExerciseProps> = ({ isOpen, onClose }
   // Exercise Screen
   if (currentScreen === 'exercise') {
     return (
-      <div className="fixed inset-0 bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 z-50 flex flex-col">
-        <div className="p-6 flex items-center justify-between">
+      <div className="fixed inset-0 bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B] z-50 flex flex-col overflow-y-auto">
+        <div className="p-6 flex items-center justify-between flex-shrink-0">
           <button
             onClick={resetExercise}
             className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
@@ -616,7 +616,7 @@ const BreathingExercise: React.FC<BreathingExerciseProps> = ({ isOpen, onClose }
         </div>
 
         {/* Progress Bar */}
-        <div className="px-6 mb-4">
+        <div className="px-6 mb-4 flex-shrink-0">
           <div className="w-full h-2 bg-white/30 rounded-full overflow-hidden">
             <div 
               className="h-full bg-[#E86F3A] rounded-full transition-all duration-1000"
@@ -625,9 +625,9 @@ const BreathingExercise: React.FC<BreathingExerciseProps> = ({ isOpen, onClose }
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center p-6">
+        <div className="flex-1 flex flex-col items-center justify-center p-6 min-h-0">
           {/* Breathing Circle */}
-          <div className="relative mb-8">
+          <div className="relative mb-8 flex-shrink-0">
             <div 
               className="w-72 h-72 rounded-full border-4 border-white/30 flex items-center justify-center transition-all duration-1000 ease-in-out shadow-2xl"
               style={{
@@ -662,12 +662,12 @@ const BreathingExercise: React.FC<BreathingExerciseProps> = ({ isOpen, onClose }
           </div>
 
           {/* Phase instruction */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-[#F6D98A] shadow-lg max-w-sm mx-auto text-center">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-[#F6D98A] shadow-lg max-w-sm mx-auto text-center flex-shrink-0">
             <p className="text-[#23412C] font-medium text-lg">{getPhaseInstruction()}</p>
           </div>
 
           {/* Stats */}
-          <div className="flex gap-4 mb-8">
+          <div className="flex gap-4 mb-8 flex-shrink-0">
             <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 text-center border border-[#F6D98A] shadow-md">
               <div className="text-2xl font-bold text-[#23412C]">{cycleCount}</div>
               <div className="text-xs text-[#23412C]/60">Zyklen</div>
@@ -683,7 +683,7 @@ const BreathingExercise: React.FC<BreathingExerciseProps> = ({ isOpen, onClose }
           </div>
 
           {/* Controls */}
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center flex-shrink-0">
             <button
               onClick={isActive ? pauseExercise : () => setIsActive(true)}
               className="w-16 h-16 bg-[#E86F3A] text-white rounded-full flex items-center justify-center hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A]"
@@ -789,8 +789,8 @@ const BreathingExercise: React.FC<BreathingExerciseProps> = ({ isOpen, onClose }
   // Settings Modal
   if (showSettings) {
     return (
-      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
-        <div className="p-6 flex items-center justify-between">
+      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col overflow-y-auto">
+        <div className="p-6 flex items-center justify-between flex-shrink-0">
           <button
             onClick={() => setShowSettings(false)}
             className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
@@ -801,7 +801,7 @@ const BreathingExercise: React.FC<BreathingExerciseProps> = ({ isOpen, onClose }
           <div className="w-12" />
         </div>
 
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-6 overflow-y-auto">
           <div className="space-y-6">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
               <h3 className="text-lg font-semibold text-[#23412C] mb-4">Audio</h3>
