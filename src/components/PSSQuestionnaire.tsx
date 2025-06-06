@@ -54,11 +54,11 @@ const questions: Question[] = [
 ];
 
 const options = [
-  { value: 0, label: "Nie", emoji: "😌" },
-  { value: 1, label: "Fast nie", emoji: "🙂" },
-  { value: 2, label: "Manchmal", emoji: "😐" },
-  { value: 3, label: "Häufig", emoji: "😟" },
-  { value: 4, label: "Sehr oft", emoji: "😰" }
+  { value: 0, label: "Nie" },
+  { value: 1, label: "Fast nie" },
+  { value: 2, label: "Manchmal" },
+  { value: 3, label: "Häufig" },
+  { value: 4, label: "Sehr oft" }
 ];
 
 interface PSSQuestionnaireProps {
@@ -126,18 +126,18 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
 
   if (showCongratulations) {
     return (
-      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
-        <div className="flex-1 p-6 flex flex-col items-center justify-center text-center">
-          <div className="w-24 h-24 bg-[#4D5922] rounded-full flex items-center justify-center mb-6 shadow-lg">
+      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col overflow-y-auto">
+        <div className="flex-1 p-6 flex flex-col items-center justify-center text-center min-h-0">
+          <div className="w-24 h-24 bg-[#4D5922] rounded-full flex items-center justify-center mb-6 shadow-lg flex-shrink-0">
             <CheckCircle className="w-12 h-12 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-[#23412C] mb-4">Herzlichen Glückwunsch!</h2>
-          <p className="text-[#23412C]/80 mb-8 max-w-sm leading-relaxed">
+          <h2 className="text-3xl font-bold text-[#23412C] mb-4 flex-shrink-0">Herzlichen Glückwunsch!</h2>
+          <p className="text-[#23412C]/80 mb-8 max-w-sm leading-relaxed flex-shrink-0">
             Sie haben alle Fragen erfolgreich beantwortet. Nun können wir mit dem ersten Modul beginnen.
           </p>
           <button
             onClick={onClose}
-            className="bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A]"
+            className="bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex-shrink-0"
           >
             Zum Modul 1
           </button>
@@ -148,18 +148,18 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
 
   if (showThankYou) {
     return (
-      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
-        <div className="flex-1 p-6 flex flex-col items-center justify-center text-center">
-          <div className="w-24 h-24 bg-[#F2C75B] rounded-full flex items-center justify-center mb-6 shadow-lg">
+      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col overflow-y-auto">
+        <div className="flex-1 p-6 flex flex-col items-center justify-center text-center min-h-0">
+          <div className="w-24 h-24 bg-[#F2C75B] rounded-full flex items-center justify-center mb-6 shadow-lg flex-shrink-0">
             <Brain className="w-12 h-12 text-[#23412C]" />
           </div>
-          <h2 className="text-3xl font-bold text-[#23412C] mb-4">Vielen Dank!</h2>
-          <p className="text-[#23412C]/80 mb-8 max-w-sm leading-relaxed">
+          <h2 className="text-3xl font-bold text-[#23412C] mb-4 flex-shrink-0">Vielen Dank!</h2>
+          <p className="text-[#23412C]/80 mb-8 max-w-sm leading-relaxed flex-shrink-0">
             Sie haben den PSS-10 Fragebogen erfolgreich abgeschlossen. Nun können wir mit dem Kurs beginnen.
           </p>
           <button
             onClick={() => setShowCongratulations(true)}
-            className="bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center gap-2"
+            className="bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center gap-2 flex-shrink-0"
           >
             <span>Weiter</span>
             <ArrowRight className="w-5 h-5" />
@@ -173,8 +173,8 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
     const { level, color, bgColor, description, recommendation } = getStressLevel(totalScore);
 
     return (
-      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
-        <div className="p-6 flex items-center justify-between">
+      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col overflow-y-auto">
+        <div className="p-6 flex items-center justify-between flex-shrink-0">
           <button
             onClick={onClose}
             className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
@@ -185,8 +185,8 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
           <div className="w-12" />
         </div>
 
-        <div className="flex-1 p-6 flex flex-col items-center justify-center">
-          <div className="w-56 h-56 rounded-full border-8 border-white/80 backdrop-blur-sm flex items-center justify-center mb-8 shadow-2xl bg-white/50">
+        <div className="flex-1 p-6 flex flex-col items-center justify-center min-h-0">
+          <div className="w-56 h-56 rounded-full border-8 border-white/80 backdrop-blur-sm flex items-center justify-center mb-8 shadow-2xl bg-white/50 flex-shrink-0">
             <div className="text-center">
               <p className="text-5xl font-bold mb-2 text-[#23412C]">{totalScore}</p>
               <p className={`text-2xl font-bold ${color}`}>{level}</p>
@@ -194,7 +194,7 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
             </div>
           </div>
 
-          <div className="text-center max-w-sm">
+          <div className="text-center max-w-sm flex-shrink-0">
             <h3 className="text-2xl font-bold text-[#23412C] mb-4">Ihr Stresslevel ist {level}</h3>
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-[#F6D98A] shadow-lg">
               <p className="text-[#23412C]/80 mb-4 leading-relaxed">
@@ -341,8 +341,8 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
-      <div className="p-6 flex items-center justify-between">
+    <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col overflow-y-auto">
+      <div className="p-6 flex items-center justify-between flex-shrink-0">
         <button
           onClick={onClose}
           className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
@@ -353,8 +353,8 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
         <div className="w-12" />
       </div>
 
-      <div className="flex-1 p-6 flex flex-col">
-        <div className="mb-8">
+      <div className="flex-1 p-6 flex flex-col min-h-0">
+        <div className="mb-8 flex-shrink-0">
           <div className="w-full bg-white/60 rounded-full h-3 shadow-inner border border-[#F6D98A]">
             <div
               className="bg-gradient-to-r from-[#E86F3A] to-[#F2C75B] h-3 rounded-full transition-all duration-500 shadow-sm"
@@ -366,15 +366,15 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col justify-between">
-          <div>
+        <div className="flex-1 flex flex-col justify-between min-h-0">
+          <div className="flex-1 overflow-y-auto">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-[#F6D98A] shadow-lg">
               <h3 className="text-xl font-semibold text-[#23412C] mb-4 leading-relaxed">
                 {questions[currentQuestion].text}
               </h3>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 pb-4">
               {options.map((option) => (
                 <button
                   key={option.value}
@@ -382,7 +382,6 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
                   className="w-full p-5 rounded-2xl border-2 border-white/60 bg-white/40 backdrop-blur-sm hover:border-[#E86F3A] hover:bg-white/60 transition-all duration-300 text-left shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                 >
                   <div className="flex items-center gap-4">
-                    <span className="text-2xl">{option.emoji}</span>
                     <span className="font-semibold text-[#23412C] text-lg">{option.label}</span>
                   </div>
                 </button>
@@ -390,7 +389,7 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
             </div>
           </div>
 
-          <div className="flex justify-between mt-8">
+          <div className="flex justify-between mt-8 flex-shrink-0">
             <button
               onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
               disabled={currentQuestion === 0}
