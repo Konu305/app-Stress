@@ -54,20 +54,20 @@ export const DiaryForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Mood Selection */}
-        <div className="bg-[#F2C75B] rounded-2xl p-4 border-2 border-[#F6D98A]">
-          <label className="block text-[#23412C] font-medium mb-3">
+        <div className="bg-[#F2C75B] rounded-2xl p-6 border-2 border-[#F6D98A]">
+          <label className="block text-[#23412C] font-medium mb-4 text-center">
             🎭 Wie fühlst du dich heute?
           </label>
-          <div className="flex gap-3 justify-center">
+          <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">
             {['😊', '😐', '😢', '😡', '😰', '🤔', '😴', '🤗'].map((emoji) => (
               <button
                 key={emoji}
                 type="button"
                 onClick={() => setMood(emoji)}
-                className={`text-3xl p-3 rounded-xl transition-all ${
+                className={`text-2xl p-3 rounded-xl transition-all aspect-square flex items-center justify-center ${
                   mood === emoji 
-                    ? 'bg-[#4D5922] shadow-lg scale-110' 
-                    : 'bg-[#F6D98A] hover:bg-[#F2C75B] hover:scale-105'
+                    ? 'bg-[#4D5922] shadow-lg scale-105 ring-2 ring-[#23412C]' 
+                    : 'bg-[#F6D98A] hover:bg-[#E6B84F] hover:scale-105'
                 }`}
               >
                 {emoji}

@@ -1,8 +1,8 @@
 export interface DiaryEntry {
   id: string;
   date: string;
-  mood: string;
-  text: string;
+  mood: string | number;
+  text?: string;
   // Detailed entry fields
   stressLevel?: number;
   situation?: string;
@@ -20,6 +20,7 @@ export interface DiaryEntry {
   whatWouldHelpOther?: string;
   wishBehavior?: string;
   practiceOpportunity?: string;
+  notes?: string;
 }
 
 export const SAMPLE_ENTRIES: DiaryEntry[] = [

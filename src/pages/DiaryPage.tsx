@@ -22,7 +22,7 @@ const DiaryPage: React.FC = () => {
   };
 
   if (selectedMode === 'menu') {
-    return (
+  return (
       <div className="max-w-md mx-auto px-4 pt-6 pb-24 bg-[#F6E3B6] min-h-screen">
         {/* Header with Back Button */}
         <div className="flex items-center mb-6">
@@ -32,7 +32,7 @@ const DiaryPage: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Zurück</span>
-          </button>
+        </button>
         </div>
 
         <h1 className="text-2xl font-bold text-center mb-8 text-[#23412C]">📖 Tagebuch</h1>
@@ -94,8 +94,8 @@ const DiaryPage: React.FC = () => {
               <p className="text-sm text-[#23412C]">Tage Streak</p>
             </div>
           </div>
-        </div>
-      </div>
+                    </div>
+                  </div>
     );
   }
 
@@ -103,14 +103,14 @@ const DiaryPage: React.FC = () => {
     <div className="max-w-md mx-auto px-4 pt-6 pb-24 bg-[#F6E3B6] min-h-screen">
       {/* Header with Back Button */}
       <div className="flex items-center mb-6">
-        <button
+                        <button
           onClick={handleBackToMenu}
           className="flex items-center space-x-2 text-[#23412C] hover:text-[#4D5922] transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="font-medium">Zurück</span>
-        </button>
-      </div>
+                        </button>
+                    </div>
 
       {selectedMode === 'audio' && (
         <div className="text-center">
@@ -120,24 +120,24 @@ const DiaryPage: React.FC = () => {
             <p className="text-[#23412C] mb-6">Audio-Funktion wird bald verfügbar sein!</p>
             <button className="bg-[#E86F3A] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#D85A2A] transition-colors">
               🎙️ Aufnahme starten
-            </button>
-          </div>
-        </div>
+                  </button>
+                    </div>
+                  </div>
       )}
 
       {selectedMode === 'text' && (
         <div>
           <h2 className="text-2xl font-bold text-[#23412C] mb-6">✍️ Text Tagebuch</h2>
           <DiaryForm />
-        </div>
-      )}
+          </div>
+        )}
 
       {selectedMode === 'detailed' && (
         <div>
           <h2 className="text-2xl font-bold text-[#23412C] mb-6">📋 Detaillierter Eintrag</h2>
           <DetailedDiaryForm />
-        </div>
-      )}
+          </div>
+        )}
     </div>
   );
 };

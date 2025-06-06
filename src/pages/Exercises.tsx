@@ -759,12 +759,12 @@ const Exercises = () => {
         {/* Header Controls */}
         <div className="absolute top-0 left-0 right-0 z-20 p-6 bg-gradient-to-b from-black/50 to-transparent">
           <div className="flex items-center justify-between">
-            <button 
+              <button
               onClick={handleVideoClose}
               className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
-            >
+              >
               <ChevronLeft className="w-6 h-6 text-[#23412C]" />
-            </button>
+              </button>
             
             <div className="text-center">
               <h2 className="text-xl font-bold text-white drop-shadow-lg">
@@ -772,12 +772,12 @@ const Exercises = () => {
               </h2>
               <p className="text-white/80 text-sm">Video 1 von 3</p>
             </div>
-            
+
             <button className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]">
               <MoreVertical className="w-6 h-6 text-[#23412C]" />
-            </button>
+              </button>
           </div>
-        </div>
+            </div>
 
         {/* Video Container */}
         <div className="absolute inset-0 m-6 mt-20 mb-32 rounded-3xl overflow-hidden shadow-2xl border-2 border-[#F6D98A]">
@@ -791,27 +791,27 @@ const Exercises = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
             {/* Play Button */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <button 
+              <button
                 onClick={handleVideoStart}
                 className="w-20 h-20 bg-[#E86F3A]/90 backdrop-blur-sm rounded-full flex items-center justify-center transform hover:scale-105 transition-all duration-300 shadow-xl border-2 border-white"
               >
                 <Play className="w-10 h-10 text-white ml-1" />
               </button>
             </div>
-            
+
             {/* Video Controls Bottom */}
             <div className="absolute bottom-0 left-0 right-0 p-6">
               {/* Progress Bar */}
               <div className="mb-4">
                 <div className="w-full h-2 bg-white/30 rounded-full overflow-hidden">
                   <div className="h-full bg-[#E86F3A] rounded-full transition-all duration-300" style={{ width: '35%' }} />
-                </div>
+              </div>
                 <div className="flex justify-between mt-2 text-white/90 text-sm">
                   <span>3:30</span>
                   <span>10:00</span>
                 </div>
-              </div>
-              
+            </div>
+
               {/* Control Buttons */}
               <div className="flex items-center justify-center gap-4">
                 <button className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
@@ -823,11 +823,11 @@ const Exercises = () => {
                 <button className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
                   <ChevronLeft className="w-6 h-6 text-white transform rotate-180" />
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                  </div>
+                  </div>
+                </div>
+                  </div>
+                  </div>
 
       {/* Key Facts & Navigation Section */}
       <div className="bg-white/95 backdrop-blur-sm rounded-t-3xl p-6 max-h-[45vh] overflow-y-auto z-10 m-4 mt-0 shadow-xl border-t-2 border-[#F6D98A]">
@@ -836,17 +836,17 @@ const Exercises = () => {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-[#E86F3A] rounded-full flex items-center justify-center">
               <Lightbulb className="w-5 h-5 text-white" />
-            </div>
+                </div>
             <h3 className="text-xl font-bold text-[#23412C]">Wichtige Erkenntnisse</h3>
-          </div>
+                  </div>
           
           {/* Progress Indicator */}
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-[#E86F3A] rounded-full" />
             <div className="w-2 h-2 bg-[#F6D98A] rounded-full" />
             <div className="w-2 h-2 bg-[#F6D98A] rounded-full" />
-          </div>
-        </div>
+                  </div>
+                </div>
         
         {/* Key Facts */}
         <div className="space-y-4 mb-6">
@@ -867,27 +867,27 @@ const Exercises = () => {
               >
                 <div className="w-8 h-8 rounded-full bg-[#E86F3A] flex items-center justify-center flex-shrink-0 mt-0.5 shadow-md">
                   <span className="text-sm text-white font-bold">{index + 1}</span>
-                </div>
+          </div>
                 <p className="text-[#23412C] leading-relaxed font-medium">{fact}</p>
-              </div>
-            ))
-          )}
         </div>
-        
+            ))
+      )}
+    </div>
+
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <button 
-            onClick={handleVideoClose}
+        <button 
+          onClick={handleVideoClose}
             className="flex-1 bg-[#F6D98A] hover:bg-[#F0D384] text-[#23412C] py-4 rounded-2xl font-semibold transition-colors border border-[#F6D98A] shadow-md"
-          >
+        >
             Zurück zur Übersicht
-          </button>
+        </button>
           <button className="flex-1 bg-[#E86F3A] hover:bg-[#D85A2A] text-white py-4 rounded-2xl font-semibold transition-colors shadow-md flex items-center justify-center gap-2">
             <span>Weiter</span>
             <ChevronLeft className="w-5 h-5 transform rotate-180" />
-          </button>
-        </div>
-        
+            </button>
+      </div>
+
         {/* Tip Section */}
         {visibleKeyFacts.length > 0 && (
           <div className="mt-6 p-4 bg-[#4D5922] rounded-2xl">
@@ -900,7 +900,7 @@ const Exercises = () => {
             <p className="text-white/90 text-sm leading-relaxed">
               Notieren Sie sich die wichtigsten Punkte in Ihrem Stresstagebuch, um sie später zu reflektieren.
             </p>
-          </div>
+        </div>
         )}
       </div>
     </div>
@@ -1121,15 +1121,15 @@ const Exercises = () => {
                 {module.description}
               </p>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                   <Clock className={`w-4 h-4 ${module.textColor} opacity-75`} />
                   <span className={`${module.textColor} opacity-75 text-sm font-medium`}>
-                    {module.duration}
-                  </span>
-                </div>
+                  {module.duration}
+                </span>
+              </div>
                 <button className={`bg-white/90 backdrop-blur-sm rounded-full p-3 ${module.textColor === 'text-white' ? 'text-[#23412C]' : module.textColor} hover:bg-white transition-colors shadow-md border border-[#F6D98A]`}>
                   <Play className="w-5 h-5" />
-                </button>
+              </button>
               </div>
             </div>
           ))}

@@ -5,7 +5,7 @@ interface DiaryEntry {
   id: string;
   date: string;
   stressLevel: number;
-  mood: number;
+  mood: string | number;
   energyLevel: number;
   location: string;
   timeOfDay: string;
@@ -71,6 +71,8 @@ export default function Diary({ isOpen, onClose }: DiaryProps) {
   const [showVoiceModal, setShowVoiceModal] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [voiceTranscript, setVoiceTranscript] = useState('');
+  const [currentMood, setCurrentMood] = useState('');
+  const [spellCheckEnabled, setSpellCheckEnabled] = useState(true);
   const [newEntry, setNewEntry] = useState<Partial<DiaryEntry>>({
     notes: ''
   });
@@ -78,6 +80,15 @@ export default function Diary({ isOpen, onClose }: DiaryProps) {
   const [showTextModal, setShowTextModal] = useState(false);
   const [textDiary, setTextDiary] = useState('');
   const recognitionRef = useRef<any>(null);
+
+  const moods = [
+    { emoji: '😊', label: 'Gut' },
+    { emoji: '😐', label: 'Neutral' },
+    { emoji: '😔', label: 'Traurig' },
+    { emoji: '😠', label: 'Gestresst' },
+    { emoji: '😰', label: 'Ängstlich' },
+    { emoji: '😴', label: 'Müde' }
+  ];
 
   if (!isOpen) return null;
 
@@ -87,14 +98,31 @@ export default function Diary({ isOpen, onClose }: DiaryProps) {
       alert('Spracherkennung wird von deinem Browser nicht unterstützt.');
       return;
     }
+
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
+    
     recognition.lang = 'de-DE';
     recognition.continuous = true;
     recognition.interimResults = true;
+    
+    recognition.onstart = () => {
+      setIsRecording(true);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error('Fehler bei der Spracherkennung:', event.error);
+      setIsRecording(false);
+    };
+
+    recognition.onend = () => {
+      setIsRecording(false);
+    };
+
     recognition.onresult = (event: any) => {
       let interim = '';
       let final = '';
+      
       for (let i = 0; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
           final += event.results[i][0].transcript;
@@ -102,13 +130,14 @@ export default function Diary({ isOpen, onClose }: DiaryProps) {
           interim += event.results[i][0].transcript;
         }
       }
+      
       setVoiceTranscript(final + interim);
     };
-    recognition.onend = () => setIsRecording(false);
+
     recognitionRef.current = recognition;
     recognition.start();
-    setIsRecording(true);
   };
+
   const stopRecording = () => {
     if (recognitionRef.current) {
       recognitionRef.current.stop();
@@ -116,12 +145,18 @@ export default function Diary({ isOpen, onClose }: DiaryProps) {
     }
     setIsRecording(false);
   };
+
   const saveVoiceEntry = () => {
+    if (!currentMood) {
+      alert('Bitte wählen Sie zuerst Ihre aktuelle Stimmung aus.');
+      return;
+    }
+
     const entry: DiaryEntry = {
       id: Date.now().toString(),
       date: new Date().toISOString(),
       stressLevel: 5,
-      mood: 50,
+      mood: currentMood,
       energyLevel: 50,
       location: '',
       timeOfDay: '',
@@ -135,9 +170,11 @@ export default function Diary({ isOpen, onClose }: DiaryProps) {
       gratitude: '',
       notes: voiceTranscript
     };
+
     setEntries(prev => [entry, ...prev]);
     setShowVoiceModal(false);
     setVoiceTranscript('');
+    setCurrentMood('');
   };
 
   const handleSaveEntry = () => {
@@ -260,37 +297,85 @@ export default function Diary({ isOpen, onClose }: DiaryProps) {
         {showVoiceModal && (
           <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
             <div className="bg-background rounded-2xl w-full max-w-md p-6 relative max-h-[80vh] overflow-y-auto">
-              <button onClick={() => { setShowVoiceModal(false); setIsRecording(false); setVoiceTranscript(''); }} className="absolute top-4 right-4 p-2 rounded-full hover:bg-accent">
+              <button 
+                onClick={() => { 
+                  setShowVoiceModal(false); 
+                  setIsRecording(false); 
+                  setVoiceTranscript(''); 
+                  setCurrentMood('');
+                }} 
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-accent"
+              >
                 <X className="w-6 h-6 text-text" />
               </button>
-              <h3 className="text-xl font-bold mb-4 text-text">Sprachaufnahme</h3>
-              <div className="mb-4">
-                <button
-                  onClick={isRecording ? stopRecording : startRecording}
-                  className={`w-full py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-all mb-4 ${isRecording ? 'bg-red-500 text-white' : 'bg-primary text-white hover:bg-primary/90'}`}
-                >
-                  {isRecording ? 'Stopp' : 'Aufnahme starten'}
-                </button>
-                <div className="bg-muted/30 rounded-xl p-4 min-h-[80px] text-text">
-                  {voiceTranscript ? voiceTranscript : 'Sprich jetzt, um Text zu transkribieren...'}
+              
+              <h3 className="text-xl font-bold mb-6 text-text">Sprachaufnahme</h3>
+              
+              {/* Mood Selection */}
+              <div className="mb-6">
+                <h4 className="font-medium text-text mb-3 text-center">Wie fühlen Sie sich heute?</h4>
+                <div className="grid grid-cols-3 gap-3 max-w-xs mx-auto">
+                  {moods.map((mood) => (
+                    <button
+                      key={mood.label}
+                      onClick={() => setCurrentMood(mood.label)}
+                      className={`p-3 rounded-xl flex flex-col items-center gap-2 transition-all aspect-square ${
+                        currentMood === mood.label 
+                          ? 'bg-primary text-white ring-2 ring-primary/50' 
+                          : 'bg-accent hover:bg-accent/80'
+                      }`}
+                    >
+                      <span className="text-xl">{mood.emoji}</span>
+                      <span className="text-xs font-medium text-center leading-tight">{mood.label}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
-              <div className="flex gap-2 mt-4">
+
+              {/* Recording Controls */}
+              <div className="mb-6">
                 <button
-                  onClick={() => { setShowVoiceModal(false); setIsRecording(false); setVoiceTranscript(''); }}
-                  className="w-1/2 py-3 rounded-xl font-medium flex items-center justify-center gap-2 bg-muted text-text hover:bg-muted/80 transition-all"
+                  onClick={isRecording ? stopRecording : startRecording}
+                  className={`w-full py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-all ${
+                    isRecording 
+                      ? 'bg-red-500 text-white' 
+                      : 'bg-primary text-white hover:bg-primary/90'
+                  }`}
                 >
-                  Abbrechen
-                </button>
-                <button
-                  onClick={saveVoiceEntry}
-                  className="w-1/2 py-3 rounded-xl font-medium flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 transition-all"
-                  disabled={!voiceTranscript}
-                >
-                  <Save className="w-5 h-5" />
-                  Speichern
+                  {isRecording ? 'Aufnahme beenden' : 'Aufnahme starten'}
                 </button>
               </div>
+
+              {/* Transcript */}
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-medium text-text">Transkript</h4>
+                  <label className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={spellCheckEnabled}
+                      onChange={(e) => setSpellCheckEnabled(e.target.checked)}
+                      className="rounded border-gray-300"
+                    />
+                    Rechtschreibprüfung
+                  </label>
+                </div>
+                <div 
+                  className="bg-muted/30 rounded-xl p-4 min-h-[120px] text-text"
+                  style={{ whiteSpace: 'pre-wrap' }}
+                >
+                  {voiceTranscript || 'Ihre Aufnahme wird hier transkribiert...'}
+                </div>
+              </div>
+
+              {/* Save Button */}
+              <button
+                onClick={saveVoiceEntry}
+                disabled={!voiceTranscript.trim() || !currentMood}
+                className="w-full py-3 rounded-xl font-medium bg-primary text-white hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Speichern
+              </button>
             </div>
           </div>
         )}
