@@ -250,7 +250,7 @@ const Analytics = () => {
     <div className="max-w-md mx-auto px-4 pt-6 pb-24 bg-background min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-text">📊 Auswertung</h1>
+        <h1 className="text-2xl font-bold text-text">Auswertung</h1>
         <div className="flex items-center gap-2 bg-card px-3 py-2 rounded-xl">
           <Calendar className="w-4 h-4 text-text" />
           <span className="text-sm font-medium text-text">
@@ -262,7 +262,7 @@ const Analytics = () => {
       {/* Time Filter */}
       <div className="bg-card rounded-xl shadow-sm p-4 mb-6 border-2 border-accent/30">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-text">⏰ Zeitraum</h2>
+          <h2 className="text-lg font-semibold text-text">Zeitraum</h2>
           <button
             onClick={() => setShowHighStressOnly(!showHighStressOnly)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
@@ -357,7 +357,6 @@ const Analytics = () => {
         ) : (
           <div className="h-32 flex items-center justify-center text-muted bg-background/50 rounded-xl">
             <p className="text-center">
-              <span className="text-2xl block mb-2">📈</span>
               Keine Daten für den gewählten Zeitraum
             </p>
           </div>
@@ -406,7 +405,6 @@ const Analytics = () => {
           </div>
         ) : (
           <div className="text-center py-8 bg-background/50 rounded-xl">
-            <span className="text-4xl block mb-2">🎯</span>
             <p className="text-muted">Keine Auslöser-Daten verfügbar</p>
           </div>
         )}
@@ -424,19 +422,16 @@ const Analytics = () => {
             {/* Balance Overview */}
             <div className="grid grid-cols-3 gap-3">
               <div className="text-center p-3 rounded-xl bg-background/50 border-2 border-success/30">
-                <div className="text-2xl mb-1">😊</div>
                 <p className="font-bold text-success text-lg">{emotionalBalance.positive}%</p>
                 <p className="text-xs text-text font-medium">Positive</p>
                 <p className="text-xs text-muted">{emotionalBalance.positiveCount} Einträge</p>
               </div>
               <div className="text-center p-3 rounded-xl bg-background/50 border-2 border-muted/30">
-                <div className="text-2xl mb-1">😐</div>
                 <p className="font-bold text-muted text-lg">{emotionalBalance.neutral}%</p>
                 <p className="text-xs text-text font-medium">Neutral</p>
                 <p className="text-xs text-muted">{emotionalBalance.neutralCount} Einträge</p>
               </div>
               <div className="text-center p-3 rounded-xl bg-background/50 border-2 border-danger/30">
-                <div className="text-2xl mb-1">😔</div>
                 <p className="font-bold text-danger text-lg">{emotionalBalance.negative}%</p>
                 <p className="text-xs text-text font-medium">Negativ</p>
                 <p className="text-xs text-muted">{emotionalBalance.negativeCount} Einträge</p>
@@ -466,15 +461,15 @@ const Analytics = () => {
               <p className="text-sm text-text text-center">
                 {emotionalBalance.positive > emotionalBalance.negative ? (
                   <span className="font-medium text-success">
-                    🌟 Großartig! Du erlebst mehr positive als negative Emotionen.
+                    Großartig! Du erlebst mehr positive als negative Emotionen.
                   </span>
                 ) : emotionalBalance.positive === emotionalBalance.negative ? (
                   <span className="font-medium text-muted">
-                    ⚖️ Deine emotionale Balance ist ausgeglichen.
+                    Deine emotionale Balance ist ausgeglichen.
                   </span>
                 ) : (
                   <span className="font-medium text-warning">
-                    💪 Du durchlebst herausfordernde Zeiten. Achte gut auf dich!
+                    Du durchlebst herausfordernde Zeiten. Achte gut auf dich!
                   </span>
                 )}
               </p>
@@ -482,7 +477,6 @@ const Analytics = () => {
           </div>
         ) : (
           <div className="text-center py-8 bg-background/50 rounded-xl">
-            <span className="text-4xl block mb-2">💭</span>
             <p className="text-muted">Keine Emotions-Daten verfügbar</p>
           </div>
         )}
@@ -518,7 +512,6 @@ const Analytics = () => {
           </div>
         ) : (
           <div className="text-center py-8 bg-background/50 rounded-xl">
-            <span className="text-4xl block mb-2">💭</span>
             <p className="text-muted">Keine Emotions-Daten verfügbar</p>
           </div>
         )}
@@ -534,7 +527,6 @@ const Analytics = () => {
         <div className="space-y-4">
           {/* Level Badge */}
           <div className="text-center p-4 bg-gradient-to-r from-accent to-secondary rounded-xl border-2 border-journalgreen/30">
-            <div className="text-3xl mb-2">🎯</div>
             <p className="font-bold text-text text-lg">Stress-Detektiv Level {progressStats.level}</p>
             <p className="text-sm text-text/80">{progressStats.totalEntries} Einträge gesammelt</p>
           </div>
@@ -544,7 +536,7 @@ const Analytics = () => {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-text flex items-center gap-2">
-                  💭 Reflexion
+                  Reflexion
                 </span>
                 <span className="text-sm font-bold text-journalgreen">{progressStats.reflectionProgress}%</span>
               </div>
@@ -559,7 +551,7 @@ const Analytics = () => {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-text flex items-center gap-2">
-                  🎯 Wunschverhalten
+                  Wunschverhalten
                 </span>
                 <span className="text-sm font-bold text-journalgreen">{progressStats.wishBehaviorProgress}%</span>
               </div>
@@ -574,7 +566,7 @@ const Analytics = () => {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-text flex items-center gap-2">
-                  ✅ Übungsmöglichkeiten
+                  Übungsmöglichkeiten
                 </span>
                 <span className="text-sm font-bold text-journalgreen">{progressStats.practiceProgress}%</span>
               </div>
@@ -590,12 +582,12 @@ const Analytics = () => {
           {/* Achievement Badges */}
           <div className="grid grid-cols-3 gap-2 mt-4">
             {[
-              { emoji: '🔥', name: 'Erste Woche', unlocked: progressStats.totalEntries >= 7 },
-              { emoji: '📊', name: 'Analyst', unlocked: progressStats.reflectionProgress >= 50 },
-              { emoji: '🎯', name: 'Zielstrebig', unlocked: progressStats.wishBehaviorProgress >= 30 },
-              { emoji: '💪', name: 'Durchhalter', unlocked: progressStats.totalEntries >= 14 },
-              { emoji: '🧠', name: 'Selbstreflexion', unlocked: progressStats.reflectionProgress >= 80 },
-              { emoji: '⭐', name: 'Vollprofi', unlocked: progressStats.totalEntries >= 30 }
+              { name: 'Erste Woche', unlocked: progressStats.totalEntries >= 7 },
+              { name: 'Analyst', unlocked: progressStats.reflectionProgress >= 50 },
+              { name: 'Zielstrebig', unlocked: progressStats.wishBehaviorProgress >= 30 },
+              { name: 'Durchhalter', unlocked: progressStats.totalEntries >= 14 },
+              { name: 'Selbstreflexion', unlocked: progressStats.reflectionProgress >= 80 },
+              { name: 'Vollprofi', unlocked: progressStats.totalEntries >= 30 }
             ].map((badge, index) => (
               <div
                 key={index}
@@ -605,7 +597,6 @@ const Analytics = () => {
                     : 'bg-background/50 border-muted text-muted'
                 }`}
               >
-                <div className="text-xl mb-1">{badge.emoji}</div>
                 <p className="text-xs font-medium">{badge.name}</p>
               </div>
             ))}
@@ -617,13 +608,13 @@ const Analytics = () => {
       <div className="bg-journalgreen rounded-xl shadow-sm p-4 border-2 border-accent text-white">
         <div className="flex items-center gap-2 mb-3">
           <Brain className="w-5 h-5" />
-          <h3 className="font-semibold">🌟 Deine Erkenntnisse</h3>
+          <h3 className="font-semibold">Deine Erkenntnisse</h3>
         </div>
         
         {filteredEntries.length > 0 ? (
           <div className="space-y-2 text-sm">
             <p>
-              📈 Dein durchschnittlicher Stresslevel liegt bei{' '}
+              Dein durchschnittlicher Stresslevel liegt bei{' '}
               <span className="font-bold bg-white/20 px-2 py-1 rounded-lg">
                 {Math.round(
                   filteredEntries.reduce((sum, entry) => sum + (entry.stressLevel || 0), 0) / 
@@ -634,7 +625,7 @@ const Analytics = () => {
             
             {triggerData.length > 0 && (
               <p>
-                🎯 Dein häufigster Stressauslöser ist{' '}
+                Dein häufigster Stressauslöser ist{' '}
                 <span className="font-bold bg-white/20 px-2 py-1 rounded-lg">{triggerData[0].trigger}</span>
                 {' '}({triggerData[0].percentage}% der Einträge)
               </p>
@@ -642,14 +633,14 @@ const Analytics = () => {
             
             {emotionalData.length > 0 && (
               <p>
-                💭 Deine häufigste emotionale Reaktion ist{' '}
+                Deine häufigste emotionale Reaktion ist{' '}
                 <span className="font-bold bg-white/20 px-2 py-1 rounded-lg">{emotionalData[0].emotion}</span>
               </p>
             )}
 
             {emotionalBalance.positive + emotionalBalance.negative > 0 && (
               <p>
-                🌈 Deine emotionale Balance:{' '}
+                Deine emotionale Balance:{' '}
                 <span className="font-bold bg-white/20 px-2 py-1 rounded-lg">
                   {emotionalBalance.positive}% positive, {emotionalBalance.negative}% negative Emotionen
                 </span>
@@ -657,7 +648,7 @@ const Analytics = () => {
             )}
             
             <p className="font-medium mt-3 bg-white/20 p-2 rounded-lg">
-              🌟 Großartig! Du reflektierst bereits {progressStats.reflectionProgress}% deiner Erfahrungen.
+              Großartig! Du reflektierst bereits {progressStats.reflectionProgress}% deiner Erfahrungen.
             </p>
           </div>
         ) : (
