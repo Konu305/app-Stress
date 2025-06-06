@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, Plus, Settings, Edit, Calendar, List } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronLeft, Plus, Settings, Edit, Calendar, List, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDiary } from '../context/DiaryContext';
+import { DiaryEntry as NewDiaryEntry } from '../lib/types';
 
 interface DiaryEntry {
   id: string;
@@ -50,23 +52,53 @@ const MOOD_DISPLAY = [
 export default function DiaryOverview() {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
-  const [entries, setEntries] = useState<DiaryEntry[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const { entries: newEntries } = useDiary();
 
-  // Lade Einträge aus localStorage
-  useEffect(() => {
-    const savedEntries = localStorage.getItem('diaryEntries');
-    if (savedEntries) {
-      setEntries(JSON.parse(savedEntries));
+  // Konvertiere neue Tagebucheinträge in das alte Format für die Anzeige
+  const convertNewEntriesToOld = (newEntries: NewDiaryEntry[]): DiaryEntry[] => {
+    return newEntries.map(entry => ({
+      id: entry.id,
+      date: entry.date,
+      notes: entry.text,
+      mood: getMoodIdFromEmoji(entry.mood)
+    }));
+  };
+
+  // Hilfsfunktion um Emoji zu Mood-ID zu konvertieren
+  const getMoodIdFromEmoji = (emoji: string): string => {
+    switch (emoji) {
+      case '😊': case '😄': case '🥳': return 'joy';
+      case '😐': return 'neutral';
+      case '😢': return 'sadness';
+      case '😡': return 'anger';
+      case '😴': return 'neutral';
+      case '🤔': return 'neutral';
+      default: return 'neutral';
     }
-  }, []);
+  };
 
-  // Speichere Einträge in localStorage wenn sie sich ändern
-  useEffect(() => {
-    localStorage.setItem('diaryEntries', JSON.stringify(entries));
-  }, [entries]);
+  const entries = convertNewEntriesToOld(newEntries);
 
   const getMoodForEntry = (entry: DiaryEntry) => {
+    // Für neue Einträge: Direkt das Emoji aus dem Eintrag verwenden
+    const newEntry = newEntries.find(ne => ne.id === entry.id);
+    if (newEntry) {
+      // Bestimme Mood-Display basierend auf Emoji
+      switch (newEntry.mood) {
+        case '😊': case '😄': case '🥳':
+          return { ...MOOD_DISPLAY.find(m => m.id === 'happy'), emoji: newEntry.mood };
+        case '😐': case '😴': case '🤔':
+          return { ...MOOD_DISPLAY.find(m => m.id === 'neutral'), emoji: newEntry.mood };
+        case '😢':
+          return { ...MOOD_DISPLAY.find(m => m.id === 'sad'), emoji: newEntry.mood };
+        case '😡':
+          return { ...MOOD_DISPLAY.find(m => m.id === 'sad'), emoji: newEntry.mood };
+        default:
+          return { ...MOOD_DISPLAY.find(m => m.id === 'neutral'), emoji: newEntry.mood };
+      }
+    }
+
     // Für detaillierte Einträge: Basierend auf Stresslevel und Emotionen
     if (entry.stressLevel !== undefined) {
       if (entry.stressLevel <= 3) return MOOD_DISPLAY.find(m => m.id === 'happy');
@@ -142,7 +174,11 @@ export default function DiaryOverview() {
           const dateInfo = formatDate(entry.date);
           
           return (
-            <div key={entry.id} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-4">
+            <div 
+              key={entry.id} 
+              onClick={() => navigate(`/diary-entry/${entry.id}`)}
+              className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 cursor-pointer hover:shadow-md transition-shadow"
+            >
               <div className="flex flex-col items-center">
                 <div className={`w-12 h-12 rounded-full ${mood?.color || 'bg-gray-400'} flex items-center justify-center text-white font-bold text-sm`}>
                   {dateInfo.day}
@@ -155,12 +191,7 @@ export default function DiaryOverview() {
                   <span className="text-2xl">{mood?.emoji || '😐'}</span>
                   <span className="font-bold text-lg text-gray-900">{mood?.label || 'Neutral'}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <span>96bpm</span>
-                  <span>•</span>
-                  <span>12lsys</span>
-                </div>
+                <p className="text-sm text-gray-600 line-clamp-2">{entry.notes}</p>
               </div>
               
               <div className="text-right">
@@ -209,7 +240,13 @@ export default function DiaryOverview() {
             const mood = entry ? getMoodForEntry(entry) : null;
             
             return (
-              <div key={index} className="aspect-square flex flex-col items-center justify-center relative">
+              <div 
+                key={index} 
+                onClick={() => entry && navigate(`/diary-entry/${entry.id}`)}
+                className={`aspect-square flex flex-col items-center justify-center relative ${
+                  entry ? 'cursor-pointer hover:bg-gray-100 rounded-lg transition-colors' : ''
+                }`}
+              >
                 <span className={`text-sm ${day.isCurrentMonth ? 'text-gray-900' : 'text-gray-300'}`}>
                   {day.date.getDate().toString().padStart(2, '0')}
                 </span>
@@ -260,7 +297,7 @@ export default function DiaryOverview() {
                   : 'text-journalgreen'
               }`}
             >
-              AI Suggestion
+              Mood History
             </button>
           </div>
         </div>
@@ -269,7 +306,7 @@ export default function DiaryOverview() {
         <div className="px-6 mb-4">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-text">
-              {viewMode === 'list' ? 'Mood History' : 'Mood History'}
+              {viewMode === 'list' ? 'History' : 'Mood History'}
             </h2>
             <button className="text-sm text-text/70 flex items-center gap-1">
               {viewMode === 'list' ? 'List View' : 'Calendar View'}
@@ -285,6 +322,13 @@ export default function DiaryOverview() {
 
         {/* Floating Action Buttons */}
         <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 flex items-center gap-4">
+          <button 
+            onClick={() => navigate('/analytics')}
+            className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-200"
+          >
+            <BarChart3 className="w-6 h-6 text-gray-600" />
+          </button>
+          
           <button className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-200">
             <Settings className="w-6 h-6 text-gray-600" />
           </button>

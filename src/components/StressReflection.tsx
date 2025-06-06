@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Volume2, Play, Pause, X, PieChart } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Volume2, Play, Pause, X, PieChart, CheckCircle, Brain, TrendingUp } from 'lucide-react';
 
 interface StressReflectionProps {
   isOpen: boolean;
@@ -11,6 +11,8 @@ interface StressCategory {
   icon: string;
   items: string[];
   color: string;
+  bgColor: string;
+  key: string;
 }
 
 const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) => {
@@ -27,7 +29,9 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
     {
       title: "Beruflicher Stress",
       icon: "💼",
-      color: "bg-blue-100 text-blue-900",
+      color: "text-[#23412C]",
+      bgColor: "bg-[#F2C75B]",
+      key: "work",
       items: [
         "Arbeit",
         "Zeitdruck",
@@ -42,7 +46,9 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
     {
       title: "Privater Stress",
       icon: "🏠",
-      color: "bg-green-100 text-green-900",
+      color: "text-[#23412C]",
+      bgColor: "bg-[#F6D98A]",
+      key: "personal",
       items: [
         "Familie",
         "Beziehung",
@@ -57,7 +63,9 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
     {
       title: "Alltäglicher Stress",
       icon: "🔁",
-      color: "bg-orange-100 text-orange-900",
+      color: "text-[#23412C]",
+      bgColor: "bg-[#E86F3A]",
+      key: "daily",
       items: [
         "Lärm",
         "Verkehr",
@@ -92,25 +100,32 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
     };
   };
 
+  const getTotalStressors = () => {
+    return Object.values(selectedStressors).reduce((acc, curr) => acc + curr.length, 0);
+  };
+
   if (!isOpen) return null;
 
   const renderIntro = () => (
     <div className="text-center px-6">
-      <h1 className="text-3xl font-bold text-gray-900 mb-4">Was stresst dich aktuell?</h1>
-      <div className="bg-blue-50 rounded-xl p-6 mb-8 relative">
+      <div className="w-20 h-20 bg-[#E86F3A] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+        <Brain className="w-10 h-10 text-white" />
+      </div>
+      <h1 className="text-3xl font-bold text-[#23412C] mb-6">Was stresst Sie aktuell?</h1>
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-8 relative border border-[#F6D98A] shadow-lg">
         <button
           onClick={() => setAudioPlaying(!audioPlaying)}
-          className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md"
+          className="absolute top-4 right-4 w-12 h-12 bg-[#F2C75B] rounded-full shadow-md flex items-center justify-center hover:bg-[#E6B84F] transition-colors"
         >
           {audioPlaying ? (
-            <Pause className="w-6 h-6 text-blue-600" />
+            <Pause className="w-6 h-6 text-[#23412C]" />
           ) : (
-            <Play className="w-6 h-6 text-blue-600" />
+            <Play className="w-6 h-6 text-[#23412C]" />
           )}
         </button>
-        <Volume2 className="w-8 h-8 text-blue-600 mb-4" />
-        <p className="text-blue-800">
-          "Stress entsteht oft durch viele kleine Auslöser im Alltag. Diese Übung hilft dir, deine persönlichen Stressquellen zu erkennen und besser zu verstehen. Wähle alle Punkte aus, die aktuell auf dich zutreffen - auch kleine Stressoren sind wichtig."
+        <Volume2 className="w-8 h-8 text-[#E86F3A] mb-4" />
+        <p className="text-[#23412C] leading-relaxed">
+          "Stress entsteht oft durch viele kleine Auslöser im Alltag. Diese Übung hilft Ihnen, Ihre persönlichen Stressquellen zu erkennen und besser zu verstehen. Wählen Sie alle Punkte aus, die aktuell auf Sie zutreffen - auch kleine Stressoren sind wichtig."
         </p>
       </div>
     </div>
@@ -118,102 +133,188 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
 
   const renderStressors = () => (
     <div className="px-6">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-[#23412C] mb-2">Ihre Stressquellen</h2>
+        <p className="text-[#23412C]/70">Wählen Sie alle zutreffenden Stressoren aus</p>
+      </div>
+
       {categories.map((category, index) => (
         <div key={index} className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-2xl">{category.icon}</span>
-            <h2 className="text-xl font-bold text-gray-900">{category.title}</h2>
+            <div className={`w-12 h-12 ${category.bgColor} rounded-full flex items-center justify-center shadow-md`}>
+              <span className="text-2xl">{category.icon}</span>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-[#23412C]">{category.title}</h3>
+              <p className="text-sm text-[#23412C]/60">
+                {selectedStressors[category.key]?.length || 0} ausgewählt
+              </p>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {category.items.map((item, itemIndex) => {
-              const isSelected = selectedStressors[category.title.toLowerCase().split(' ')[0]]?.includes(item);
+              const isSelected = selectedStressors[category.key]?.includes(item);
               return (
                 <button
                   key={itemIndex}
-                  onClick={() => toggleStressor(
-                    category.title.toLowerCase().split(' ')[0],
-                    item
-                  )}
-                  className={`p-4 rounded-xl text-left transition-all ${
+                  onClick={() => toggleStressor(category.key, item)}
+                  className={`p-4 rounded-2xl text-left transition-all duration-300 border-2 shadow-md hover:shadow-lg transform hover:scale-[1.02] ${
                     isSelected
-                      ? `${category.color} ring-2 ring-offset-2 ring-blue-500`
-                      : 'bg-gray-50 hover:bg-gray-100'
+                      ? `${category.bgColor} border-[#E86F3A] ${category.color} shadow-lg`
+                      : 'bg-white/60 border-white/60 hover:bg-white/80 text-[#23412C]'
                   }`}
                 >
-                  {item}
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">{item}</span>
+                    {isSelected && (
+                      <CheckCircle className="w-5 h-5 text-[#E86F3A]" />
+                    )}
+                  </div>
                 </button>
               );
             })}
           </div>
         </div>
       ))}
+      
       <div className="mb-8">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Individueller Stress</h2>
-        <textarea
-          value={customStressor}
-          onChange={(e) => setCustomStressor(e.target.value)}
-          placeholder="Gibt es weitere Stressoren, die dich belasten?"
-          className="w-full p-4 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          rows={4}
-        />
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-[#4D5922] rounded-full flex items-center justify-center shadow-md">
+            <span className="text-2xl">✏️</span>
+          </div>
+          <h3 className="text-xl font-bold text-[#23412C]">Individueller Stress</h3>
+        </div>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-[#F6D98A] shadow-lg">
+          <textarea
+            value={customStressor}
+            onChange={(e) => setCustomStressor(e.target.value)}
+            placeholder="Gibt es weitere Stressoren, die Sie belasten?"
+            className="w-full p-4 border-2 border-white/60 rounded-xl focus:ring-2 focus:ring-[#E86F3A] focus:border-[#E86F3A] bg-white/60 text-[#23412C] placeholder-[#23412C]/50 resize-none"
+            rows={4}
+          />
+        </div>
       </div>
     </div>
   );
 
   const renderAnalysis = () => {
     const distribution = calculateStressDistribution();
+    const totalStressors = getTotalStressors();
+    
     return (
       <div className="px-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Dein Stressprofil</h2>
-        <div className="bg-white rounded-xl border p-6 mb-8">
-          <div className="flex items-center justify-center mb-8">
-            <PieChart className="w-32 h-32 text-blue-600" />
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 bg-[#4D5922] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <TrendingUp className="w-10 h-10 text-white" />
           </div>
+          <h2 className="text-2xl font-bold text-[#23412C] mb-2">Ihr Stressprofil</h2>
+          <p className="text-[#23412C]/70">Analyse Ihrer {totalStressors} identifizierten Stressoren</p>
+        </div>
+
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-[#F6D98A] p-6 mb-6 shadow-lg">
+          <div className="flex items-center justify-center mb-8">
+            <div className="relative">
+              <PieChart className="w-32 h-32 text-[#E86F3A]" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-[#23412C]">{totalStressors}</p>
+                  <p className="text-xs text-[#23412C]/60">Stressoren</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span>Beruflicher Stress</span>
-              <span className="font-medium">{Math.round(distribution.work)}%</span>
+            <div className="flex items-center justify-between p-4 bg-[#F2C75B]/30 rounded-xl">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">💼</span>
+                <span className="font-medium text-[#23412C]">Beruflicher Stress</span>
+              </div>
+              <span className="font-bold text-[#23412C]">{Math.round(distribution.work)}%</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span>Privater Stress</span>
-              <span className="font-medium">{Math.round(distribution.personal)}%</span>
+            <div className="flex items-center justify-between p-4 bg-[#F6D98A]/30 rounded-xl">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🏠</span>
+                <span className="font-medium text-[#23412C]">Privater Stress</span>
+              </div>
+              <span className="font-bold text-[#23412C]">{Math.round(distribution.personal)}%</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span>Alltäglicher Stress</span>
-              <span className="font-medium">{Math.round(distribution.daily)}%</span>
+            <div className="flex items-center justify-between p-4 bg-[#E86F3A]/30 rounded-xl">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🔁</span>
+                <span className="font-medium text-[#23412C]">Alltäglicher Stress</span>
+              </div>
+              <span className="font-bold text-[#23412C]">{Math.round(distribution.daily)}%</span>
             </div>
           </div>
         </div>
-        <div className="bg-green-50 rounded-xl p-6 mb-8">
-          <p className="text-green-800 font-medium text-center">
-            Gut gemacht! Du hast den ersten Schritt zur besseren Stressbewältigung gemacht.
+
+        <div className="bg-[#4D5922] rounded-2xl p-6 mb-6 shadow-lg">
+          <div className="flex items-center gap-3 mb-4">
+            <CheckCircle className="w-6 h-6 text-[#F6D98A]" />
+            <h3 className="text-lg font-semibold text-white">Glückwunsch!</h3>
+          </div>
+          <p className="text-white/90 leading-relaxed">
+            Sie haben den ersten wichtigen Schritt zur besseren Stressbewältigung gemacht. Das Bewusstsein für Ihre Stressquellen ist der Grundstein für effektive Veränderungen.
           </p>
         </div>
+
+        {totalStressors > 0 && (
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
+            <h3 className="text-lg font-semibold text-[#23412C] mb-3">Nächste Schritte</h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-[#E86F3A] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-sm font-bold">1</span>
+                </div>
+                <p className="text-sm text-[#23412C] leading-relaxed">
+                  Beginnen Sie mit den Achtsamkeitsübungen im nächsten Modul
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-[#F2C75B] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-[#23412C] text-sm font-bold">2</span>
+                </div>
+                <p className="text-sm text-[#23412C] leading-relaxed">
+                  Führen Sie regelmäßig ein Stresstagebuch
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-[#4D5922] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-sm font-bold">3</span>
+                </div>
+                <p className="text-sm text-[#23412C] leading-relaxed">
+                  Üben Sie täglich die erlernten Entspannungstechniken
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
 
   return (
-    <div className="fixed inset-0 bg-white z-50 flex flex-col">
+    <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
       {/* Header */}
-      <div className="flex-shrink-0 bg-white p-4 border-b flex items-center justify-between">
+      <div className="flex-shrink-0 bg-[#F6E3B6] p-6 flex items-center justify-between">
         <button
           onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-full"
+          className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
         >
-          <X className="w-6 h-6 text-gray-600" />
+          <ChevronLeft className="w-6 h-6 text-[#23412C]" />
         </button>
         <div className="flex gap-2">
           {[0, 1, 2].map(step => (
             <div
               key={step}
-              className={`w-2 h-2 rounded-full ${
-                step <= currentStep ? 'bg-blue-600' : 'bg-gray-200'
+              className={`w-3 h-3 rounded-full transition-colors ${
+                step <= currentStep ? 'bg-[#E86F3A]' : 'bg-white/60'
               }`}
             />
           ))}
         </div>
-        <div className="w-10" /> {/* Spacer for alignment */}
+        <div className="w-12" />
       </div>
 
       {/* Content - Scrollable area */}
@@ -226,12 +327,12 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
       </div>
 
       {/* Footer - Fixed at bottom */}
-      <div className="flex-shrink-0 bg-white p-6 border-t">
+      <div className="flex-shrink-0 bg-[#F6E3B6] p-6">
         <div className="flex gap-4 max-w-md mx-auto">
           {currentStep > 0 && (
             <button
               onClick={() => setCurrentStep(prev => prev - 1)}
-              className="flex-1 py-4 border border-gray-200 rounded-xl font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+              className="flex-1 py-4 bg-white/80 backdrop-blur-sm border-2 border-[#F6D98A] rounded-2xl font-semibold hover:bg-white transition-colors flex items-center justify-center gap-2 shadow-md text-[#23412C]"
             >
               <ChevronLeft className="w-5 h-5" />
               Zurück
@@ -240,7 +341,7 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
           {currentStep < 2 ? (
             <button
               onClick={() => setCurrentStep(prev => prev + 1)}
-              className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-lg"
+              className="flex-1 bg-[#E86F3A] text-white py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors flex items-center justify-center gap-2 shadow-lg border border-[#F6D98A]"
             >
               Weiter
               <ChevronRight className="w-5 h-5" />
@@ -248,8 +349,9 @@ const StressReflection: React.FC<StressReflectionProps> = ({ isOpen, onClose }) 
           ) : (
             <button
               onClick={onClose}
-              className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-medium hover:bg-blue-700 transition-colors shadow-lg"
+              className="flex-1 bg-[#4D5922] text-white py-4 rounded-2xl font-semibold hover:bg-[#3A4219] transition-colors shadow-lg border border-[#F6D98A] flex items-center justify-center gap-2"
             >
+              <CheckCircle className="w-5 h-5" />
               Abschließen
             </button>
           )}

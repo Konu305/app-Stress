@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, CheckCircle, Brain, TrendingUp, Info, Target, Heart, BarChart3 } from 'lucide-react';
 
 interface Question {
   id: number;
@@ -54,11 +54,11 @@ const questions: Question[] = [
 ];
 
 const options = [
-  { value: 0, label: "Nie" },
-  { value: 1, label: "Fast nie" },
-  { value: 2, label: "Manchmal" },
-  { value: 3, label: "Häufig" },
-  { value: 4, label: "Sehr oft" }
+  { value: 0, label: "Nie", emoji: "😌" },
+  { value: 1, label: "Fast nie", emoji: "🙂" },
+  { value: 2, label: "Manchmal", emoji: "😐" },
+  { value: 3, label: "Häufig", emoji: "😟" },
+  { value: 4, label: "Sehr oft", emoji: "😰" }
 ];
 
 interface PSSQuestionnaireProps {
@@ -66,6 +66,7 @@ interface PSSQuestionnaireProps {
 }
 
 const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
+  const [showIntro, setShowIntro] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
@@ -98,27 +99,45 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
   }, [currentQuestion, calculateScore]);
 
   const getStressLevel = (score: number) => {
-    if (score <= 13) return { level: "Niedrig", color: "text-green-600" };
-    if (score <= 26) return { level: "Mittel", color: "text-yellow-600" };
-    return { level: "Hoch", color: "text-red-600" };
+    if (score <= 13) return { 
+      level: "Niedrig", 
+      color: "text-[#4D5922]", 
+      bgColor: "bg-[#4D5922]",
+      description: "Sie haben bereits gute Strategien im Umgang mit Stress entwickelt.",
+      recommendation: "Nutzen Sie die Übungen zur Vertiefung Ihrer Entspannungsfähigkeiten."
+    };
+    if (score <= 26) return { 
+      level: "Mittel", 
+      color: "text-[#E86F3A]", 
+      bgColor: "bg-[#E86F3A]",
+      description: "Ihr Stresslevel liegt im mittleren Bereich.",
+      recommendation: "Die Übungen in diesem Kurs werden Ihnen helfen, besser mit Stress umzugehen."
+    };
+    return { 
+      level: "Hoch", 
+      color: "text-[#D85A2A]", 
+      bgColor: "bg-[#D85A2A]",
+      description: "Sie erleben aktuell ein hohes Stressniveau.",
+      recommendation: "Wir empfehlen Ihnen, die Stressmanagement-Übungen regelmäßig durchzuführen."
+    };
   };
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   if (showCongratulations) {
     return (
-      <div className="fixed inset-0 bg-white z-50 flex flex-col">
+      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
         <div className="flex-1 p-6 flex flex-col items-center justify-center text-center">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-            <ArrowRight className="w-10 h-10 text-green-600" />
+          <div className="w-24 h-24 bg-[#4D5922] rounded-full flex items-center justify-center mb-6 shadow-lg">
+            <CheckCircle className="w-12 h-12 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Herzlichen Glückwunsch!</h2>
-          <p className="text-gray-600 mb-8 max-w-sm">
+          <h2 className="text-3xl font-bold text-[#23412C] mb-4">Herzlichen Glückwunsch!</h2>
+          <p className="text-[#23412C]/80 mb-8 max-w-sm leading-relaxed">
             Sie haben alle Fragen erfolgreich beantwortet. Nun können wir mit dem ersten Modul beginnen.
           </p>
           <button
             onClick={onClose}
-            className="bg-blue-600 text-white px-8 py-4 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+            className="bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A]"
           >
             Zum Modul 1
           </button>
@@ -129,20 +148,21 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
 
   if (showThankYou) {
     return (
-      <div className="fixed inset-0 bg-white z-50 flex flex-col">
+      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
         <div className="flex-1 p-6 flex flex-col items-center justify-center text-center">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-            <ArrowRight className="w-10 h-10 text-green-600" />
+          <div className="w-24 h-24 bg-[#F2C75B] rounded-full flex items-center justify-center mb-6 shadow-lg">
+            <Brain className="w-12 h-12 text-[#23412C]" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Vielen Dank!</h2>
-          <p className="text-gray-600 mb-8 max-w-sm">
+          <h2 className="text-3xl font-bold text-[#23412C] mb-4">Vielen Dank!</h2>
+          <p className="text-[#23412C]/80 mb-8 max-w-sm leading-relaxed">
             Sie haben den PSS-10 Fragebogen erfolgreich abgeschlossen. Nun können wir mit dem Kurs beginnen.
           </p>
           <button
             onClick={() => setShowCongratulations(true)}
-            className="bg-blue-600 text-white px-8 py-4 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+            className="bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center gap-2"
           >
-            Weiter
+            <span>Weiter</span>
+            <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -150,42 +170,169 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
   }
 
   if (showResults) {
-    const { level, color } = getStressLevel(totalScore);
+    const { level, color, bgColor, description, recommendation } = getStressLevel(totalScore);
 
     return (
-      <div className="fixed inset-0 bg-white z-50 flex flex-col">
-        <div className="p-4 border-b flex items-center justify-between">
+      <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
+        <div className="p-6 flex items-center justify-between">
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
           >
-            <ChevronLeft className="w-6 h-6 text-gray-600" />
+            <ChevronLeft className="w-6 h-6 text-[#23412C]" />
           </button>
-          <h2 className="text-xl font-bold text-gray-900">Ihre Ergebnisse</h2>
-          <div className="w-10" /> {/* Spacer for alignment */}
+          <h2 className="text-xl font-bold text-[#23412C]">Ihre Ergebnisse</h2>
+          <div className="w-12" />
         </div>
 
         <div className="flex-1 p-6 flex flex-col items-center justify-center">
-          <div className="w-48 h-48 rounded-full border-8 border-gray-200 flex items-center justify-center mb-8">
+          <div className="w-56 h-56 rounded-full border-8 border-white/80 backdrop-blur-sm flex items-center justify-center mb-8 shadow-2xl bg-white/50">
             <div className="text-center">
-              <p className="text-4xl font-bold mb-2">{totalScore}</p>
-              <p className={`text-xl font-semibold ${color}`}>{level}</p>
+              <p className="text-5xl font-bold mb-2 text-[#23412C]">{totalScore}</p>
+              <p className={`text-2xl font-bold ${color}`}>{level}</p>
+              <p className="text-sm text-[#23412C]/60 mt-1">von 40 Punkten</p>
             </div>
           </div>
 
           <div className="text-center max-w-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Ihr Stresslevel ist {level}</h3>
-            <p className="text-gray-600 mb-8">
-              Basierend auf Ihren Antworten haben Sie ein {level.toLowerCase()}es Stressniveau. 
-              {level === "Hoch" && " Wir empfehlen Ihnen, die Stressmanagement-Übungen regelmäßig durchzuführen."}
-              {level === "Mittel" && " Die Übungen in diesem Kurs werden Ihnen helfen, besser mit Stress umzugehen."}
-              {level === "Niedrig" && " Sie haben bereits gute Strategien im Umgang mit Stress entwickelt."}
-            </p>
+            <h3 className="text-2xl font-bold text-[#23412C] mb-4">Ihr Stresslevel ist {level}</h3>
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-[#F6D98A] shadow-lg">
+              <p className="text-[#23412C]/80 mb-4 leading-relaxed">
+                {description}
+              </p>
+              <div className="bg-[#F6E3B6]/50 rounded-xl p-4">
+                <div className="flex items-start gap-3">
+                  <TrendingUp className="w-5 h-5 text-[#E86F3A] mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-[#23412C] leading-relaxed">
+                    {recommendation}
+                  </p>
+                </div>
+              </div>
+            </div>
             <button
               onClick={() => setShowThankYou(true)}
-              className="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+              className="bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center gap-2 mx-auto"
             >
-              Weiter
+              <span>Weiter</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (showIntro) {
+    return (
+      <div className="fixed inset-0 bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 z-50 flex flex-col">
+        <div className="p-6 flex items-center justify-between">
+          <button
+            onClick={onClose}
+            className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
+          >
+            <ChevronLeft className="w-6 h-6 text-[#23412C]" />
+          </button>
+          <h2 className="text-xl font-bold text-[#23412C]">PSS-10 Fragebogen</h2>
+          <div className="w-12" />
+        </div>
+
+        <div className="flex-1 p-6 overflow-y-auto">
+          <div className="text-center mb-8">
+            <div className="w-32 h-32 bg-[#E86F3A] rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
+              <BarChart3 className="w-16 h-16 text-white" />
+            </div>
+            
+            <h1 className="text-3xl font-bold text-[#23412C] mb-4">Stress-Eingangsassessment</h1>
+            <p className="text-[#23412C]/80 text-lg mb-8 max-w-lg mx-auto leading-relaxed">
+              Bevor wir mit dem Kurs beginnen, möchten wir Ihr aktuelles Stresslevel besser verstehen.
+            </p>
+          </div>
+
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-[#F6D98A] shadow-lg">
+            <h3 className="text-xl font-bold text-[#23412C] mb-4 flex items-center gap-2">
+              <Info className="w-6 h-6 text-[#E86F3A]" />
+              Warum führen wir diesen Fragebogen durch?
+            </h3>
+            
+            <div className="space-y-4 text-sm text-[#23412C]/80 leading-relaxed">
+              <div className="bg-[#E86F3A]/20 rounded-xl p-4 border-l-4 border-[#E86F3A]">
+                <h4 className="font-semibold text-[#23412C] mb-2">🎯 Individuelle Ausgangslage erfassen</h4>
+                <p>
+                  Jeder Mensch erlebt Stress unterschiedlich. Um Ihnen die bestmögliche Unterstützung zu bieten, 
+                  müssen wir zunächst verstehen, wie stark Sie aktuell von Stress betroffen sind. Diese Einschätzung 
+                  hilft uns, den Kurs optimal auf Ihre Bedürfnisse anzupassen.
+                </p>
+              </div>
+
+              <div className="bg-[#F6E3B6]/50 rounded-xl p-4">
+                <h4 className="font-semibold text-[#23412C] mb-2">📊 Wissenschaftlich validiert</h4>
+                <p>
+                  Der PSS-10 (Perceived Stress Scale) ist ein wissenschaftlich anerkanntes Instrument zur 
+                  Messung des subjektiv wahrgenommenen Stresses. Er wurde speziell entwickelt, um zu erfassen, 
+                  wie unvorhersagbar, unkontrollierbar und überlastend Sie Ihr Leben empfinden.
+                </p>
+              </div>
+
+              <div className="bg-[#F2C75B]/30 rounded-xl p-4">
+                <h4 className="font-semibold text-[#23412C] mb-2">🔍 Bewusstsein schaffen</h4>
+                <p>
+                  Oft sind wir uns nicht vollständig bewusst, wie stark uns Stress wirklich belastet. 
+                  Die Fragen helfen Ihnen dabei, Ihre Stressreaktionen bewusster wahrzunehmen und 
+                  ein realistisches Bild Ihrer aktuellen Situation zu entwickeln.
+                </p>
+              </div>
+
+              <div className="bg-[#4D5922]/20 rounded-xl p-4">
+                <h4 className="font-semibold text-[#23412C] mb-2">📈 Fortschritt messbar machen</h4>
+                <p>
+                  Diese Eingangsmessung dient als Vergleichswert für Ihren Fortschritt. Am Ende des Kurses 
+                  können Sie sehen, wie sich Ihr Stresslevel verändert hat und welche Verbesserungen Sie 
+                  durch die erlernten Techniken erreicht haben.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-[#F6D98A] shadow-lg">
+            <h3 className="text-lg font-semibold text-[#23412C] mb-4 flex items-center gap-2">
+              <Target className="w-5 h-5 text-[#E86F3A]" />
+              Was erwartet Sie?
+            </h3>
+            
+            <div className="space-y-3 text-sm text-[#23412C]/80">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-[#E86F3A] rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">1</div>
+                <p><strong>10 Fragen</strong> zu Ihrem Stresserleben in den letzten 4 Wochen</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-[#F2C75B] rounded-full flex items-center justify-center text-[#23412C] text-xs font-bold mt-0.5">2</div>
+                <p><strong>5 Antwortmöglichkeiten</strong> von "Nie" bis "Sehr oft"</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-[#4D5922] rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5">3</div>
+                <p><strong>Sofortige Auswertung</strong> mit personalisierter Einschätzung</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#4D5922] rounded-2xl p-6 mb-6 text-white shadow-lg">
+            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+              <Heart className="w-5 h-5" />
+              Ihre Daten sind sicher
+            </h3>
+            <p className="text-white/90 text-sm leading-relaxed">
+              Alle Ihre Antworten werden vertraulich behandelt und dienen ausschließlich Ihrer persönlichen 
+              Entwicklung. Die Ergebnisse helfen uns, Ihnen maßgeschneiderte Empfehlungen zu geben.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <button
+              onClick={() => setShowIntro(false)}
+              className="w-full bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center justify-center gap-2"
+            >
+              <BarChart3 className="w-5 h-5" />
+              Fragebogen jetzt starten
             </button>
           </div>
         </div>
@@ -194,45 +341,50 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-white z-50 flex flex-col">
-      <div className="p-4 border-b flex items-center justify-between">
+    <div className="fixed inset-0 bg-[#F6E3B6] z-50 flex flex-col">
+      <div className="p-6 flex items-center justify-between">
         <button
           onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-full"
+          className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
         >
-          <ChevronLeft className="w-6 h-6 text-gray-600" />
+          <ChevronLeft className="w-6 h-6 text-[#23412C]" />
         </button>
-        <h2 className="text-xl font-bold text-gray-900">PSS-10 Fragebogen</h2>
-        <div className="w-10" /> {/* Spacer for alignment */}
+        <h2 className="text-xl font-bold text-[#23412C]">PSS-10 Fragebogen</h2>
+        <div className="w-12" />
       </div>
 
       <div className="flex-1 p-6 flex flex-col">
         <div className="mb-8">
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-white/60 rounded-full h-3 shadow-inner border border-[#F6D98A]">
             <div
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-[#E86F3A] to-[#F2C75B] h-3 rounded-full transition-all duration-500 shadow-sm"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="mt-2 text-sm text-gray-600 text-center">
+          <div className="mt-3 text-sm text-[#23412C]/70 text-center font-medium">
             Frage {currentQuestion + 1} von {questions.length}
           </div>
         </div>
 
         <div className="flex-1 flex flex-col justify-between">
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-8">
-              {questions[currentQuestion].text}
-            </h3>
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-[#F6D98A] shadow-lg">
+              <h3 className="text-xl font-semibold text-[#23412C] mb-4 leading-relaxed">
+                {questions[currentQuestion].text}
+              </h3>
+            </div>
 
             <div className="space-y-4">
               {options.map((option) => (
                 <button
                   key={option.value}
                   onClick={() => handleAnswer(option.value)}
-                  className="w-full p-4 rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 text-left"
+                  className="w-full p-5 rounded-2xl border-2 border-white/60 bg-white/40 backdrop-blur-sm hover:border-[#E86F3A] hover:bg-white/60 transition-all duration-300 text-left shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                 >
-                  <span className="font-medium text-gray-900">{option.label}</span>
+                  <div className="flex items-center gap-4">
+                    <span className="text-2xl">{option.emoji}</span>
+                    <span className="font-semibold text-[#23412C] text-lg">{option.label}</span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -242,24 +394,24 @@ const PSSQuestionnaire: React.FC<PSSQuestionnaireProps> = ({ onClose }) => {
             <button
               onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
               disabled={currentQuestion === 0}
-              className={`p-2 rounded-lg ${
+              className={`w-12 h-12 rounded-2xl transition-colors shadow-md ${
                 currentQuestion === 0
-                  ? 'text-gray-400 cursor-not-allowed'
-                  : 'text-gray-600 hover:bg-gray-100'
+                  ? 'bg-white/30 text-[#23412C]/30 cursor-not-allowed'
+                  : 'bg-white/80 text-[#23412C] hover:bg-white border border-[#F6D98A]'
               }`}
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-6 h-6 mx-auto" />
             </button>
             <button
               onClick={() => setCurrentQuestion(prev => Math.min(questions.length - 1, prev + 1))}
-              disabled={currentQuestion === questions.length - 1}
-              className={`p-2 rounded-lg ${
-                currentQuestion === questions.length - 1
-                  ? 'text-gray-400 cursor-not-allowed'
-                  : 'text-gray-600 hover:bg-gray-100'
+              disabled={currentQuestion === questions.length - 1 || !answers.hasOwnProperty(currentQuestion)}
+              className={`w-12 h-12 rounded-2xl transition-colors shadow-md ${
+                currentQuestion === questions.length - 1 || !answers.hasOwnProperty(currentQuestion)
+                  ? 'bg-white/30 text-[#23412C]/30 cursor-not-allowed'
+                  : 'bg-[#E86F3A] text-white hover:bg-[#D85A2A] border border-[#F6D98A]'
               }`}
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-6 h-6 mx-auto" />
             </button>
           </div>
         </div>
