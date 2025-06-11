@@ -64,9 +64,9 @@ const Analytics = () => {
       date: format(parseISO(entry.date), 'dd.MM', { locale: de }),
       fullDate: entry.date,
       stressLevel: entry.stressLevel || 0,
-      triggers: entry.trigger?.join(', ') || 'Keine Angabe',
-      mood: entry.mood,
-      situation: entry.situation || ''
+      triggers: entry.trigger?.join(', ') || 'Keine',
+      mood: entry.mood || '😐',
+      situation: entry.situation || 'Keine Beschreibung'
     }));
   }, [filteredEntries]);
 
@@ -188,58 +188,37 @@ const Analytics = () => {
   };
 
   // Emotion color mapping
-  const getEmotionColor = (emotion: string) => {
-    const colorMap: Record<string, string> = {
-      // Negative Emotionen
-      'Angst': '#8B5CF6',
-      'Wut': '#E86F3A',
-      'Traurigkeit': '#3B82F6',
-      'Überforderung': '#F97316',
-      'Frustration': '#DC2626',
-      'Nervosität': '#A855F7',
-      'Erschöpfung': '#6B7280',
-      'Einsamkeit': '#6366F1',
-      'Hilflosigkeit': '#9CA3AF',
-      'Ungerechtigkeit': '#EF4444',
-      'Sorge': '#8B5CF6',
-      'Ärger': '#E86F3A',
-      'Stress': '#F97316',
-      
-      // Positive Emotionen
-      'Freude': '#F2C75B',
-      'Ruhe': '#4D5922',
-      'Zufriedenheit': '#4D5922',
-      'Dankbarkeit': '#10B981',
-      'Stolz': '#F2C75B',
-      'Erleichterung': '#10B981',
-      'Verbundenheit': '#06B6D4',
-      'Gelassenheit': '#4D5922',
-      'Begeisterung': '#F59E0B',
-      'Ausgeglichenheit': '#10B981',
-      'Verbundenheit mit der Natur': '#059669',
-      'Geborgenheit': '#10B981',
-      'Energie': '#F59E0B',
-      'Wohlbefinden': '#10B981'
+  const getEmotionColor = (emotion: string): string => {
+    const colorMap: { [key: string]: string } = {
+      'Freude': '#FFD700',      // Gold
+      'Stolz': '#FFD700',       // Gold
+      'Zufriedenheit': '#4D5922', // Dunkelgrün
+      'Ruhe': '#4D5922',        // Dunkelgrün
+      'Nervosität': '#9932CC',  // Violett
+      'Frustration': '#FF4444', // Rot
+      'Dankbarkeit': '#00CED1', // Türkis
+      'Überforderung': '#FF7F50', // Koralle
+      'Stress': '#FF7F50',      // Koralle
+      'Angst': '#9932CC',       // Violett
+      'Verbundenheit': '#00CED1' // Türkis
     };
-    return colorMap[emotion] || colors.primary;
+    return colorMap[emotion] || '#808080'; // Grau als Fallback
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-card p-4 rounded-xl shadow-lg border-2 border-accent max-w-xs">
-          <p className="font-semibold text-text">{label}</p>
+        <div className="bg-card p-4 rounded-xl shadow-lg border-2 border-accent/30">
+          <p className="text-lg font-bold mb-1">{label}</p>
           <p className="text-sm text-text/80 mb-2">{data.situation}</p>
-          <div className="flex items-center gap-2 mb-1">
-            <div 
-              className="w-3 h-3 rounded-full" 
-              style={{ backgroundColor: getStressColor(data.stressLevel) }}
-            />
-            <span className="text-sm font-medium text-text">Stresslevel: {data.stressLevel}/10</span>
-          </div>
-          <p className="text-xs text-muted">Auslöser: {data.triggers}</p>
-          <p className="text-xs text-text">Stimmung: {data.mood}</p>
+          <p className="font-medium">Stresslevel: {data.stressLevel}/10</p>
+          <p className="text-sm text-text/80">
+            Auslöser: {data.triggers}
+          </p>
+          <p className="text-sm">
+            Stimmung: {data.mood}
+          </p>
         </div>
       );
     }
@@ -320,50 +299,49 @@ const Analytics = () => {
         )}
       </div>
 
-      {/* Module 1: Stress Level Trend */}
+      {/* Stress Level Chart */}
       <div className="bg-card rounded-xl shadow-sm p-4 mb-6 border-2 border-accent/30">
         <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="w-5 h-5 text-journalgreen" />
+          <TrendingUp className="w-5 h-5 text-primary" />
           <h2 className="text-lg font-semibold text-text">Stresslevel-Verlauf</h2>
         </div>
         
         {stressLevelData.length > 0 ? (
-          <div className="h-64 bg-background/50 rounded-xl p-2">
+          <div className="w-full h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={stressLevelData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#B6B6A6" opacity={0.3} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
                 <XAxis 
                   dataKey="date" 
-                  tick={{ fontSize: 12, fill: colors.text }}
-                  stroke={colors.muted}
+                  stroke="#23412C"
+                  fontSize={12}
                 />
                 <YAxis 
-                  domain={[0, 10]}
-                  tick={{ fontSize: 12, fill: colors.text }}
-                  stroke={colors.muted}
+                  domain={[0, 10]} 
+                  ticks={[0, 2, 4, 6, 8, 10]} 
+                  stroke="#23412C"
+                  fontSize={12}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Line
                   type="monotone"
                   dataKey="stressLevel"
-                  stroke={colors.primary}
-                  strokeWidth={3}
-                  dot={{ fill: colors.journalgreen, strokeWidth: 2, r: 5 }}
-                  activeDot={{ r: 7, stroke: colors.primary, strokeWidth: 3, fill: colors.card }}
+                  stroke="#E86F3A"
+                  strokeWidth={2}
+                  dot={{ fill: '#E86F3A', strokeWidth: 2 }}
+                  activeDot={{ r: 6, fill: '#E86F3A' }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-32 flex items-center justify-center text-muted bg-background/50 rounded-xl">
-            <p className="text-center">
-              Keine Daten für den gewählten Zeitraum
-            </p>
+          <div className="text-center py-8 bg-background/50 rounded-xl">
+            <p className="text-muted">Keine Stresslevel-Daten verfügbar</p>
           </div>
         )}
       </div>
 
-      {/* Module 2: Most Common Triggers */}
+      {/* Trigger Analysis */}
       <div className="bg-card rounded-xl shadow-sm p-4 mb-6 border-2 border-accent/30">
         <div className="flex items-center gap-2 mb-4">
           <Zap className="w-5 h-5 text-primary" />
@@ -375,14 +353,7 @@ const Analytics = () => {
             {triggerData.map((item, index) => (
               <div
                 key={item.trigger}
-                className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${
-                  selectedTrigger === item.trigger 
-                    ? 'bg-accent border-2 border-journalgreen shadow-md' 
-                    : 'bg-background/50 hover:bg-accent/50 border-2 border-transparent'
-                }`}
-                onClick={() => setSelectedTrigger(
-                  selectedTrigger === item.trigger ? null : item.trigger
-                )}
+                className="flex items-center justify-between p-3 rounded-xl bg-background/50"
               >
                 <div className="flex items-center gap-3">
                   <span className="text-xl">{getTriggerIcon(item.trigger)}</span>
@@ -393,9 +364,9 @@ const Analytics = () => {
                 </div>
                 <div className="text-right">
                   <p className="font-bold text-journalgreen text-lg">{item.percentage}%</p>
-                  <div className="w-16 h-3 bg-background rounded-full mt-1 overflow-hidden">
+                  <div className="w-24 h-2 bg-background rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-journalgreen to-primary rounded-full transition-all duration-700"
+                      className="h-full bg-gradient-to-r from-journalgreen to-primary rounded-full"
                       style={{ width: `${item.percentage}%` }}
                     />
                   </div>
@@ -410,7 +381,7 @@ const Analytics = () => {
         )}
       </div>
 
-      {/* Module 3: Emotional Balance */}
+      {/* Emotional Balance */}
       <div className="bg-card rounded-xl shadow-sm p-4 mb-6 border-2 border-accent/30">
         <div className="flex items-center gap-2 mb-4">
           <Heart className="w-5 h-5 text-primary" />
@@ -419,60 +390,27 @@ const Analytics = () => {
         
         {emotionalData.length > 0 ? (
           <div className="space-y-4">
-            {/* Balance Overview */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="text-center p-3 rounded-xl bg-background/50 border-2 border-success/30">
-                <p className="font-bold text-success text-lg">{emotionalBalance.positive}%</p>
-                <p className="text-xs text-text font-medium">Positive</p>
+              <div className="text-center p-3 rounded-xl bg-background/50">
+                <p className="font-bold text-success text-xl">{emotionalBalance.positive}%</p>
+                <p className="text-sm text-text">Positive</p>
                 <p className="text-xs text-muted">{emotionalBalance.positiveCount} Einträge</p>
               </div>
-              <div className="text-center p-3 rounded-xl bg-background/50 border-2 border-muted/30">
-                <p className="font-bold text-muted text-lg">{emotionalBalance.neutral}%</p>
-                <p className="text-xs text-text font-medium">Neutral</p>
+              <div className="text-center p-3 rounded-xl bg-background/50">
+                <p className="font-bold text-muted text-xl">{emotionalBalance.neutral}%</p>
+                <p className="text-sm text-text">Neutral</p>
                 <p className="text-xs text-muted">{emotionalBalance.neutralCount} Einträge</p>
               </div>
-              <div className="text-center p-3 rounded-xl bg-background/50 border-2 border-danger/30">
-                <p className="font-bold text-danger text-lg">{emotionalBalance.negative}%</p>
-                <p className="text-xs text-text font-medium">Negativ</p>
+              <div className="text-center p-3 rounded-xl bg-background/50">
+                <p className="font-bold text-danger text-xl">{emotionalBalance.negative}%</p>
+                <p className="text-sm text-text">Negativ</p>
                 <p className="text-xs text-muted">{emotionalBalance.negativeCount} Einträge</p>
               </div>
             </div>
-
-            {/* Balance Bar */}
-            <div className="bg-background rounded-full h-6 overflow-hidden border-2 border-accent/30">
-              <div className="h-full flex">
-                <div 
-                  className="bg-gradient-to-r from-success to-journalgreen transition-all duration-700"
-                  style={{ width: `${emotionalBalance.positive}%` }}
-                />
-                <div 
-                  className="bg-muted transition-all duration-700"
-                  style={{ width: `${emotionalBalance.neutral}%` }}
-                />
-                <div 
-                  className="bg-gradient-to-r from-warning to-danger transition-all duration-700"
-                  style={{ width: `${emotionalBalance.negative}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Insight */}
-            <div className="bg-background/50 rounded-xl p-3 border-2 border-accent/20">
-              <p className="text-sm text-text text-center">
-                {emotionalBalance.positive > emotionalBalance.negative ? (
-                  <span className="font-medium text-success">
-                    Großartig! Du erlebst mehr positive als negative Emotionen.
-                  </span>
-                ) : emotionalBalance.positive === emotionalBalance.negative ? (
-                  <span className="font-medium text-muted">
-                    Deine emotionale Balance ist ausgeglichen.
-                  </span>
-                ) : (
-                  <span className="font-medium text-warning">
-                    Du durchlebst herausfordernde Zeiten. Achte gut auf dich!
-                  </span>
-                )}
-              </p>
+            <div className="h-2 bg-background rounded-full overflow-hidden flex">
+              <div className="h-full bg-success" style={{ width: `${emotionalBalance.positive}%` }} />
+              <div className="h-full bg-muted" style={{ width: `${emotionalBalance.neutral}%` }} />
+              <div className="h-full bg-danger" style={{ width: `${emotionalBalance.negative}%` }} />
             </div>
           </div>
         ) : (
@@ -482,7 +420,7 @@ const Analytics = () => {
         )}
       </div>
 
-      {/* Module 4: Emotional Reactions */}
+      {/* Emotionale Reaktionen */}
       <div className="bg-card rounded-xl shadow-sm p-4 mb-6 border-2 border-accent/30">
         <div className="flex items-center gap-2 mb-4">
           <Heart className="w-5 h-5 text-primary" />
@@ -490,25 +428,25 @@ const Analytics = () => {
         </div>
         
         {emotionalData.length > 0 ? (
-          <div className="grid grid-cols-2 gap-3">
-            {emotionalData.map((item, index) => (
-              <div
-                key={item.emotion}
-                className="p-3 rounded-xl border-2 text-center bg-background/50 hover:bg-accent/30 transition-colors"
-                style={{ 
-                  borderColor: `${getEmotionColor(item.emotion)}40`
-                }}
-              >
+          <div className="grid grid-cols-2 gap-4">
+            {emotionalData.map((item) => {
+              const emotionColor = getEmotionColor(item.emotion);
+              return (
                 <div
-                  className="w-10 h-10 rounded-full mx-auto mb-2 flex items-center justify-center text-white text-sm font-bold shadow-md"
-                  style={{ backgroundColor: getEmotionColor(item.emotion) }}
+                  key={item.emotion}
+                  className="p-3 rounded-xl bg-background/50 flex flex-col items-center"
                 >
-                  {item.count}
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold mb-2`}
+                    style={{ backgroundColor: emotionColor }}
+                  >
+                    {item.count}
+                  </div>
+                  <p className="text-text font-medium text-sm">{item.emotion}</p>
+                  <p className="text-xs text-muted">{item.percentage}%</p>
                 </div>
-                <p className="font-medium text-text text-sm">{item.emotion}</p>
-                <p className="text-xs text-muted font-semibold">{item.percentage}%</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-8 bg-background/50 rounded-xl">

@@ -24,7 +24,7 @@ interface DiaryEntry {
   whatWouldHelpOther?: string;
   wishBehavior?: string;
   practiceOpportunity?: string;
-  mood?: string; // Für Text- und Audio-Tagebuch
+  mood: string; // Für Text- und Audio-Tagebuch
 }
 
 // Emotionen mit Emoji und Text
@@ -41,12 +41,12 @@ const EMOTIONS = [
 
 // Mood-Icons für die Übersicht
 const MOOD_DISPLAY = [
-  { id: 'overjoyed', label: 'Overjoyed', emoji: '😄', color: 'bg-journalgreen' },
-  { id: 'happy', label: 'Happy', emoji: '😊', color: 'bg-yellow-400' },
-  { id: 'satisfied', label: 'Satisfied', emoji: '🙂', color: 'bg-green-400' },
+  { id: 'overjoyed', label: 'Überglücklich', emoji: '😄', color: 'bg-journalgreen' },
+  { id: 'happy', label: 'Glücklich', emoji: '😊', color: 'bg-yellow-400' },
+  { id: 'satisfied', label: 'Zufrieden', emoji: '🙂', color: 'bg-green-400' },
   { id: 'neutral', label: 'Neutral', emoji: '😐', color: 'bg-gray-400' },
-  { id: 'sad', label: 'Sad', emoji: '😢', color: 'bg-orange-400' },
-  { id: 'depressed', label: 'Depressed', emoji: '😔', color: 'bg-gray-500' },
+  { id: 'sad', label: 'Traurig', emoji: '😢', color: 'bg-orange-400' },
+  { id: 'depressed', label: 'Niedergeschlagen', emoji: '😔', color: 'bg-gray-500' },
 ];
 
 export default function DiaryOverview() {
@@ -60,20 +60,20 @@ export default function DiaryOverview() {
     return newEntries.map(entry => ({
       id: entry.id,
       date: entry.date,
-      notes: entry.text,
-      mood: getMoodIdFromEmoji(entry.mood)
+      notes: entry.text || '',
+      mood: typeof entry.mood === 'string' ? getMoodIdFromEmoji(entry.mood) : 'neutral'
     }));
   };
 
   // Hilfsfunktion um Emoji zu Mood-ID zu konvertieren
   const getMoodIdFromEmoji = (emoji: string): string => {
     switch (emoji) {
-      case '😊': case '😄': case '🥳': return 'joy';
-      case '😐': return 'neutral';
-      case '😢': return 'sadness';
-      case '😡': return 'anger';
-      case '😴': return 'neutral';
-      case '🤔': return 'neutral';
+      case '😄': return 'overjoyed';
+      case '😊': return 'happy';
+      case '🙂': return 'satisfied';
+      case '😐': case '😴': case '🤔': return 'neutral';
+      case '😢': return 'sad';
+      case '😔': return 'depressed';
       default: return 'neutral';
     }
   };
@@ -86,14 +86,18 @@ export default function DiaryOverview() {
     if (newEntry) {
       // Bestimme Mood-Display basierend auf Emoji
       switch (newEntry.mood) {
-        case '😊': case '😄': case '🥳':
+        case '😄':
+          return { ...MOOD_DISPLAY.find(m => m.id === 'overjoyed'), emoji: newEntry.mood };
+        case '😊':
           return { ...MOOD_DISPLAY.find(m => m.id === 'happy'), emoji: newEntry.mood };
+        case '🙂':
+          return { ...MOOD_DISPLAY.find(m => m.id === 'satisfied'), emoji: newEntry.mood };
         case '😐': case '😴': case '🤔':
           return { ...MOOD_DISPLAY.find(m => m.id === 'neutral'), emoji: newEntry.mood };
         case '😢':
           return { ...MOOD_DISPLAY.find(m => m.id === 'sad'), emoji: newEntry.mood };
-        case '😡':
-          return { ...MOOD_DISPLAY.find(m => m.id === 'sad'), emoji: newEntry.mood };
+        case '😔':
+          return { ...MOOD_DISPLAY.find(m => m.id === 'depressed'), emoji: newEntry.mood };
         default:
           return { ...MOOD_DISPLAY.find(m => m.id === 'neutral'), emoji: newEntry.mood };
       }
@@ -110,9 +114,9 @@ export default function DiaryOverview() {
     if (entry.mood) {
       const emotion = EMOTIONS.find(e => e.id === entry.mood);
       if (emotion) {
-        if (['joy', 'satisfied'].includes(emotion.id)) return MOOD_DISPLAY.find(m => m.id === 'happy');
+        if (['overjoyed', 'happy', 'satisfied'].includes(emotion.id)) return MOOD_DISPLAY.find(m => m.id === 'happy');
         if (['neutral'].includes(emotion.id)) return MOOD_DISPLAY.find(m => m.id === 'neutral');
-        if (['sadness', 'anger', 'fear', 'overwhelm', 'helpless'].includes(emotion.id)) return MOOD_DISPLAY.find(m => m.id === 'sad');
+        if (['sad', 'depressed'].includes(emotion.id)) return MOOD_DISPLAY.find(m => m.id === 'sad');
       }
     }
     
@@ -272,7 +276,7 @@ export default function DiaryOverview() {
           >
             <ChevronLeft className="w-6 h-6 text-text" />
           </button>
-          <h1 className="text-xl font-bold text-text">My Mood</h1>
+          <h1 className="text-xl font-bold text-text">Meine Stimmung</h1>
           <div className="w-10" />
         </div>
 
@@ -297,7 +301,7 @@ export default function DiaryOverview() {
                   : 'text-journalgreen'
               }`}
             >
-              Mood History
+              Stimmungsverlauf
             </button>
           </div>
         </div>
@@ -306,10 +310,10 @@ export default function DiaryOverview() {
         <div className="px-6 mb-4">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-text">
-              {viewMode === 'list' ? 'History' : 'Mood History'}
+              {viewMode === 'list' ? 'Verlauf' : 'Stimmungsverlauf'}
             </h2>
             <button className="text-sm text-text/70 flex items-center gap-1">
-              {viewMode === 'list' ? 'List View' : 'Calendar View'}
+              {viewMode === 'list' ? 'Listenansicht' : 'Kalenderansicht'}
               <ChevronLeft className="w-4 h-4 rotate-90" />
             </button>
           </div>

@@ -14,7 +14,7 @@ export const MoodHistory: React.FC = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Mood History</h2>
+      <h2 className="text-2xl font-bold mb-4">Stimmungsverlauf</h2>
       <div className="space-y-4">
         {lastWeekEntries.map((entry) => (
           <div key={entry.id} className="flex items-center justify-between border-b pb-2">

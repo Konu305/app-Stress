@@ -6,7 +6,7 @@ export const History: React.FC = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">History</h2>
+      <h2 className="text-2xl font-bold mb-4">Verlauf</h2>
       <div className="space-y-6">
         {entries.map((entry) => (
           <div key={entry.id} className="border-b pb-4">

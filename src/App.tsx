@@ -41,10 +41,10 @@ function App() {
           </main>
           <Navbar 
             items={[
-              { icon: Heart, label: 'Home', path: '/' },
-              { icon: Brain, label: 'Exercises', path: '/exercises' },
-              { icon: Compass, label: 'Progress', path: '/progress' },
-              { icon: User, label: 'Profile', path: '/profile' },
+              { icon: Heart, label: 'Startseite', path: '/' },
+              { icon: Brain, label: 'Übungen', path: '/exercises' },
+              { icon: Compass, label: 'Fortschritt', path: '/progress' },
+              { icon: User, label: 'Profil', path: '/profile' },
             ]} 
           />
         </div>
