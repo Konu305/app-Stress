@@ -1,14 +1,141 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Stress Management App - Ihre persönliche Stress-Hilfe" />
-  <title>Stress Management App</title>
+  <title>Stress App - Test Deployment</title>
+  <style>
+    #login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #login-screen.hidden {
+      display: none;
+    }
+    .login-container {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 90%;
+      width: 400px;
+    }
+    .login-title {
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .login-input {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .login-input:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+    .login-button {
+      background: #4f46e5;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 1rem;
+    }
+    .login-button:hover {
+      background: #4338ca;
+    }
+    .login-error {
+      color: #dc2626;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      display: none;
+    }
+    .login-error.visible {
+      display: block;
+    }
+  </style>
 </head>
 <body>
+  <!-- Login Screen -->
+  <div id="login-screen">
+    <div class="login-container">
+      <h1 class="login-title">Stress App - Vorschau</h1>
+      <p style="color: #4b5563; margin-bottom: 1.5rem;">Bitte gib das Passwort ein, um auf die Vorschau zuzugreifen.</p>
+      <input 
+        type="password" 
+        id="password-input" 
+        class="login-input" 
+        placeholder="Passwort eingeben"
+        onkeypress="if(event.key === 'Enter') checkPassword()"
+      />
+      <div id="login-error" class="login-error">Falsches Passwort. Bitte versuche es erneut.</div>
+      <button onclick="checkPassword()" class="login-button">Zugriff erhalten</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
   <div id="root"></div>
+
+  <script>
+    // Prüfe ob bereits eingeloggt
+    function checkLoginStatus() {
+      const isLoggedIn = localStorage.getItem('app-access-granted') === 'true';
+      if (isLoggedIn) {
+        document.getElementById('login-screen').classList.add('hidden');
+      }
+    }
+
+    // Passwort-Check
+    function checkPassword() {
+      const correctPassword = 'stress2024'; // Hier dein gewünschtes Passwort eintragen
+      const passwordInput = document.getElementById('password-input');
+      const loginError = document.getElementById('login-error');
+      
+      if (passwordInput.value === correctPassword) {
+        // Speichere Login-Status
+        localStorage.setItem('app-access-granted', 'true');
+        // Verstecke Login-Screen
+        document.getElementById('login-screen').classList.add('hidden');
+        // Lösche Fehlermeldung
+        loginError.classList.remove('visible');
+        // Lösche Passwort
+        passwordInput.value = '';
+      } else {
+        // Zeige Fehlermeldung
+        loginError.classList.add('visible');
+        // Lösche Passwort
+        passwordInput.value = '';
+      }
+    }
+
+    // Prüfe Login-Status beim Laden
+    checkLoginStatus();
+  </script>
+
+  <!-- Main App Script -->
   <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
