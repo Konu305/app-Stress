@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu as MenuIcon, Clock, Play, MoreVertical, Sun, Moon, CloudRain, CloudLightning, BookOpen, Lightbulb, UserPlus, Check, ChevronLeft, ChevronRight, Heart, X, Brain } from 'lucide-react';
+import { Menu as MenuIcon, Clock, Play, MoreVertical, Sun, Moon, CloudRain, CloudLightning, BookOpen, Lightbulb, UserPlus, Check, ChevronLeft, ChevronRight, Heart, X, Brain, Target } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Menu from '../components/Menu';
 import Diary from '../components/Diary';
 import KeyFacts from '../components/KeyFacts';
 import ZPPRegistration from '../components/ZPPRegistration';
 import BreathingExercise from '../components/BreathingExercise';
+import ExerciseFinder from '../components/ExerciseFinder';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Home = () => {
   const [isKeyFactsOpen, setIsKeyFactsOpen] = useState(false);
   const [isZPPRegistrationOpen, setIsZPPRegistrationOpen] = useState(false);
   const [isBreathingExerciseOpen, setIsBreathingExerciseOpen] = useState(false);
+  const [isExerciseFinderOpen, setIsExerciseFinderOpen] = useState(false);
   const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
   const [isStressLevelConfirmed, setIsStressLevelConfirmed] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
@@ -777,6 +779,36 @@ const Home = () => {
         </button>
       </div>
 
+      {/* Exercise Finder Card */}
+      <div className="bg-gradient-to-br from-journalgreen to-journalgreen/80 rounded-xl p-6 mb-8 text-white">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="bg-white/20 rounded-full p-2">
+            <Target className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold">Finde deine perfekte Übung</h3>
+            <p className="text-white/90 text-sm">Personalisierte Empfehlungen in 4 einfachen Schritten</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-1">
+              <span className="bg-white/20 rounded-full px-2 py-1">🧠</span>
+              <span>Basierend auf deinem Stress-Level</span>
+            </div>
+          </div>
+        </div>
+        
+        <button
+          onClick={() => setIsExerciseFinderOpen(true)}
+          className="w-full bg-white text-journalgreen py-3 px-6 rounded-xl font-semibold hover:bg-white/90 transition-colors flex items-center justify-center gap-2"
+        >
+          <Target className="w-5 h-5" />
+          Übung finden
+        </button>
+      </div>
+
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Tagesübung</h2>
       <div 
         className="relative rounded-3xl p-6 mb-8 h-48 overflow-hidden shadow-lg border-2 border-[#F6D98A] cursor-pointer hover:scale-[1.02] transition-all duration-300"
@@ -885,6 +917,10 @@ const Home = () => {
       <BreathingExercise 
         isOpen={isBreathingExerciseOpen} 
         onClose={() => setIsBreathingExerciseOpen(false)} 
+      />
+      <ExerciseFinder 
+        isOpen={isExerciseFinderOpen} 
+        onClose={() => setIsExerciseFinderOpen(false)} 
       />
     </div>
   );

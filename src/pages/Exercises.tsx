@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Menu, Clock, Play, ChevronLeft, MoreVertical, Video, Book, Brain, Heart, X, Lightbulb, Volume2, VolumeX } from 'lucide-react';
+import { Search, Menu, Clock, Play, ChevronLeft, MoreVertical, Video, Book, Brain, Heart, X, Lightbulb, Volume2, VolumeX, ChevronRight, Pause, ArrowLeft, CheckCircle, BarChart3, Target, TrendingUp, Users, Calendar, MessageSquare, Star, Award, Sparkles, Info } from 'lucide-react';
 import PSSQuestionnaire from '../components/PSSQuestionnaire';
 import StressReflection from '../components/StressReflection';
 import BreathingExercise from '../components/BreathingExercise';
 import StressBarometer from '../components/StressBarometer';
+import Stresstagebuch from '../components/Stresstagebuch';
+import AudioIntroduction from '../components/AudioIntroduction';
 
 // Type definitions
 interface ModuleItem {
@@ -44,6 +46,8 @@ const Exercises = () => {
   const [selectedCategory, setSelectedCategory] = useState<'theorie' | 'praxis' | 'reflexion' | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
   const [showStressBarometer, setShowStressBarometer] = useState(false);
+  const [showStresstagebuch, setShowStresstagebuch] = useState(false);
+  const [showAudioIntroduction, setShowAudioIntroduction] = useState(false);
   
   const startTime = useRef(0);
 
@@ -53,8 +57,8 @@ const Exercises = () => {
       subtitle: 'Woche 1',
       description: 'Grundlagen & persönliche Analyse',
       duration: '45 min',
-      color: 'bg-gradient-to-br from-[#F6E3B6] to-[#F2C75B]',
-      textColor: 'text-[#23412C]',
+      color: 'bg-card',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'stress-intro'
     },
@@ -63,8 +67,8 @@ const Exercises = () => {
       subtitle: 'Woche 2',
       description: 'Gedanken und Stressreaktionen erkennen',
       duration: '50 min',
-      color: 'bg-gradient-to-br from-[#F2C75B] to-[#E86F3A]',
-      textColor: 'text-[#23412C]',
+      color: 'bg-accent',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'mindfulness'
     },
@@ -73,8 +77,8 @@ const Exercises = () => {
       subtitle: 'Woche 3',
       description: 'Kognitive Verzerrungen bei Stress',
       duration: '40 min',
-      color: 'bg-gradient-to-br from-[#E86F3A] to-[#F6D98A]',
-      textColor: 'text-[#23412C]',
+      color: 'bg-stressed',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'thinking-traps'
     },
@@ -83,8 +87,8 @@ const Exercises = () => {
       subtitle: 'Woche 4',
       description: 'Negative Gedanken hinterfragen',
       duration: '45 min',
-      color: 'bg-gradient-to-br from-[#F6D98A] to-[#4D5922]',
-      textColor: 'text-white',
+      color: 'bg-secondary',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'cognitive-restructuring'
     },
@@ -93,8 +97,8 @@ const Exercises = () => {
       subtitle: 'Woche 5',
       description: 'Neue Perspektiven üben (Anwendung)',
       duration: '45 min',
-      color: 'bg-gradient-to-br from-[#4D5922] to-[#F6E3B6]',
-      textColor: 'text-white',
+      color: 'bg-secondary',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'perspective-change'
     },
@@ -103,8 +107,8 @@ const Exercises = () => {
       subtitle: 'Woche 6',
       description: 'Umgang mit stressbedingten Gefühlen',
       duration: '50 min',
-      color: 'bg-gradient-to-br from-[#F6E3B6] to-[#F2C75B]',
-      textColor: 'text-[#23412C]',
+      color: 'bg-depressed',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'emotion-regulation'
     },
@@ -113,8 +117,8 @@ const Exercises = () => {
       subtitle: 'Woche 7',
       description: 'Eigene Stärken nutzen',
       duration: '45 min',
-      color: 'bg-gradient-to-br from-[#F2C75B] to-[#E86F3A]',
-      textColor: 'text-[#23412C]',
+      color: 'bg-depressed',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'resources'
     },
@@ -123,8 +127,8 @@ const Exercises = () => {
       subtitle: 'Woche 8',
       description: 'Rückblick, Festigung und Zukunftsplan',
       duration: '40 min',
-      color: 'bg-gradient-to-br from-[#E86F3A] to-[#F6D98A]',
-      textColor: 'text-[#23412C]',
+      color: 'bg-muted',
+      textColor: 'text-text',
       progress: 0,
       illustration: 'completion'
     }
@@ -135,6 +139,13 @@ const Exercises = () => {
       theorie: [
         {
           title: 'Einleitung',
+          type: 'Audio',
+          duration: '5 min',
+          description: 'Willkommen - Einführung in das Programm',
+          onClick: () => setShowAudioIntroduction(true)
+        },
+        {
+          title: 'Fragebogen',
           type: 'Fragebogen',
           duration: '10 min',
           description: 'PSS-10 Fragebogen zur Stresseinschätzung',
@@ -197,6 +208,13 @@ const Exercises = () => {
           duration: '10 min',
           description: 'Erfassung individueller Stressmuster',
           onClick: () => navigate('/personal-stress-analysis')
+        },
+        {
+          title: 'Stresstagebuch',
+          type: 'Journal',
+          duration: '10 min',
+          description: 'Dokumentation von Stresssituationen',
+          onClick: () => setShowStresstagebuch(true)
         }
       ]
     },
@@ -658,6 +676,8 @@ const Exercises = () => {
     switch (type) {
       case 'Video':
         return Video;
+      case 'Audio':
+        return Volume2;
       case 'Lektion':
         return Book;
       case 'Übung':
@@ -980,10 +1000,10 @@ const Exercises = () => {
                         </div>
                       </div>
                       <button 
-                        className="bg-[#E86F3A] hover:bg-[#D85A2A] p-3 rounded-full transition-colors shadow-md"
+                        className="bg-background rounded-full p-3 shadow-lg border-2 border-accent hover:bg-white hover:scale-105 transition-all duration-200 text-text"
                         onClick={item.onClick}
                       >
-                        <Play className="w-5 h-5 text-white" />
+                        <Play className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
@@ -1017,10 +1037,10 @@ const Exercises = () => {
                         </div>
                       </div>
                       <button 
-                        className="bg-[#E86F3A] hover:bg-[#D85A2A] p-3 rounded-full transition-colors shadow-md"
+                        className="bg-background rounded-full p-3 shadow-lg border-2 border-accent hover:bg-white hover:scale-105 transition-all duration-200 text-text"
                         onClick={item.onClick}
                       >
-                        <Play className="w-5 h-5 text-white" />
+                        <Play className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
@@ -1053,8 +1073,11 @@ const Exercises = () => {
                           <span className="text-sm text-[#23412C]/70 font-medium">{item.duration}</span>
                         </div>
                       </div>
-                      <button className="bg-[#E86F3A] hover:bg-[#D85A2A] p-3 rounded-full transition-colors shadow-md">
-                        <Play className="w-5 h-5 text-white" />
+                      <button 
+                        className="bg-background rounded-full p-3 shadow-lg border-2 border-accent hover:bg-white hover:scale-105 transition-all duration-200 text-text"
+                        onClick={item.onClick}
+                      >
+                        <Play className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
@@ -1127,7 +1150,7 @@ const Exercises = () => {
                   {module.duration}
                 </span>
               </div>
-                <button className={`bg-white/90 backdrop-blur-sm rounded-full p-3 ${module.textColor === 'text-white' ? 'text-[#23412C]' : module.textColor} hover:bg-white transition-colors shadow-md border border-[#F6D98A]`}>
+                <button className={`bg-background rounded-full p-3 shadow-lg border-2 border-accent hover:bg-white hover:scale-105 transition-all duration-200 ${module.textColor}`}>
                   <Play className="w-5 h-5" />
               </button>
               </div>
@@ -1145,6 +1168,20 @@ const Exercises = () => {
       <StressBarometer
         isOpen={showStressBarometer}
         onClose={() => setShowStressBarometer(false)}
+      />
+      
+      <Stresstagebuch
+        isOpen={showStresstagebuch}
+        onClose={() => setShowStresstagebuch(false)}
+      />
+      
+      <AudioIntroduction
+        isOpen={showAudioIntroduction}
+        onClose={() => setShowAudioIntroduction(false)}
+        onComplete={() => {
+          setShowAudioIntroduction(false);
+          setShowQuestionnaire(true);
+        }}
       />
     </div>
   );
