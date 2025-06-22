@@ -496,163 +496,88 @@ const Exercises = () => {
         case 'stress-intro':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #4D5922 0%, #E86F3A 100%)' }}>
-                {/* Brain icon */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-8 h-6 bg-white rounded-full relative">
-                    <div className="absolute top-1 left-2 w-1 h-1 bg-[#23412C] rounded-full" />
-                    <div className="absolute top-1 right-2 w-1 h-1 bg-[#23412C] rounded-full" />
-                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-2 h-1 bg-[#23412C] rounded-full" />
-                    {/* Brain waves */}
-                    <div className="absolute -top-1 left-1 w-3 h-0.5 bg-[#F6D98A] rounded-full" />
-                    <div className="absolute -top-2 left-3 w-2 h-0.5 bg-[#F6D98A] rounded-full" />
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-11.-Juni-2025-12_11_21.png"
+                alt="Stress Intro"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
         case 'mindfulness':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #F6E3B6 0%, #4D5922 100%)' }}>
-                {/* Meditation pose */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-6 h-6 bg-white rounded-full relative">
-                    <div className="absolute top-2 left-1.5 w-0.5 h-0.5 bg-[#23412C] rounded-full" />
-                    <div className="absolute top-2 right-1.5 w-0.5 h-0.5 bg-[#23412C] rounded-full" />
-                    <div className="absolute top-3.5 left-1/2 transform -translate-x-1/2 w-1 h-0.5 bg-[#23412C] rounded-full" />
-                  </div>
-                  <div className="w-8 h-6 bg-white rounded-t-full relative -mt-1">
-                    <div className="absolute -left-1 top-1 w-3 h-1 bg-white rounded-full transform -rotate-45" />
-                    <div className="absolute -right-1 top-1 w-3 h-1 bg-white rounded-full transform rotate-45" />
-                  </div>
-                </div>
-                {/* Mindfulness circles */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border border-white rounded-full opacity-30" />
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-11.-Juni-2025-12_07_00.png"
+                alt="Mindfulness"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
         case 'thinking-traps':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #E86F3A 0%, #F6D98A 100%)' }}>
-                {/* Maze/trap symbol */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-8 h-8 bg-white rounded-lg relative">
-                    {/* Maze lines */}
-                    <div className="absolute top-1 left-1 w-6 h-0.5 bg-[#23412C]" />
-                    <div className="absolute top-2.5 left-2 w-4 h-0.5 bg-[#23412C]" />
-                    <div className="absolute top-4 left-1 w-5 h-0.5 bg-[#23412C]" />
-                    <div className="absolute top-5.5 left-3 w-3 h-0.5 bg-[#23412C]" />
-                    {/* Vertical lines */}
-                    <div className="absolute top-1 left-1 w-0.5 h-2 bg-[#23412C]" />
-                    <div className="absolute top-3 left-4 w-0.5 h-2 bg-[#23412C]" />
-                    <div className="absolute top-2 left-6 w-0.5 h-3 bg-[#23412C]" />
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-11.-Juni-2025-12_03_11-1.png"
+                alt="Thinking Traps"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
         case 'cognitive-restructuring':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #F6D98A 0%, #4D5922 100%)' }}>
-                {/* Gear/restructuring symbol */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-8 h-8 bg-white rounded-full relative">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#4D5922] rounded-full" />
-                    {/* Gear teeth */}
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-2 bg-white" />
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-2 bg-white" />
-                    <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-1 bg-white" />
-                    <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-2 h-1 bg-white" />
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-11.-Juni-2025-12_03_08-1.png"
+                alt="Cognitive Restructuring"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
         case 'perspective-change':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #4D5922 0%, #F6E3B6 100%)' }}>
-                {/* Eye with different perspective */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-8 h-5 bg-white rounded-full relative">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#4D5922] rounded-full">
-                      <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full" />
-                    </div>
-                  </div>
-                  {/* Vision rays */}
-                  <div className="absolute -top-1 left-2 w-4 h-0.5 bg-[#F6D98A] transform rotate-12" />
-                  <div className="absolute -top-0.5 left-3 w-3 h-0.5 bg-[#F6D98A]" />
-                  <div className="absolute top-0 left-2 w-4 h-0.5 bg-[#F6D98A] transform -rotate-12" />
-                </div>
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-22.-Juni-2025-13_58_27.png"
+                alt="Perspective Change"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
         case 'emotion-regulation':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #F6E3B6 0%, #F2C75B 100%)' }}>
-                {/* Heart with regulation waves */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-6 h-5 bg-[#E86F3A] relative">
-                    {/* Heart shape */}
-                    <div className="absolute top-0 left-0 w-3 h-3 bg-[#E86F3A] rounded-full" />
-                    <div className="absolute top-0 right-0 w-3 h-3 bg-[#E86F3A] rounded-full" />
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-3 border-r-3 border-t-3 border-transparent border-t-[#E86F3A]" />
-                  </div>
-                  {/* Regulation waves */}
-                  <div className="absolute -right-2 top-1 w-3 h-0.5 bg-white rounded-full" />
-                  <div className="absolute -right-1 top-2 w-2 h-0.5 bg-white rounded-full" />
-                  <div className="absolute -right-2 top-3 w-3 h-0.5 bg-white rounded-full" />
-                </div>
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-22.-Juni-2025-14_02_56.png"
+                alt="Emotion Regulation"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
         case 'resources':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #F2C75B 0%, #E86F3A 100%)' }}>
-                {/* Shield/strength symbol */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-6 h-7 bg-white relative">
-                    {/* Shield shape */}
-                    <div className="w-full h-5 bg-white rounded-t-full" />
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-3 border-r-3 border-t-2 border-transparent border-t-white" />
-                    {/* Strength symbol */}
-                    <div className="absolute top-1.5 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-[#4D5922] rounded-full" />
-                    <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-[#4D5922]" />
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-22.-Juni-2025-14_04_56.png"
+                alt="Resources"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
         case 'completion':
           return (
             <div className={`absolute top-4 right-4 w-16 h-16 ${className}`}>
-              <div className="relative w-full h-full rounded-full" style={{ background: 'linear-gradient(135deg, #E86F3A 0%, #F6D98A 100%)' }}>
-                {/* Trophy/completion symbol */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-6 h-6 bg-[#F6D98A] rounded-full relative">
-                    {/* Trophy cup */}
-                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-4 h-3 bg-white rounded-t-lg" />
-                    <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-1 bg-white" />
-                    {/* Trophy handles */}
-                    <div className="absolute left-0 top-1.5 w-1 h-2 border-l-2 border-white rounded-l-full" />
-                    <div className="absolute right-0 top-1.5 w-1 h-2 border-r-2 border-white rounded-r-full" />
-                    {/* Star */}
-                    <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-[#E86F3A] rotate-45" />
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="https://clarigen.de/wp-content/uploads/2025/06/ChatGPT-Image-22.-Juni-2025-14_06_11.png"
+                alt="Completion"
+                className="w-full h-full rounded-full object-cover shadow-lg border-2 border-accent"
+              />
             </div>
           );
 
