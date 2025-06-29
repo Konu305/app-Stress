@@ -1,18 +1,252 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, Brain, Target, BarChart3, TrendingUp, Heart, CheckCircle, Info, AlertTriangle, Calendar, Award, Thermometer, Activity, Play, BookOpen } from 'lucide-react';
+import { ChevronLeft, Brain, Target, BarChart3, TrendingUp, Heart, CheckCircle, Info, AlertTriangle, Calendar, Award, Thermometer, Activity, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-interface AssessmentAnswer {
-  questionId: string;
-  answer: number;
-  category: 'cognitive' | 'physical' | 'emotional' | 'social';
-}
+// Constants
+const dass21Questions = [
+  {
+    id: 'dass_1',
+    category: 'depression',
+    question: 'Ich konnte überhaupt keine positiven Gefühle mehr empfinden',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_2',
+    category: 'anxiety',
+    question: 'Ich spürte meinen Herzschlag ohne körperliche Belastung',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_3',
+    category: 'depression',
+    question: 'Ich fühlte mich niedergeschlagen und traurig',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_4',
+    category: 'anxiety',
+    question: 'Ich hatte Schwierigkeiten zu atmen',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_5',
+    category: 'depression',
+    question: 'Ich fand es schwierig, mich zu etwas aufzuraffen',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_6',
+    category: 'stress',
+    question: 'Ich tendierte dazu, auf Situationen überzureagieren',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_7',
+    category: 'anxiety',
+    question: 'Ich zitterte (z.B. an den Händen)',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_8',
+    category: 'stress',
+    question: 'Ich fand es schwierig, mich zu entspannen',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_9',
+    category: 'anxiety',
+    question: 'Ich machte mir Sorgen über Situationen, in denen ich in Panik geraten könnte',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+    },
+    {
+    id: 'dass_10',
+    category: 'depression',
+    question: 'Ich hatte das Gefühl, nichts mehr zu erwarten',
+      options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_11',
+    category: 'stress',
+    question: 'Ich fand mich leicht aufgeregt',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_12',
+    category: 'stress',
+    question: 'Ich fand es schwierig, mich zu beruhigen',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_13',
+    category: 'depression',
+    question: 'Ich fühlte mich niedergeschlagen und traurig',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_14',
+    category: 'stress',
+    question: 'Ich reagierte ungehalten auf alles, was mich davon abhielt, meine momentane Tätigkeit fortzuführen',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_15',
+    category: 'anxiety',
+    question: 'Ich fühlte mich einer Panik nahe',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_16',
+    category: 'depression',
+    question: 'Ich war nicht in der Lage, mich für irgendetwas zu begeistern',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_17',
+    category: 'depression',
+    question: 'Ich fühlte mich als Person nicht viel wert',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_18',
+    category: 'stress',
+    question: 'Ich fand mich ziemlich empfindlich',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_19',
+    category: 'anxiety',
+    question: 'Ich schwitzte spürbar (z.B. Hände) ohne körperliche Anstrengung',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  },
+  {
+    id: 'dass_20',
+    category: 'anxiety',
+    question: 'Ich fühlte mich grundlos ängstlich',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+      ]
+  },
+  {
+    id: 'dass_21',
+    category: 'depression',
+    question: 'Ich empfand das Leben als sinnlos',
+    options: [
+      { value: 0, label: 'Traf gar nicht auf mich zu' },
+      { value: 1, label: 'Traf manchmal auf mich zu' },
+      { value: 2, label: 'Traf häufig auf mich zu' },
+      { value: 3, label: 'Traf sehr häufig auf mich zu' }
+    ]
+  }
+] as const;
+
+// Types
+type Category = 'depression' | 'anxiety' | 'stress';
+type Severity = 'normal' | 'mild' | 'moderate' | 'severe' | 'extremely severe';
 
 interface CategoryScore {
   name: string;
   score: number;
   icon: string;
-  areas: string[];
+  description: string;
+  severity: Severity;
   color: string;
 }
 
@@ -25,455 +259,466 @@ interface Recommendation {
   priority: 'high' | 'medium' | 'low';
 }
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 flex items-center justify-center">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-[#F6D98A] shadow-lg text-center">
+            <AlertTriangle className="w-12 h-12 text-[#E86F3A] mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-[#23412C] mb-2">Ein Fehler ist aufgetreten</h2>
+            <p className="text-[#23412C]/70 mb-6">{this.state.error?.message}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-[#4D5922] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#3D4819] transition-colors"
+            >
+              Seite neu laden
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+// Main Component
 const PersonalStressAnalysis: React.FC = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<'intro' | 'assessment' | 'results' | 'recommendations'>('intro');
+  const [currentQuestionGroup, setCurrentQuestionGroup] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const assessmentQuestions = [
-    {
-      id: 'sleep_quality',
-      category: 'physical' as const,
-      question: 'Wie bewerten Sie Ihre Schlafqualität in den letzten 2 Wochen?',
-      options: [
-        { value: 1, label: 'Sehr schlecht - ständig müde und unausgeruht' },
-        { value: 2, label: 'Schlecht - oft müde, schlechter Schlaf' },
-        { value: 3, label: 'Mittelmäßig - manchmal gut, manchmal schlecht' },
-        { value: 4, label: 'Gut - meist erholsamer Schlaf' },
-        { value: 5, label: 'Sehr gut - erholsamer, tiefer Schlaf' }
-      ]
-    },
-    {
-      id: 'concentration',
-      category: 'cognitive' as const,
-      question: 'Wie gut können Sie sich bei wichtigen Aufgaben konzentrieren?',
-      options: [
-        { value: 1, label: 'Sehr schwer - ständig abgelenkt' },
-        { value: 2, label: 'Schwer - häufige Konzentrationsprobleme' },
-        { value: 3, label: 'Mittelmäßig - mal besser, mal schlechter' },
-        { value: 4, label: 'Gut - meist fokussiert' },
-        { value: 5, label: 'Sehr gut - sehr fokussiert und aufmerksam' }
-      ]
-    },
-    {
-      id: 'emotional_balance',
-      category: 'emotional' as const,
-      question: 'Wie ausgeglichen fühlen Sie sich emotional in letzter Zeit?',
-      options: [
-        { value: 1, label: 'Sehr unausgeglichen - starke Schwankungen' },
-        { value: 2, label: 'Unausgeglichen - häufige emotionale Höhen/Tiefen' },
-        { value: 3, label: 'Mittelmäßig - normale Schwankungen' },
-        { value: 4, label: 'Ausgeglichen - meist stabile Stimmung' },
-        { value: 5, label: 'Sehr ausgeglichen - sehr stabile, positive Stimmung' }
-      ]
-    },
-    {
-      id: 'social_connections',
-      category: 'social' as const,
-      question: 'Wie zufrieden sind Sie mit Ihren sozialen Beziehungen?',
-      options: [
-        { value: 1, label: 'Sehr unzufrieden - fühle mich isoliert' },
-        { value: 2, label: 'Unzufrieden - wenig befriedigende Kontakte' },
-        { value: 3, label: 'Mittelmäßig - einige gute Beziehungen' },
-        { value: 4, label: 'Zufrieden - gute, unterstützende Beziehungen' },
-        { value: 5, label: 'Sehr zufrieden - erfüllende, starke Beziehungen' }
-      ]
-    },
-    {
-      id: 'energy_level',
-      category: 'physical' as const,
-      question: 'Wie ist Ihr allgemeines Energielevel im Alltag?',
-      options: [
-        { value: 1, label: 'Sehr niedrig - ständig erschöpft' },
-        { value: 2, label: 'Niedrig - oft müde und schwach' },
-        { value: 3, label: 'Mittelmäßig - ausreichend für den Alltag' },
-        { value: 4, label: 'Hoch - energiegeladen und aktiv' },
-        { value: 5, label: 'Sehr hoch - voller Energie und Motivation' }
-      ]
-    },
-    {
-      id: 'stress_handling',
-      category: 'emotional' as const,
-      question: 'Wie gut können Sie mit Stress umgehen?',
-      options: [
-        { value: 1, label: 'Sehr schlecht - fühle mich schnell überwältigt' },
-        { value: 2, label: 'Schlecht - Stress belastet mich stark' },
-        { value: 3, label: 'Mittelmäßig - manchmal gut, manchmal nicht' },
-        { value: 4, label: 'Gut - bewältige Stress meist erfolgreich' },
-        { value: 5, label: 'Sehr gut - bleibe auch unter Druck gelassen' }
-      ]
-    },
-    {
-      id: 'decision_making',
-      category: 'cognitive' as const,
-      question: 'Wie leicht fallen Ihnen Entscheidungen im Alltag?',
-      options: [
-        { value: 1, label: 'Sehr schwer - grüble ewig und bin unsicher' },
-        { value: 2, label: 'Schwer - bin oft unentschlossen' },
-        { value: 3, label: 'Mittelmäßig - je nach Situation' },
-        { value: 4, label: 'Leicht - entscheide meist zügig und sicher' },
-        { value: 5, label: 'Sehr leicht - entscheide schnell und selbstbewusst' }
-      ]
-    },
-    {
-      id: 'work_life_balance',
-      category: 'social' as const,
-      question: 'Wie zufrieden sind Sie mit Ihrer Work-Life-Balance?',
-      options: [
-        { value: 1, label: 'Sehr unzufrieden - keine Balance' },
-        { value: 2, label: 'Unzufrieden - zu viel Arbeit, zu wenig Freizeit' },
-        { value: 3, label: 'Mittelmäßig - mal besser, mal schlechter' },
-        { value: 4, label: 'Zufrieden - gute Balance zwischen Arbeit und Freizeit' },
-        { value: 5, label: 'Sehr zufrieden - perfekte Balance' }
-      ]
-    },
-    {
-      id: 'physical_symptoms',
-      category: 'physical' as const,
-      question: 'Wie häufig haben Sie körperliche Stress-Symptome (Kopfschmerzen, Verspannungen, etc.)?',
-      options: [
-        { value: 5, label: 'Nie - keine körperlichen Beschwerden' },
-        { value: 4, label: 'Selten - nur bei starkem Stress' },
-        { value: 3, label: 'Manchmal - gelegentliche Beschwerden' },
-        { value: 2, label: 'Oft - regelmäßige Beschwerden' },
-        { value: 1, label: 'Sehr oft - ständige körperliche Probleme' }
-      ]
-    },
-    {
-      id: 'optimism',
-      category: 'emotional' as const,
-      question: 'Wie optimistisch blicken Sie in die Zukunft?',
-      options: [
-        { value: 1, label: 'Sehr pessimistisch - sehe meist das Negative' },
-        { value: 2, label: 'Pessimistisch - mache mir oft Sorgen' },
-        { value: 3, label: 'Neutral - weder besonders optimistisch noch pessimistisch' },
-        { value: 4, label: 'Optimistisch - blicke meist positiv in die Zukunft' },
-        { value: 5, label: 'Sehr optimistisch - bin voller Hoffnung und Zuversicht' }
-      ]
+  useEffect(() => {
+    try {
+      // Initialize component
+      setIsLoading(false);
+    } catch (err) {
+      console.error('Error initializing component:', err);
+      setError('Error loading the questionnaire');
     }
-  ];
+  }, []);
+
+  console.log('Current step:', currentStep);
+  console.log('Current question group:', currentQuestionGroup);
+  console.log('Answers:', answers);
+
+  // Split questions into groups of 5
+  const questionGroups = React.useMemo(() => {
+    try {
+      return Array.from({ length: Math.ceil(dass21Questions.length / 5) }, (_, i) =>
+        dass21Questions.slice(i * 5, (i + 1) * 5)
+      );
+    } catch (err) {
+      console.error('Error splitting questions:', err);
+      setError('Error loading questions');
+      return [];
+    }
+  }, [dass21Questions]);
+
+  const handleAnswer = (questionId: string, value: number) => {
+    try {
+      setAnswers(prev => ({ ...prev, [questionId]: value }));
+    } catch (err) {
+      console.error('Error saving answer:', err);
+      setError('Error saving your answer');
+    }
+  };
+
+  const moveToNextGroup = () => {
+    try {
+      const currentQuestions = questionGroups[currentQuestionGroup];
+      const allAnswered = currentQuestions.every(q => answers[q.id] !== undefined);
+      
+      if (allAnswered) {
+        if (currentQuestionGroup < questionGroups.length - 1) {
+          setCurrentQuestionGroup(prev => prev + 1);
+        } else {
+          setCurrentStep('results');
+        }
+      }
+    } catch (err) {
+      console.error('Error moving to next group:', err);
+      setError('Error navigating to next questions');
+    }
+  };
+
+  const moveToPreviousGroup = () => {
+    try {
+      if (currentQuestionGroup > 0) {
+        setCurrentQuestionGroup(prev => prev - 1);
+      } else {
+        setCurrentStep('intro');
+      }
+    } catch (err) {
+      console.error('Error moving to previous group:', err);
+      setError('Error navigating to previous questions');
+    }
+  };
 
   const calculateCategoryScores = (): CategoryScore[] => {
-    const categories = {
-      cognitive: { sum: 0, count: 0 },
-      physical: { sum: 0, count: 0 },
-      emotional: { sum: 0, count: 0 },
-      social: { sum: 0, count: 0 }
+    const scores: Record<Category, number> = {
+      depression: 0,
+      anxiety: 0,
+      stress: 0
     };
 
-    // Calculate sums for each category
-    assessmentQuestions.forEach(question => {
-      const answer = answers[question.id];
-      if (answer) {
-        categories[question.category].sum += answer;
-        categories[question.category].count += 1;
-      }
+    questionGroups.forEach(group => {
+      group.forEach(question => {
+        const answer = answers[question.id] || 0;
+        scores[question.category as Category] += answer;
+      });
     });
 
     return [
       {
-        name: 'Kognitiv',
-        score: categories.cognitive.count > 0 ? categories.cognitive.sum / categories.cognitive.count : 0,
-        icon: '🧠',
-        areas: ['Konzentration', 'Entscheidungsfindung', 'Klarheit'],
-        color: '#4D5922'
+        name: 'Depression',
+        score: scores.depression,
+        icon: 'Brain',
+        description: 'Bewertung der depressiven Symptome',
+        severity: getSeverityLevel(scores.depression, 'depression'),
+        color: 'text-blue-500'
       },
       {
-        name: 'Körperlich',
-        score: categories.physical.count > 0 ? categories.physical.sum / categories.physical.count : 0,
-        icon: '💪',
-        areas: ['Schlaf', 'Energie', 'Körperliche Symptome'],
-        color: '#E86F3A'
+        name: 'Angst',
+        score: scores.anxiety,
+        icon: 'Heart',
+        description: 'Bewertung der Angstsymptome',
+        severity: getSeverityLevel(scores.anxiety, 'anxiety'),
+        color: 'text-red-500'
       },
       {
-        name: 'Emotional',
-        score: categories.emotional.count > 0 ? categories.emotional.sum / categories.emotional.count : 0,
-        icon: '❤️',
-        areas: ['Ausgeglichenheit', 'Stressbewältigung', 'Optimismus'],
-        color: '#F2C75B'
-      },
-      {
-        name: 'Sozial',
-        score: categories.social.count > 0 ? categories.social.sum / categories.social.count : 0,
-        icon: '👥',
-        areas: ['Beziehungen', 'Work-Life-Balance'],
-        color: '#F6D98A'
+        name: 'Stress',
+        score: scores.stress,
+        icon: 'Activity',
+        description: 'Bewertung der Stresssymptome',
+        severity: getSeverityLevel(scores.stress, 'stress'),
+        color: 'text-green-500'
       }
     ];
+  };
+
+  const getSeverityLevel = (score: number, category: Category): Severity => {
+    const ranges: Record<Category, Record<Severity, [number, number]>> = {
+      depression: {
+        normal: [0, 9],
+        mild: [10, 13],
+        moderate: [14, 20],
+        severe: [21, 27],
+        'extremely severe': [28, 42]
+      },
+      anxiety: {
+        normal: [0, 7],
+        mild: [8, 9],
+        moderate: [10, 14],
+        severe: [15, 19],
+        'extremely severe': [20, 42]
+      },
+      stress: {
+        normal: [0, 14],
+        mild: [15, 18],
+        moderate: [19, 25],
+        severe: [26, 33],
+        'extremely severe': [34, 42]
+      }
+    };
+
+    const categoryRanges = ranges[category];
+    
+    if (score <= categoryRanges.normal[1]) return 'normal';
+    if (score <= categoryRanges.mild[1]) return 'mild';
+    if (score <= categoryRanges.moderate[1]) return 'moderate';
+    if (score <= categoryRanges.severe[1]) return 'severe';
+    return 'extremely severe';
   };
 
   const generateRecommendations = (categoryScores: CategoryScore[]): Recommendation[] => {
     const recommendations: Recommendation[] = [];
 
     categoryScores.forEach(category => {
-      if (category.score < 3) {
+      if (category.severity === 'normal') return;
+
+      const baseRecommendation: Recommendation = {
+        category: category.name,
+        title: '',
+        description: '',
+        actions: [],
+        icon: category.icon,
+        priority: getPriorityFromSeverity(category.severity)
+      };
+
         switch (category.name) {
-          case 'Kognitiv':
-            recommendations.push({
-              category: 'Kognitiv',
-              title: 'Mentale Klarheit stärken',
-              description: 'Verbessern Sie Ihre Konzentration und Entscheidungsfähigkeit',
-              actions: [
-                'Täglich 10-15 Minuten Meditation praktizieren',
-                'Pausen alle 90 Minuten bei konzentrierter Arbeit',
-                'Brain-Food wie Nüsse, Beeren und Fisch konsumieren',
-                'Komplexe Aufgaben am Morgen erledigen (höchste Leistungsfähigkeit)'
-              ],
-              icon: '🧠',
-              priority: 'high' as const
-            });
+        case 'Depression':
+          baseRecommendation.title = 'Umgang mit depressiven Symptomen';
+          baseRecommendation.description = 'Ihre Antworten deuten auf depressive Symptome hin.';
+          baseRecommendation.actions = [
+            'Suchen Sie professionelle Unterstützung',
+            'Etablieren Sie eine Tagesstruktur',
+            'Bleiben Sie körperlich aktiv',
+            'Pflegen Sie soziale Kontakte'
+          ];
             break;
-          case 'Körperlich':
-            recommendations.push({
-              category: 'Körperlich',
-              title: 'Körperliche Balance wiederherstellen',
-              description: 'Stärken Sie Ihre körperliche Widerstandsfähigkeit',
-              actions: [
-                'Feste Schlafzeiten einhalten (7-9 Stunden pro Nacht)',
-                'Täglich 20-30 Minuten moderate Bewegung',
-                'Progressive Muskelentspannung lernen und anwenden',
-                'Regelmäßige, ausgewogene Mahlzeiten zu sich nehmen'
-              ],
-              icon: '💪',
-              priority: 'high' as const
-            });
+        case 'Angst':
+          baseRecommendation.title = 'Umgang mit Angstsymptomen';
+          baseRecommendation.description = 'Ihre Antworten deuten auf erhöhte Angstsymptome hin.';
+          baseRecommendation.actions = [
+            'Praktizieren Sie Entspannungsübungen',
+            'Lernen Sie Atemtechniken',
+            'Suchen Sie professionelle Unterstützung',
+            'Führen Sie ein Angsttagebuch'
+          ];
             break;
-          case 'Emotional':
-            recommendations.push({
-              category: 'Emotional',
-              title: 'Emotionale Stabilität fördern',
-              description: 'Entwickeln Sie Ihre emotionale Resilienz',
-              actions: [
-                'Atemübungen (4-7-8 Technik) bei Stress anwenden',
-                'Gefühle-Tagebuch führen zur Selbstreflexion',
-                'Stressoren identifizieren und Bewältigungsstrategien entwickeln',
-                'Bei anhaltenden Problemen professionelle Unterstützung suchen'
-              ],
-              icon: '❤️',
-              priority: 'high' as const
-            });
-            break;
-          case 'Sozial':
-            recommendations.push({
-              category: 'Sozial',
-              title: 'Soziale Verbindungen stärken',
-              description: 'Verbessern Sie Ihre sozialen Beziehungen und Work-Life-Balance',
-              actions: [
-                'Klare Grenzen zwischen Arbeit und Freizeit setzen',
-                'Aktiv Unterstützung von Familie und Freunden suchen',
-                'Regelmäßige soziale Aktivitäten planen',
-                'Offene Kommunikation bei Konflikten praktizieren'
-              ],
-              icon: '👥',
-              priority: 'medium' as const
-            });
+        case 'Stress':
+          baseRecommendation.title = 'Stressmanagement';
+          baseRecommendation.description = 'Ihre Antworten deuten auf ein erhöhtes Stressniveau hin.';
+          baseRecommendation.actions = [
+            'Praktizieren Sie Stressmanagement-Techniken',
+            'Planen Sie regelmäßige Pausen ein',
+            'Üben Sie Achtsamkeit',
+            'Optimieren Sie Ihren Schlaf'
+          ];
             break;
         }
-      }
+
+      recommendations.push(baseRecommendation);
     });
-
-    // Add positive reinforcement for strong areas
-    const strongestCategory = categoryScores.reduce((prev, current) => 
-      (prev.score > current.score) ? prev : current
-    );
-
-    if (strongestCategory.score >= 4) {
-      recommendations.unshift({
-        category: 'Stärken',
-        title: `Ihre Stärke: ${strongestCategory.name} Bereich`,
-        description: `Sie zeigen hervorragende Fähigkeiten im ${strongestCategory.name.toLowerCase()}en Bereich`,
-        actions: [
-          `Nutzen Sie Ihre Stärken in ${strongestCategory.areas.join(' und ')} als Ressource`,
-          'Übertragen Sie diese Fähigkeiten auf andere Lebensbereiche',
-          'Teilen Sie Ihre Erfolgsstrategien mit anderen',
-          'Feiern Sie bewusst Ihre Fortschritte und Erfolge'
-        ],
-        icon: '⭐',
-        priority: 'medium' as const
-      });
-    }
 
     return recommendations;
   };
 
+  const getPriorityFromSeverity = (severity: Severity): 'high' | 'medium' | 'low' => {
+    switch (severity) {
+      case 'extremely severe':
+      case 'severe':
+        return 'high';
+      case 'moderate':
+        return 'medium';
+      default:
+        return 'low';
+    }
+  };
+
+  const getSeverityColor = (severity: Severity): string => {
+    switch (severity) {
+      case 'normal':
+        return '#22C55E';
+      case 'mild':
+        return '#84CC16';
+      case 'moderate':
+        return '#F59E0B';
+      case 'severe':
+        return '#DC2626';
+      case 'extremely severe':
+        return '#991B1B';
+    }
+  };
+
+  const getSeverityText = (severity: Severity): string => {
+    switch (severity) {
+      case 'normal':
+        return 'Normal';
+      case 'mild':
+        return 'Leicht';
+      case 'moderate':
+        return 'Moderat';
+      case 'severe':
+        return 'Schwer';
+      case 'extremely severe':
+        return 'Sehr schwer';
+    }
+  };
+
   const renderIntro = () => (
-    <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 p-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6">
+      <div className="flex items-center justify-between mb-6">
           <button
-            onClick={() => navigate('/exercises')}
+          onClick={() => navigate(-1)}
             className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
           >
             <ChevronLeft className="w-6 h-6 text-[#23412C]" />
           </button>
-          <h1 className="text-2xl font-bold text-[#23412C]">Persönliche Stressanalyse</h1>
+        <h2 className="text-xl font-bold text-[#23412C]">DASS-21 Fragebogen</h2>
           <div className="w-12" />
         </div>
 
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <div className="w-32 h-32 bg-gradient-to-br from-[#E86F3A] to-[#D85A2A] rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
-            <Brain className="w-16 h-16 text-white" />
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-[#F6D98A] shadow-lg mb-8">
+        <div className="text-center mb-8">
+          <div className="w-24 h-24 bg-gradient-to-br from-[#4D5922] to-[#3D4819] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <Target className="w-12 h-12 text-white" />
           </div>
-          
-          <h2 className="text-4xl font-bold text-[#23412C] mb-6">
-            Entdecken Sie Ihr persönliches Stressprofil
-          </h2>
-          
-          <p className="text-lg text-[#23412C]/80 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Eine umfassende Analyse Ihrer aktuellen Stressbelastung und personalisierten Empfehlungen 
-            für besseres Wohlbefinden in allen Lebensbereichen.
+          <h1 className="text-3xl font-bold text-[#23412C] mb-4">
+            Persönliche Stressanalyse
+          </h1>
+          <p className="text-lg text-[#23412C]/80 max-w-2xl mx-auto">
+            Der DASS-21 ist ein wissenschaftlich validierter Fragebogen zur Erfassung von Depression, Angst und Stress.
           </p>
         </div>
 
-        {/* What to Expect */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-[#F6D98A] shadow-lg">
-          <h3 className="text-2xl font-bold text-[#23412C] mb-6 text-center">
-            Was Sie erwartet
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-[#F6E3B6]/50 rounded-xl p-6">
-              <div className="text-3xl mb-4">📋</div>
-              <h4 className="font-semibold text-[#23412C] mb-2">10 gezielte Fragen</h4>
-              <p className="text-[#23412C]/70 text-sm">
-                Wissenschaftlich fundierte Bewertung Ihrer kognitiven, körperlichen, 
-                emotionalen und sozialen Belastung.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-[#F6E3B6]/50 rounded-xl p-4">
+            <div className="w-12 h-12 bg-[#4D5922] rounded-full flex items-center justify-center mb-4">
+              <Brain className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="font-semibold text-[#23412C] mb-2">Depression</h3>
+            <p className="text-sm text-[#23412C]/70">
+              Erfasst Symptome wie Niedergeschlagenheit, Antriebslosigkeit und Interessenverlust.
               </p>
             </div>
-            
-            <div className="bg-[#F2C75B]/30 rounded-xl p-6">
-              <div className="text-3xl mb-4">📊</div>
-              <h4 className="font-semibold text-[#23412C] mb-2">Detaillierte Auswertung</h4>
-              <p className="text-[#23412C]/70 text-sm">
-                Visualisierte Ergebnisse mit Stärken-Schwächen-Analyse 
-                und individueller Bewertung.
+          <div className="bg-[#F6E3B6]/50 rounded-xl p-4">
+            <div className="w-12 h-12 bg-[#4D5922] rounded-full flex items-center justify-center mb-4">
+              <Heart className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="font-semibold text-[#23412C] mb-2">Angst</h3>
+            <p className="text-sm text-[#23412C]/70">
+              Misst körperliche Anspannung, Beunruhigung und situative Ängste.
               </p>
             </div>
-            
-            <div className="bg-[#E86F3A]/20 rounded-xl p-6">
-              <div className="text-3xl mb-4">🎯</div>
-              <h4 className="font-semibold text-[#23412C] mb-2">Maßgeschneiderte Empfehlungen</h4>
-              <p className="text-[#23412C]/70 text-sm">
-                Konkrete, umsetzbare Strategien basierend auf Ihren 
-                spezifischen Herausforderungen.
-              </p>
+          <div className="bg-[#F6E3B6]/50 rounded-xl p-4">
+            <div className="w-12 h-12 bg-[#4D5922] rounded-full flex items-center justify-center mb-4">
+              <Activity className="w-6 h-6 text-white" />
             </div>
-            
-            <div className="bg-[#4D5922]/20 rounded-xl p-6">
-              <div className="text-3xl mb-4">📈</div>
-              <h4 className="font-semibold text-[#23412C] mb-2">Langfristige Entwicklung</h4>
-              <p className="text-[#23412C]/70 text-sm">
-                Verfolgung Ihres Fortschritts und Anpassung der 
-                Strategien über Zeit.
-              </p>
-            </div>
+            <h3 className="font-semibold text-[#23412C] mb-2">Stress</h3>
+            <p className="text-sm text-[#23412C]/70">
+              Bewertet Nervosität, Anspannung und Schwierigkeiten zu entspannen.
+            </p>
           </div>
         </div>
 
-        {/* Privacy Note */}
-        <div className="bg-[#4D5922] rounded-2xl p-6 mb-8 text-white">
-          <h3 className="font-semibold mb-3 flex items-center gap-2">
+        <div className="bg-[#4D5922] rounded-xl p-4 text-white mb-8">
+          <h4 className="font-semibold mb-2 flex items-center gap-2">
             <Info className="w-5 h-5" />
-            Datenschutz & Vertraulichkeit
-          </h3>
-          <p className="text-white/90 text-sm leading-relaxed">
-            Alle Ihre Antworten werden vertraulich behandelt und nur zur Generierung 
-            Ihrer persönlichen Empfehlungen verwendet. Die Daten werden lokal gespeichert 
-            und nicht an Dritte weitergegeben.
+            Wichtige Information
+          </h4>
+          <p className="text-sm text-white/90">
+            Dieser Fragebogen ersetzt keine professionelle Diagnose. Bei anhaltenden Beschwerden wenden Sie sich bitte an einen Arzt oder Therapeuten.
           </p>
         </div>
 
-        {/* Start Button */}
-        <div className="text-center">
+        <div className="space-y-4 text-sm text-[#23412C]/70 mb-8">
+          <div className="flex items-start gap-3">
+            <CheckCircle className="w-5 h-5 text-[#4D5922] mt-0.5 flex-shrink-0" />
+            <span>21 kurze Fragen zu Ihrem Befinden in der letzten Woche</span>
+          </div>
+          <div className="flex items-start gap-3">
+            <CheckCircle className="w-5 h-5 text-[#4D5922] mt-0.5 flex-shrink-0" />
+            <span>Detaillierte Auswertung in den Bereichen Depression, Angst und Stress</span>
+          </div>
+          <div className="flex items-start gap-3">
+            <CheckCircle className="w-5 h-5 text-[#4D5922] mt-0.5 flex-shrink-0" />
+            <span>Personalisierte Empfehlungen basierend auf Ihren Ergebnissen</span>
+          </div>
+        </div>
+
           <button
             onClick={() => setCurrentStep('assessment')}
-            className="bg-[#E86F3A] text-white px-12 py-4 rounded-2xl font-semibold text-lg hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center justify-center gap-3 mx-auto"
+          className="w-full bg-[#E86F3A] text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center justify-center gap-3"
           >
-            <Play className="w-6 h-6" />
-            Analyse jetzt starten
+          <Target className="w-6 h-6" />
+          Fragebogen starten
           </button>
-          <p className="text-[#23412C]/60 mt-3 text-sm">
-            Dauer: ca. 5-7 Minuten
-          </p>
-        </div>
       </div>
     </div>
   );
 
   const renderAssessment = () => {
-    const currentQuestionIndex = Object.keys(answers).length;
-    const currentQuestion = assessmentQuestions[currentQuestionIndex];
-    const progress = (currentQuestionIndex / assessmentQuestions.length) * 100;
-
-    if (currentQuestionIndex >= assessmentQuestions.length) {
-      setCurrentStep('results');
-      return null;
-    }
+    const currentQuestions = questionGroups[currentQuestionGroup];
+    const progress = ((currentQuestionGroup + 1) / questionGroups.length) * 100;
+    const allQuestionsAnswered = currentQuestions.every(q => answers[q.id] !== undefined);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 p-6">
-        <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-6">
             <button
-              onClick={() => setCurrentStep('intro')}
+            onClick={() => currentQuestionGroup === 0 ? setCurrentStep('intro') : moveToPreviousGroup()}
               className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
             >
               <ChevronLeft className="w-6 h-6 text-[#23412C]" />
             </button>
-            <div className="text-center">
-              <h2 className="text-xl font-bold text-[#23412C]">Frage {currentQuestionIndex + 1} von {assessmentQuestions.length}</h2>
-              <div className="w-64 bg-white/60 rounded-full h-2 mt-2">
+          <h2 className="text-xl font-bold text-[#23412C]">DASS-21 Fragebogen</h2>
+          <div className="w-12" />
+        </div>
+
+        {/* Progress Bar */}
+        <div className="bg-white/50 rounded-full h-2 mb-6">
                 <div 
-                  className="bg-[#E86F3A] h-2 rounded-full transition-all duration-500"
+            className="bg-[#4D5922] h-full rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 />
-              </div>
-            </div>
-            <div className="w-12" />
           </div>
 
-          {/* Question */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-[#F6D98A] shadow-lg">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-[#E86F3A] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <Activity className="w-8 h-8 text-white" />
-              </div>
-              
-              <h3 className="text-2xl font-bold text-[#23412C] mb-4">
-                {currentQuestion.question}
+        {/* Questions */}
+        <div className="space-y-6">
+          {currentQuestions.map((question, index) => (
+            <div
+              key={question.id}
+              className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-[#F6D98A] shadow-lg"
+            >
+              <h3 className="text-lg font-medium text-[#23412C] mb-4">
+                {currentQuestionGroup * 5 + index + 1}. {question.question}
               </h3>
-              
-              <p className="text-[#23412C]/70 text-sm">
-                Wählen Sie die Antwort, die am besten auf Sie zutrifft
-              </p>
-            </div>
-
-            {/* Answer Options */}
-            <div className="space-y-4">
-              {currentQuestion.options.map((option, index) => (
+              <div className="grid grid-cols-1 gap-3">
+                {question.options.map((option) => (
                 <button
-                  key={index}
-                  onClick={() => {
-                    setAnswers(prev => ({ ...prev, [currentQuestion.id]: option.value }));
-                  }}
-                  className="w-full p-6 rounded-xl text-left transition-all duration-200 border-2 bg-[#F6E3B6]/30 border-[#F6E3B6] hover:bg-[#F2C75B]/40 hover:border-[#E86F3A] hover:shadow-md"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-full border-2 border-[#E86F3A] flex items-center justify-center bg-white">
-                      <span className="text-[#E86F3A] font-bold">{option.value}</span>
-                    </div>
-                    <p className="text-[#23412C] font-medium leading-relaxed">
+                    key={option.value}
+                    onClick={() => handleAnswer(question.id, option.value)}
+                    className={`p-4 rounded-lg text-left transition-all ${
+                      answers[question.id] === option.value
+                        ? 'bg-[#4D5922] text-white'
+                        : 'bg-white/50 hover:bg-white/80 text-[#23412C]'
+                    }`}
+                  >
                       {option.label}
-                    </p>
-                  </div>
                 </button>
               ))}
             </div>
           </div>
+          ))}
+        </div>
+
+        {/* Navigation */}
+        <div className="mt-8 flex justify-between items-center">
+          <button
+            onClick={moveToPreviousGroup}
+            className={`px-6 py-3 rounded-xl font-medium transition-colors ${
+              currentQuestionGroup === 0
+                ? 'opacity-0'
+                : 'bg-white/80 text-[#23412C] hover:bg-white'
+            }`}
+            disabled={currentQuestionGroup === 0}
+          >
+            Zurück
+          </button>
+          <div className="text-[#23412C] font-medium">
+            Fragen {currentQuestionGroup * 5 + 1}-{Math.min((currentQuestionGroup + 1) * 5, dass21Questions.length)} von {dass21Questions.length}
+          </div>
+          <button
+            onClick={moveToNextGroup}
+            disabled={!allQuestionsAnswered}
+            className={`px-6 py-3 rounded-xl font-medium transition-colors ${
+              allQuestionsAnswered
+                ? 'bg-[#4D5922] text-white hover:bg-[#3D4819]'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
+          >
+            {currentQuestionGroup === questionGroups.length - 1 ? 'Auswertung' : 'Weiter'}
+          </button>
         </div>
       </div>
     );
@@ -481,12 +726,9 @@ const PersonalStressAnalysis: React.FC = () => {
 
   const renderResults = () => {
     const categoryScores = calculateCategoryScores();
-    const overallScore = categoryScores.reduce((sum, cat) => sum + cat.score, 0) / categoryScores.length;
-    const recommendations = generateRecommendations(categoryScores);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 p-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <button
@@ -495,94 +737,112 @@ const PersonalStressAnalysis: React.FC = () => {
             >
               <ChevronLeft className="w-6 h-6 text-[#23412C]" />
             </button>
-            <h1 className="text-2xl font-bold text-[#23412C]">Ihre Ergebnisse</h1>
+          <h1 className="text-2xl font-bold text-[#23412C]">
+            DASS-21 Fragebogen
+          </h1>
             <div className="w-12" />
           </div>
 
-          {/* Overall Score */}
-          <div className="text-center mb-12">
-            <div className="w-32 h-32 bg-gradient-to-br from-[#E86F3A] to-[#D85A2A] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">{(overallScore * 20).toFixed(0)}%</div>
-                <div className="text-white/80 text-sm">Wohlbefinden</div>
-              </div>
-            </div>
-            
-            <h2 className="text-3xl font-bold text-[#23412C] mb-4">
-              Ihre persönliche Stressanalyse
-            </h2>
-            
-            <p className="text-lg text-[#23412C]/80 max-w-2xl mx-auto">
-              {overallScore >= 4 ? 
-                "Gratulation! Sie zeigen eine sehr gute Stressresilienz und Wohlbefinden in den meisten Bereichen." :
-                overallScore >= 3 ?
-                "Sie haben eine solide Basis, aber es gibt einige Bereiche mit Verbesserungspotential." :
-                "Ihre Analyse zeigt mehrere Bereiche, die Aufmerksamkeit benötigen. Die folgenden Empfehlungen können Ihnen helfen."
-              }
-            </p>
-          </div>
+        {/* Category Scores */}
+        <div className="space-y-6">
+          {categoryScores.map((category) => {
+            const severity = category.severity;
+            const percentage = (category.score / 42) * 100;
 
-          {/* Category Breakdown */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-[#F6D98A] shadow-lg">
-            <h3 className="text-2xl font-bold text-[#23412C] mb-6 flex items-center gap-2">
-              <BarChart3 className="w-6 h-6 text-[#E86F3A]" />
-              Detaillierte Bereichsanalyse
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {categoryScores.map((category, index) => (
-                <div key={index} className="bg-[#F6E3B6]/30 rounded-xl p-6">
+            return (
+              <div key={category.name} className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-[#F6D98A] shadow-lg">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <span className="text-3xl">{category.icon}</span>
+                    {category.name === 'Depression' && <Brain className="w-8 h-8 text-blue-500" />}
+                    {category.name === 'Angst' && <Heart className="w-8 h-8 text-red-500" />}
+                    {category.name === 'Stress' && <Activity className="w-8 h-8 text-green-500" />}
                       <div>
                         <h4 className="font-semibold text-[#23412C] text-lg">{category.name}</h4>
-                        <p className="text-[#23412C]/60 text-sm">{category.areas.join(', ')}</p>
+                      <p className="text-[#23412C]/60 text-sm">{category.description}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-[#23412C]">
-                        {(category.score * 20).toFixed(0)}%
+                    <div className="text-2xl font-bold text-[#23412C] mb-1">
+                      {category.score}
                       </div>
-                      <div className="text-xs text-[#23412C]/60">
-                        {category.score >= 4 ? 'Sehr gut' : 
-                         category.score >= 3 ? 'Gut' :
-                         category.score >= 2 ? 'Verbesserung' : 'Aufmerksamkeit'}
+                    <div className="text-sm font-medium px-3 py-1 rounded-full text-white" 
+                         style={{ backgroundColor: getSeverityColor(severity) }}>
+                      {getSeverityText(severity)}
                       </div>
                     </div>
                   </div>
                   
-                  <div className="w-full bg-white/60 rounded-full h-4 mb-4">
+                <div className="bg-white/50 rounded-full h-3 overflow-hidden mb-3">
                     <div 
-                      className={`h-4 rounded-full transition-all duration-1000 ${
-                        category.score >= 4 ? 'bg-[#4D5922]' :
-                        category.score >= 3 ? 'bg-[#F2C75B]' : 'bg-[#E86F3A]'
-                      }`}
-                      style={{ width: `${category.score * 20}%` }}
+                    className="h-full rounded-full transition-all duration-1000"
+                    style={{ 
+                      width: `${Math.min(percentage, 100)}%`,
+                      backgroundColor: getSeverityColor(severity)
+                    }}
                     />
                   </div>
                   
-                  <div className="flex items-center gap-2">
-                    {category.score >= 4 ? (
-                      <CheckCircle className="w-4 h-4 text-[#4D5922]" />
-                    ) : category.score >= 3 ? (
-                      <Info className="w-4 h-4 text-[#F2C75B]" />
+                <div className="flex items-center gap-2 text-sm">
+                  {severity === 'normal' ? (
+                    <CheckCircle className="w-4 h-4 text-[#22C55E]" />
+                  ) : severity === 'mild' ? (
+                    <Info className="w-4 h-4 text-[#84CC16]" />
                     ) : (
-                      <AlertTriangle className="w-4 h-4 text-[#E86F3A]" />
+                    <AlertTriangle className="w-4 h-4 text-[#DC2626]" />
                     )}
-                    <span className="text-sm text-[#23412C]/70">
-                      {category.score >= 4 ? 'Dieser Bereich ist eine Stärke für Sie' :
-                       category.score >= 3 ? 'Solide Basis mit Potenzial' :
-                       'Hier können Sie sich verbessern'}
+                  <span className="text-[#23412C]/70">
+                    {severity === 'normal' ? 'Dieser Bereich zeigt keine signifikante Belastung.' :
+                    severity === 'mild' ? 'Leichte Belastung - präventive Maßnahmen empfohlen.' :
+                    'Erhöhte Belastung - professionelle Unterstützung kann hilfreich sein.'}
                     </span>
                   </div>
                 </div>
-              ))}
+            );
+          })}
+        </div>
+
+        {/* DASS-21 Reference Scale */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mt-8 border border-[#F6D98A] shadow-lg">
+          <h4 className="font-semibold text-[#23412C] mb-4 flex items-center gap-2">
+            <Award className="w-5 h-5 text-[#E86F3A]" />
+            DASS-21 Bewertungsskala
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div>
+              <h5 className="font-medium text-[#23412C] mb-2">Depression</h5>
+              <div className="space-y-1 text-xs">
+                <div className="flex justify-between"><span>Normal:</span><span>0-9</span></div>
+                <div className="flex justify-between"><span>Mild:</span><span>10-13</span></div>
+                <div className="flex justify-between"><span>Moderat:</span><span>14-20</span></div>
+                <div className="flex justify-between"><span>Schwer:</span><span>21-27</span></div>
+                <div className="flex justify-between"><span>Extrem:</span><span>28+</span></div>
+              </div>
+            </div>
+            <div>
+              <h5 className="font-medium text-[#23412C] mb-2">Angst</h5>
+              <div className="space-y-1 text-xs">
+                <div className="flex justify-between"><span>Normal:</span><span>0-7</span></div>
+                <div className="flex justify-between"><span>Mild:</span><span>8-9</span></div>
+                <div className="flex justify-between"><span>Moderat:</span><span>10-14</span></div>
+                <div className="flex justify-between"><span>Schwer:</span><span>15-19</span></div>
+                <div className="flex justify-between"><span>Extrem:</span><span>20+</span></div>
+              </div>
+            </div>
+            <div>
+              <h5 className="font-medium text-[#23412C] mb-2">Stress</h5>
+              <div className="space-y-1 text-xs">
+                <div className="flex justify-between"><span>Normal:</span><span>0-14</span></div>
+                <div className="flex justify-between"><span>Mild:</span><span>15-18</span></div>
+                <div className="flex justify-between"><span>Moderat:</span><span>19-25</span></div>
+                <div className="flex justify-between"><span>Schwer:</span><span>26-33</span></div>
+                <div className="flex justify-between"><span>Extrem:</span><span>34+</span></div>
+              </div>
+            </div>
             </div>
           </div>
 
           {/* Action Button */}
-          <div className="text-center">
+        <div className="text-center mt-8">
             <button
               onClick={() => setCurrentStep('recommendations')}
               className="bg-[#E86F3A] text-white px-12 py-4 rounded-2xl font-semibold text-lg hover:bg-[#D85A2A] transition-colors shadow-lg border border-[#F6D98A] flex items-center justify-center gap-3 mx-auto"
@@ -590,7 +850,6 @@ const PersonalStressAnalysis: React.FC = () => {
               <Target className="w-6 h-6" />
               Persönliche Empfehlungen anzeigen
             </button>
-          </div>
         </div>
       </div>
     );
@@ -601,8 +860,7 @@ const PersonalStressAnalysis: React.FC = () => {
     const recommendations = generateRecommendations(categoryScores);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 p-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <button
@@ -631,13 +889,15 @@ const PersonalStressAnalysis: React.FC = () => {
           {/* Recommendations */}
           <div className="space-y-6">
             {recommendations.map((rec, index) => (
-              <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-[#F6D98A] shadow-lg">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-[#E86F3A] rounded-full flex items-center justify-center shadow-lg">
-                    <span className="text-3xl">{rec.icon}</span>
+            <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-[#F6D98A] shadow-lg">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-[#E86F3A] rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+                  {rec.category === 'Depression' && <Brain className="w-8 h-8 text-white" />}
+                  {rec.category === 'Angst' && <Heart className="w-8 h-8 text-white" />}
+                  {rec.category === 'Stress' && <Activity className="w-8 h-8 text-white" />}
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-[#23412C]">{rec.title}</h3>
+                <div className="flex-grow">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#23412C]">{rec.title}</h3>
                     <p className="text-[#23412C]/70">{rec.description}</p>
                   </div>
                   <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -645,7 +905,7 @@ const PersonalStressAnalysis: React.FC = () => {
                     rec.priority === 'medium' ? 'bg-[#F2C75B] text-[#23412C]' :
                     'bg-[#F6E3B6] text-[#23412C]'
                   }`}>
-                    {rec.priority === 'high' ? 'Hoch' : rec.priority === 'medium' ? 'Mittel' : 'Niedrig'} Priorität
+                  {rec.priority === 'high' ? 'Hohe' : rec.priority === 'medium' ? 'Mittlere' : 'Niedrige'} Priorität
                   </div>
                 </div>
                 
@@ -664,7 +924,7 @@ const PersonalStressAnalysis: React.FC = () => {
           </div>
 
           {/* Next Steps */}
-          <div className="bg-[#4D5922] rounded-2xl p-8 mt-8 text-white">
+        <div className="bg-[#4D5922] rounded-2xl p-6 sm:p-8 mt-8 text-white">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
               <Calendar className="w-6 h-6" />
               Nächste Schritte
@@ -707,25 +967,50 @@ const PersonalStressAnalysis: React.FC = () => {
               <BookOpen className="w-5 h-5" />
               Zu den Übungen
             </button>
-          </div>
         </div>
       </div>
     );
   };
 
-  // Main render
-  switch (currentStep) {
-    case 'intro':
-      return renderIntro();
-    case 'assessment':
-      return renderAssessment();
-    case 'results':
-      return renderResults();
-    case 'recommendations':
-      return renderRecommendations();
-    default:
-      return renderIntro();
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 flex items-center justify-center">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-[#F6D98A] shadow-lg text-center">
+          <div className="w-12 h-12 border-4 border-[#4D5922] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-[#23412C]/70">Laden...</p>
+        </div>
+      </div>
+    );
   }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 flex items-center justify-center">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-[#F6D98A] shadow-lg text-center">
+          <AlertTriangle className="w-12 h-12 text-[#E86F3A] mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-[#23412C] mb-2">Ein Fehler ist aufgetreten</h2>
+          <p className="text-[#23412C]/70 mb-6">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-[#4D5922] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#3D4819] transition-colors"
+          >
+            Seite neu laden
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30">
+        {currentStep === 'intro' && renderIntro()}
+        {currentStep === 'assessment' && renderAssessment()}
+        {currentStep === 'results' && renderResults()}
+        {currentStep === 'recommendations' && renderRecommendations()}
+      </div>
+    </ErrorBoundary>
+  );
 };
 
 export default PersonalStressAnalysis; 

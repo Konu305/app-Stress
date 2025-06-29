@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Menu, Clock, Play, ChevronLeft, MoreVertical, Video, Book, Brain, Heart, X, Lightbulb, Volume2, VolumeX, ChevronRight, Pause, ArrowLeft, CheckCircle, BarChart3, Target, TrendingUp, Users, Calendar, MessageSquare, Star, Award, Sparkles, Info } from 'lucide-react';
 import PSSQuestionnaire from '../components/PSSQuestionnaire';
@@ -7,6 +7,7 @@ import BreathingExercise from '../components/BreathingExercise';
 import StressBarometer from '../components/StressBarometer';
 import Stresstagebuch from '../components/Stresstagebuch';
 import AudioIntroduction from '../components/AudioIntroduction';
+import GHQ12Questionnaire from '../components/GHQ12Questionnaire';
 
 // Type definitions
 interface ModuleItem {
@@ -48,6 +49,7 @@ const Exercises = () => {
   const [showStressBarometer, setShowStressBarometer] = useState(false);
   const [showStresstagebuch, setShowStresstagebuch] = useState(false);
   const [showAudioIntroduction, setShowAudioIntroduction] = useState(false);
+  const [showGHQ12, setShowGHQ12] = useState(false);
   
   const startTime = useRef(0);
 
@@ -172,11 +174,11 @@ const Exercises = () => {
           ]
         },
         {
-          title: 'Persönliche Stressanalyse',
+          title: 'Persönliches Wohlbefinden',
           type: 'Lektion',
           duration: '15 min',
-          description: 'Identifikation persönlicher Stressoren',
-          onClick: () => setShowStressReflection(true)
+          description: 'Erfassung des allgemeinen Gesundheitszustands',
+          onClick: () => setShowGHQ12(true)
         }
       ],
       praxis: [
@@ -196,12 +198,6 @@ const Exercises = () => {
         }
       ],
       reflexion: [
-        {
-          title: 'Stresstagebuch',
-          type: 'Journal',
-          duration: '10 min',
-          description: 'Dokumentation von Stresssituationen'
-        },
         {
           title: 'Persönliche Stressanalyse',
           type: 'Fragebogen',
@@ -1107,6 +1103,11 @@ const Exercises = () => {
           setShowAudioIntroduction(false);
           setShowQuestionnaire(true);
         }}
+      />
+      
+      <GHQ12Questionnaire
+        isOpen={showGHQ12}
+        onClose={() => setShowGHQ12(false)}
       />
     </div>
   );

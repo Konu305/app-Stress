@@ -76,51 +76,51 @@ const Stresstagebuch: React.FC<StresstagebuchProps> = ({ isOpen, onClose }) => {
       audioText: "Herzlich willkommen zu Ihrem persönlichen Stresstagebuch-Training. In den nächsten 15 Minuten werden Sie verstehen, warum ein Stresstagebuch eines der mächtigsten Werkzeuge für Ihre mentale Gesundheit ist. Studien zeigen, dass Menschen, die regelmäßig ihre Stresserfahrungen dokumentieren, 23% weniger Stress empfinden und bessere Bewältigungsstrategien entwickeln.",
       content: (
         <div className="space-y-6">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-200">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-[#4D5922] rounded-full flex items-center justify-center">
                 <Brain className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-800">Warum ein Stresstagebuch?</h3>
+              <h3 className="text-xl font-semibold text-[#23412C]">Warum ein Stresstagebuch?</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-[#4D5922] mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-gray-800">Muster erkennen</h4>
-                  <p className="text-sm text-gray-600">Verstehen Sie Ihre Stressauslöser</p>
+                  <h4 className="font-medium text-[#23412C]">Muster erkennen</h4>
+                  <p className="text-sm text-[#23412C]/70">Verstehen Sie Ihre Stressauslöser</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-[#4D5922] mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-gray-800">Bewusstsein schaffen</h4>
-                  <p className="text-sm text-gray-600">Automatische Reaktionen durchbrechen</p>
+                  <h4 className="font-medium text-[#23412C]">Bewusstsein schaffen</h4>
+                  <p className="text-sm text-[#23412C]/70">Automatische Reaktionen durchbrechen</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-[#4D5922] mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-gray-800">Erfolge messen</h4>
-                  <p className="text-sm text-gray-600">Fortschritte sichtbar machen</p>
+                  <h4 className="font-medium text-[#23412C]">Erfolge messen</h4>
+                  <p className="text-sm text-[#23412C]/70">Fortschritte sichtbar machen</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-[#4D5922] mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-gray-800">Strategien entwickeln</h4>
-                  <p className="text-sm text-gray-600">Wirksamste Bewältigungsmethoden finden</p>
+                  <h4 className="font-medium text-[#23412C]">Strategien entwickeln</h4>
+                  <p className="text-sm text-[#23412C]/70">Wirksamste Bewältigungsmethoden finden</p>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="bg-yellow-50 p-4 rounded-xl border border-yellow-200">
+          <div className="bg-[#4D5922] rounded-2xl p-6 text-white shadow-lg">
             <div className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-600 mt-1 flex-shrink-0" />
+              <Lightbulb className="w-5 h-5 text-[#F6D98A] mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-medium text-yellow-800 mb-2">Wissenschaftlicher Hintergrund</h4>
-                <p className="text-sm text-yellow-700">
+                <h4 className="font-medium mb-2">Wissenschaftlicher Hintergrund</h4>
+                <p className="text-sm text-white/90">
                   Das Führen eines Stresstagebuchs aktiviert den präfrontalen Kortex - den Teil des Gehirns, 
                   der für rationales Denken zuständig ist. Dies hilft dabei, emotionale Reaktionen zu regulieren 
                   und neue neuronale Verbindungen zu schaffen.
@@ -139,52 +139,64 @@ const Stresstagebuch: React.FC<StresstagebuchProps> = ({ isOpen, onClose }) => {
       audioText: "Lassen Sie mich Ihnen erklären, was in Ihrem Gehirn passiert, wenn Sie Stress dokumentieren. Wenn wir gestresst sind, übernimmt die Amygdala - unser Alarmzentrum - die Kontrolle. Durch das Aufschreiben aktivieren wir jedoch den präfrontalen Kortex, der für rationales Denken zuständig ist. Dieser Prozess wird 'Affect Labeling' genannt - das Benennen von Gefühlen reduziert nachweislich die Aktivität der Amygdala um bis zu 50%.",
       content: (
         <div className="space-y-6">
-          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-2xl border border-purple-200">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Brain className="w-6 h-6 text-purple-600" />
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
+            <h3 className="text-xl font-semibold text-[#23412C] mb-6 flex items-center gap-2">
+              <Brain className="w-6 h-6 text-[#E86F3A]" />
               Neuroplastizität in Aktion
             </h3>
             <div className="space-y-4">
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <AlertCircle className="w-4 h-4 text-red-600" />
+                <div className="w-8 h-8 bg-[#E86F3A]/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-4 h-4 text-[#E86F3A]" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-800">Amygdala (Alarmzentrum)</h4>
-                  <p className="text-sm text-gray-600">Reagiert automatisch auf Bedrohungen - löst Stress aus</p>
+                  <h4 className="font-medium text-[#23412C]">Amygdala (Alarmzentrum)</h4>
+                  <p className="text-sm text-[#23412C]/70">Reagiert automatisch auf Bedrohungen - löst Stress aus</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Target className="w-4 h-4 text-blue-600" />
+                <div className="w-8 h-8 bg-[#4D5922]/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Target className="w-4 h-4 text-[#4D5922]" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-800">Präfrontaler Kortex</h4>
-                  <p className="text-sm text-gray-600">Wird durch Schreiben aktiviert - ermöglicht rationales Denken</p>
+                  <h4 className="font-medium text-[#23412C]">Präfrontaler Kortex</h4>
+                  <p className="text-sm text-[#23412C]/70">Wird durch Schreiben aktiviert - ermöglicht rationales Denken</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-4 h-4 text-green-600" />
+                <div className="w-8 h-8 bg-[#F6D98A]/50 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-4 h-4 text-[#E86F3A]" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-800">Neue neuronale Verbindungen</h4>
-                  <p className="text-sm text-gray-600">Entstehen durch regelmäßige Reflexion - verändern Reaktionsmuster</p>
+                  <h4 className="font-medium text-[#23412C]">Neue neuronale Verbindungen</h4>
+                  <p className="text-sm text-[#23412C]/70">Entstehen durch regelmäßige Reflexion - verändern Reaktionsmuster</p>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="bg-green-50 p-4 rounded-xl border border-green-200">
+          <div className="bg-[#4D5922] rounded-2xl p-6 text-white shadow-lg">
             <div className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+              <TrendingUp className="w-5 h-5 text-[#F6D98A] mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-medium text-green-800 mb-2">Studien-Ergebnisse</h4>
-                <ul className="text-sm text-green-700 space-y-1">
-                  <li>• 23% Reduktion des Stresslevels nach 4 Wochen</li>
-                  <li>• 50% weniger Aktivität in der Amygdala</li>
-                  <li>• Verbesserte Emotionsregulation um 35%</li>
-                  <li>• Bessere Problemlösungsfähigkeiten</li>
+                <h4 className="font-medium mb-2">Studien-Ergebnisse</h4>
+                <ul className="text-sm text-white/90 space-y-2">
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-[#F6D98A] rounded-full"></span>
+                    23% Reduktion des Stresslevels nach 4 Wochen
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-[#F6D98A] rounded-full"></span>
+                    50% weniger Aktivität in der Amygdala
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-[#F6D98A] rounded-full"></span>
+                    Verbesserte Emotionsregulation um 35%
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-[#F6D98A] rounded-full"></span>
+                    Bessere Problemlösungsfähigkeiten
+                  </li>
                 </ul>
               </div>
             </div>
@@ -200,23 +212,23 @@ const Stresstagebuch: React.FC<StresstagebuchProps> = ({ isOpen, onClose }) => {
       audioText: "Jetzt werden wir gemeinsam Ihren ersten Stresstagebuch-Eintrag erstellen. Denken Sie an eine Situation aus den letzten Tagen, die Sie gestresst hat. Es muss nichts Dramatisches sein - auch kleine Alltagsstressoren sind wichtig. Während wir die Situation dokumentieren, achten Sie darauf, wie sich bereits das Aufschreiben auf Ihr Gefühl auswirkt.",
       content: (
         <div className="space-y-6">
-          <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar className="w-5 h-5 text-blue-600" />
-              <h3 className="font-medium text-blue-800">Situation beschreiben</h3>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <Calendar className="w-5 h-5 text-[#E86F3A]" />
+              <h3 className="font-medium text-[#23412C]">Situation beschreiben</h3>
             </div>
             <textarea
               value={currentEntry.situation || ''}
               onChange={(e) => setCurrentEntry({...currentEntry, situation: e.target.value})}
               placeholder="Beschreiben Sie die stressige Situation... (z.B. 'Wichtige Präsentation vor dem Chef')"
-              className="w-full p-3 border border-blue-200 rounded-lg resize-none h-24 text-sm"
+              className="w-full p-4 bg-white/50 border border-[#F6D98A] rounded-xl resize-none h-32 text-sm text-[#23412C] placeholder-[#23412C]/50 focus:outline-none focus:ring-2 focus:ring-[#E86F3A]"
             />
           </div>
 
-          <div className="bg-orange-50 p-4 rounded-xl border border-orange-200">
-            <div className="flex items-center gap-2 mb-3">
-              <BarChart3 className="w-5 h-5 text-orange-600" />
-              <h3 className="font-medium text-orange-800">Stresslevel (1-10)</h3>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <BarChart3 className="w-5 h-5 text-[#E86F3A]" />
+              <h3 className="font-medium text-[#23412C]">Stresslevel (1-10)</h3>
             </div>
             <div className="flex items-center gap-4">
               <input
@@ -225,70 +237,77 @@ const Stresstagebuch: React.FC<StresstagebuchProps> = ({ isOpen, onClose }) => {
                 max="10"
                 value={currentEntry.stressLevel || 5}
                 onChange={(e) => setCurrentEntry({...currentEntry, stressLevel: Number(e.target.value)})}
-                className="flex-1"
+                className="flex-1 accent-[#E86F3A]"
               />
-              <span className="text-2xl font-bold text-orange-600 min-w-[3rem] text-center">
+              <span className="text-2xl font-bold text-[#E86F3A] min-w-[3rem] text-center">
                 {currentEntry.stressLevel}
               </span>
             </div>
-            <div className="flex justify-between text-xs text-gray-600 mt-2">
+            <div className="flex justify-between text-xs text-[#23412C]/70 mt-2">
               <span>Sehr entspannt</span>
               <span>Extrem gestresst</span>
             </div>
           </div>
 
-          <div className="bg-red-50 p-4 rounded-xl border border-red-200">
-            <div className="flex items-center gap-2 mb-3">
-              <Heart className="w-5 h-5 text-red-600" />
-              <h3 className="font-medium text-red-800">Körperliche Symptome</h3>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <Heart className="w-5 h-5 text-[#E86F3A]" />
+              <h3 className="font-medium text-[#23412C]">Körperliche Symptome</h3>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {physicalSymptoms.map((symptom) => (
-                <label key={symptom} className="flex items-center gap-2 text-sm">
+                <label key={symptom} className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     checked={currentEntry.physicalSymptoms?.includes(symptom) || false}
                     onChange={(e) => {
-                      const symptoms = currentEntry.physicalSymptoms || [];
-                      if (e.target.checked) {
-                        setCurrentEntry({...currentEntry, physicalSymptoms: [...symptoms, symptom]});
-                      } else {
-                        setCurrentEntry({...currentEntry, physicalSymptoms: symptoms.filter(s => s !== symptom)});
-                      }
+                      const updatedSymptoms = e.target.checked
+                        ? [...(currentEntry.physicalSymptoms || []), symptom]
+                        : (currentEntry.physicalSymptoms || []).filter(s => s !== symptom);
+                      setCurrentEntry({...currentEntry, physicalSymptoms: updatedSymptoms});
                     }}
-                    className="rounded text-red-600"
+                    className="w-4 h-4 rounded border-[#F6D98A] text-[#4D5922] focus:ring-[#4D5922]"
                   />
-                  <span className="text-gray-700">{symptom}</span>
+                  <span className="text-sm text-[#23412C]">{symptom}</span>
                 </label>
               ))}
             </div>
           </div>
 
-          <div className="bg-purple-50 p-4 rounded-xl border border-purple-200">
-            <div className="flex items-center gap-2 mb-3">
-              <Heart className="w-5 h-5 text-purple-600" />
-              <h3 className="font-medium text-purple-800">Emotionen</h3>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#F6D98A] shadow-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <Brain className="w-5 h-5 text-[#E86F3A]" />
+              <h3 className="font-medium text-[#23412C]">Emotionen</h3>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {emotions.map((emotion) => (
-                <label key={emotion} className="flex items-center gap-2 text-sm">
+                <label key={emotion} className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     checked={currentEntry.emotions?.includes(emotion) || false}
                     onChange={(e) => {
-                      const currentEmotions = currentEntry.emotions || [];
-                      if (e.target.checked) {
-                        setCurrentEntry({...currentEntry, emotions: [...currentEmotions, emotion]});
-                      } else {
-                        setCurrentEntry({...currentEntry, emotions: currentEmotions.filter(em => em !== emotion)});
-                      }
+                      const updatedEmotions = e.target.checked
+                        ? [...(currentEntry.emotions || []), emotion]
+                        : (currentEntry.emotions || []).filter(e => e !== emotion);
+                      setCurrentEntry({...currentEntry, emotions: updatedEmotions});
                     }}
-                    className="rounded text-purple-600"
+                    className="w-4 h-4 rounded border-[#F6D98A] text-[#4D5922] focus:ring-[#4D5922]"
                   />
-                  <span className="text-gray-700">{emotion}</span>
+                  <span className="text-sm text-[#23412C]">{emotion}</span>
                 </label>
               ))}
             </div>
+          </div>
+
+          <div className="bg-[#4D5922] rounded-2xl p-6 text-white shadow-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <Lightbulb className="w-5 h-5 text-[#F6D98A]" />
+              <h3 className="font-medium">Tipp</h3>
+            </div>
+            <p className="text-sm text-white/90">
+              Je genauer Sie Ihre Symptome und Gefühle dokumentieren, desto besser können Sie später 
+              Muster erkennen und geeignete Bewältigungsstrategien entwickeln.
+            </p>
           </div>
         </div>
       )
@@ -725,123 +744,81 @@ const Stresstagebuch: React.FC<StresstagebuchProps> = ({ isOpen, onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                {currentStepData.icon}
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-gray-800">{currentStepData.title}</h2>
-                <p className="text-gray-600">{currentStepData.subtitle}</p>
-              </div>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <X className="w-6 h-6 text-gray-600" />
-            </button>
-          </div>
+    <div className="fixed inset-0 bg-gradient-to-br from-[#F6E3B6] via-[#F6E3B6] to-[#F2C75B]/30 z-50 flex flex-col">
+      {/* Header */}
+      <div className="p-6 flex items-center justify-between">
+        <button
+          onClick={onClose}
+          className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg border border-[#F6D98A]"
+        >
+          <ChevronLeft className="w-6 h-6 text-[#23412C]" />
+        </button>
+        <h2 className="text-xl font-bold text-[#23412C]">Stresstagebuch</h2>
+        <div className="w-12" />
+      </div>
 
-          {/* Progress */}
-          <div className="mt-4">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
-              <span>Schritt {currentStep + 1} von {steps.length}</span>
-              <span>{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-              />
-            </div>
-          </div>
-        </div>
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto px-6 pb-6">
+        {steps[currentStep].content}
+      </div>
 
-        {/* Audio Control */}
-        <div className="p-4 bg-gray-50 border-b border-gray-200">
-          <audio
-            ref={audioRef}
-            src={currentStepData.audioFile}
-            onTimeUpdate={handleAudioTimeUpdate}
-            onLoadedMetadata={handleAudioLoadedMetadata}
-            onEnded={handleAudioEnded}
-          />
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleAudio}
-              className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-            >
-              {audioPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-            </button>
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <Volume2 className="w-4 h-4 text-gray-600" />
-                <span className="text-sm font-medium text-gray-800">Audio-Anleitung</span>
-                {audioPlaying && (
-                  <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                    Spielt ab...
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 mt-2">
-                <span className="text-xs text-gray-500">{formatTime(audioCurrentTime)}</span>
-                <div className="flex-1 bg-gray-200 rounded-full h-1">
-                  <div 
-                    className="bg-blue-600 h-1 rounded-full transition-all duration-100"
-                    style={{ width: `${audioDuration > 0 ? (audioCurrentTime / audioDuration) * 100 : 0}%` }}
-                  />
-                </div>
-                <span className="text-xs text-gray-500">{formatTime(audioDuration)}</span>
+      {/* Footer */}
+      <div className="p-6 bg-white/80 backdrop-blur-sm border-t border-[#F6D98A]">
+        {/* Audio Player */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={toggleAudio}
+                className="w-10 h-10 bg-[#4D5922] rounded-full flex items-center justify-center text-white hover:bg-[#3D4819] transition-colors"
+              >
+                {audioPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+              </button>
+              <div className="text-sm text-[#23412C]">
+                {formatTime(audioCurrentTime)} / {formatTime(audioDuration)}
               </div>
             </div>
+            <Volume2 className="w-5 h-5 text-[#23412C]" />
           </div>
-        </div>
-
-        {/* Content */}
-        <div className="p-6">
-          {currentStepData.content}
+          
+          <div className="h-1 bg-[#F6D98A]/50 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#4D5922] transition-all duration-100"
+              style={{
+                width: `${(audioCurrentTime / audioDuration) * 100}%`
+              }}
+            />
+          </div>
         </div>
 
         {/* Navigation */}
-        <div className="p-6 border-t border-gray-200">
-          <div className="flex justify-between">
+        <div className="flex justify-between gap-4">
+          {currentStep > 0 && (
             <button
               onClick={prevStep}
-              disabled={currentStep === 0}
-              className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 bg-white text-[#23412C] px-6 py-3 rounded-xl font-medium hover:bg-white/90 transition-colors border border-[#F6D98A] flex items-center justify-center gap-2"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-5 h-5" />
               Zurück
             </button>
-            
-            <div className="flex gap-2">
-              {steps.map((_, index) => (
-                <div
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentStep ? 'bg-blue-600' : 
-                    index < currentStep ? 'bg-green-500' : 'bg-gray-300'
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={nextStep}
-              disabled={currentStep === steps.length - 1}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Weiter
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+          )}
+          <button
+            onClick={nextStep}
+            className="flex-1 bg-[#E86F3A] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#D85A2A] transition-colors border border-[#F6D98A] flex items-center justify-center gap-2"
+          >
+            {currentStep === steps.length - 1 ? 'Abschließen' : 'Weiter'}
+            {currentStep < steps.length - 1 && <ChevronRight className="w-5 h-5" />}
+          </button>
         </div>
       </div>
+
+      <audio
+        ref={audioRef}
+        src={steps[currentStep].audioFile}
+        onTimeUpdate={handleAudioTimeUpdate}
+        onLoadedMetadata={handleAudioLoadedMetadata}
+        onEnded={handleAudioEnded}
+      />
     </div>
   );
 };
